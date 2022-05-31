@@ -1,6 +1,8 @@
 import { css, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { state } from 'lit/decorators/state.js';
+import { repeat } from 'lit/directives/repeat.js';
+
 
 
 import { AppElement } from '../app-debt/app-element';
@@ -10,7 +12,7 @@ import type { ListenerInterface } from '@alwatr/signal';
 import type { TemplateResult } from 'lit';
 
 // Get color
-import { glod, Orange, background, OrangeHover } from "../color"
+import { glod, Orange, background, OrangeHover, Gray } from "../color"
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -25,21 +27,51 @@ const list = [
   { name: "الصفحة الرئيسية", link: "/home" },
   { name: "الصفحة الرئيسية", link: "/" },
 ]
-/**
- * APP PWA Home Page Element
- *
- * ```html
- * <page-home></page-home>
- * ```
- */
+
+interface project_Image {
+  name: string,
+  link: string,
+  image: string
+}
+const project_img: Array<project_Image> = [
+  { name: "الصفحة الرئيسية", link: "/", image: "/images/background-part-about.jpg" },
+  { name: "الصفحة الرئيسية", link: "/", image: "/images/background-part-about.jpg" },
+]
+
+interface project {
+  name: string,
+  link: string,
+  number: number
+
+}
+const project: Array<project> = [
+  { name: "الصفحة الرئيسية", link: "/", number: 0 },
+  { name: "الصفحة الرئيسية", link: "/", number: 0 },
+]
+
+interface post {
+  titel: string,
+  description: string,
+  link: string,
+  image: string
+
+}
+const posts: Array<post> = [
+  { titel: "خبر الاول", description: "توضيحات", link: "/", image: "/images/background-homePage.jpg" },
+  { titel: "خبر الاول", description: "توضيحات", link: "/", image: "/images/background-homePage.jpg" },
+  { titel: "خبر الاول", description: "توضيحات", link: "/", image: "/images/background-homePage.jpg" },
+  { titel: "خبر الاول", description: "توضيحات", link: "/", image: "/images/background-homePage.jpg" },
+]
+
+
 @customElement('page-home')
 export class PageHome extends AppElement {
   static override styles = css`
-      p,img,div,span,h1,h2,h3,h4,h5,h6{
+      p,img,div,span,h1,h2,h3,h4,h5,h6,input{
       margin:0;
       padding:0;
     }
-    p,h1,h2,h3,h4,h5,h6{
+    p,h1,h2,h3,h4,h5,h6,div,input{
       font-family: 'Tajawal', sans-serif;
     }
     :host {
@@ -105,7 +137,7 @@ export class PageHome extends AppElement {
       width:7em;
     }
     .titel{
-      font-size:7vw;
+      font-size:5vw;
       color:${glod};
     }
 
@@ -166,7 +198,7 @@ export class PageHome extends AppElement {
       border:6px solid ${Orange};
       border-radius:10px;
       position:relative;
-      margin-left:10em;
+      margin: 0 10em;
     }
     .image_about>img{
       width:40vw;
@@ -182,7 +214,7 @@ export class PageHome extends AppElement {
       width:30em;
       display:flex;
       flex-direction:column;
-      align-items:flex-end;
+      align-items:flex-start;
       justify-content:center;
       z-index:1;
     }
@@ -225,19 +257,20 @@ export class PageHome extends AppElement {
       display:flex;
       justify-content:center;
       align-items:center;
-      margin-bottom:20em;
+      margin-bottom:5em;
     }
     .Circle_part_date{
-      width:33em;
-      height:33em;
-      border-radius:50%;
+      width:27em;
+      height:12em;
+      border-radius:20vw 20vw 0 0;
       background-color:${background};
       position:absolute;
-      bottom:-22em;
+      bottom:0;
       display:flex;
       flex-direction:column;
       justify-content:flex-start;
       align-items:center;
+      z-index:1;
     }
     .time{
       font-size:80px;
@@ -250,13 +283,14 @@ export class PageHome extends AppElement {
     }
     .border_circle_part_date{
       width:58vw;
-      height:50vw;
+      height:45vw;
       min-width: 50em;
-      min-height: 50em;
+      min-height: 29em;
+      max-height:30em;
       border:2px solid ${background};
-      border-radius:50%;
+      border-radius:110vw 110vw 0 0;
       position:absolute;
-      bottom:-25vw;
+      bottom:0;
       display:flex;
       flex-direction:column;
       justify-content:flex-start;
@@ -306,6 +340,185 @@ export class PageHome extends AppElement {
       position:absolute;
       top:16em;
     }
+    /* Styles Part Project */
+    .part-project{
+      width:100%;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:flex-start;
+    }
+    .box-project{
+        width:100%;
+        display:flex;
+        justify-content:space-around;
+        align-items:center;
+        flex-wrap:wrap;
+        margin:2em;
+      }
+      .img-project{
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+      }
+      .item-project-img{
+        width:40em;
+        height:15em;
+        display:flex;
+        justify-content:center;
+        overflow:hidden;
+        position:relative;
+        text-decoration:none;
+        margin:.5em 0;
+      }
+      .item-project-img>p{
+        position:absolute;
+        font-size:30px;
+        bottom:-30px;
+        color:${Orange};
+        transition:300ms linear bottom;
+      }
+      .item-project-img>img{
+        width:100%;
+        height:100%;
+        position:absolute;
+        right:0;
+        top:0;
+        border-radius:15px;
+      }
+      .item-project-img:hover>p{
+        bottom:3em;
+      }
+      .project{
+        width:20em;
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+      }
+      .item-project{
+        width:20em;
+        height:3em;
+        border:3px solid ${Orange};
+        border-radius:4px;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin:.7em;
+        text-decoration:none;
+        padding:0 .5em;
+        box-sizing:border-box;
+        transition:300ms linear box-shadow;
+      }
+      .item-project:hover{
+        box-shadow: 0 0 15px 0 ${Orange}
+      }
+      /* Styles vicarious shrine */
+      .part-vicarious-shrine{
+        width:100%;
+        min-height:16em;
+        background:url(/images/background-part-vicarious-shrine.jpg) no-repeat center center /cover;
+        display:flex;
+        justify-content:flex-start;
+        align-items:center;
+        position:relative;
+        margin:10em 0 1em 0;
+      }
+      .part-vicarious-shrine>img{
+        position:absolute;
+        bottom:0;
+        left:5vw;
+      }
+      .part-vicarious-shrine>div{
+        padding:0 1em;
+        width:30%;
+        height:100%;
+        display:flex;
+        justify-content:space-around;
+        flex-wrap:wrap;
+        align-items:flex-start;
+        flex-direction:column;
+      }
+      .part-vicarious-shrine>div>h2{
+        font-size:30px;
+      }
+      .part-vicarious-shrine>div>p{
+        text-align:start;
+        color:${Gray}
+      }
+      .part-vicarious-shrine>div>form{
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:flex-start;
+      }
+      .part-vicarious-shrine>div>form>input[type=text]{
+        width:25em;
+        height:3.5em;
+        text-align:start;
+        border:2px solid ${Orange};
+        border-radius:7px;
+        padding: 0 .6em;
+        margin:.5em;
+        outline:none;
+      }
+      .part-vicarious-shrine>div>form>input[type=submit]{
+        width:10em;
+        height:2.5em;
+        border:2px solid ${Orange};
+        border-radius:7px;
+        padding: 0 .6em;
+        margin:.5em;
+        outline:none;
+        background-color:transparent;
+        color:#fff;
+        cursor:pointer;
+        transition:300ms linear background-color;
+      }
+      .part-vicarious-shrine>div>form>input[type=submit]:hover{
+        background-color:${Orange};
+      }
+      /* Styles Part Ports */
+      .part-posts{
+        width:100%;
+        margin-bottom:5em;
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+      }
+      .part-posts>div{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        flex-wrap:wrap;
+        margin:1em 0;
+        width:100%;
+      }
+      
+      .part-posts>div>a{
+        width:17vw;
+        min-height:25em;
+        display:flex;
+        flex-direction:column;
+        align-items:flex-start;
+        justify-content:flex-start;
+        text-decoration:none;
+        position:relative;
+        border-radius:10px;
+        overflow:hidden;
+        margin:0 .8em;
+        box-shadow:0 0 20px 0 #000000
+      }
+      .part-posts>div>a>h4{
+        font-size:30px;
+        color:black;
+      }
+      .part-posts>div>a>img{
+        width:17vw;
+      }
+
   
     @media only screen and (max-width: 768px) {
       .filter_background>header{
@@ -364,15 +577,45 @@ export class PageHome extends AppElement {
         min-height: 10em;
         bottom: 0;
         border-radius:250px 250px 0 0;
-
+      }
+      .item-project-img{
+        width:80vw;
+        height:10em;
+      }
+      .item-project-img>p{
+        bottom:2em;
+      }
+      .part-vicarious-shrine>img{
+        left:0em;
       }
       @media only screen and (max-width: 320px) {
-      .Circle_part_date{
-        width:100vw;
-        min-width:auto;
+        .Circle_part_date{
+          width:100vw;
+          min-width:auto;
+        }
+        .part-project{
+          margin:6em 0;
+        }
+        .part-project>h2{
+          text-align:center
+        }
       }
+      
+    }
+    @media only screen and (max-width: 676px) {
+      .part-vicarious-shrine>img{
+        display:none;
       }
-
+      .part-vicarious-shrine>div{
+        width:100%;
+        padding:0;
+      }
+      .part-vicarious-shrine>div>h2{
+        text-align:center;
+      }
+      .part-vicarious-shrine > div > form > input[type=text]:nth-child(1){
+        margin:0;
+      }
     }
   `;
 
@@ -395,9 +638,9 @@ export class PageHome extends AppElement {
           <!-- Menu -->
           <header>
             <ul class="menu">
-              ${list.map((item) => {
-       return html`<li><a href="/${item.link}">${item.name}</a></li>`
-     })}
+              ${repeat(list, (item) => html`
+              <li><a href="${item.link}">${item.name}</a></li>`
+     )}
             </ul>
           </header>
           <h1 title="titel" class="titel">العتبة العسكرية المقدسة</h1>
@@ -410,10 +653,13 @@ export class PageHome extends AppElement {
       </div>
       <!-- Part About -->
       <div class="about">
+        <div class="image_about">
+          <img src="/images/background-homePage.jpg" loading="lazy" alt="about" title="about" />
+        </div>
         <div class="text-about">
           <p class="perfix_titel">تاريخ</p>
           <h2>سامراء وأئمة سامراء</h2>
-          <img src="/images/border1.png" alt="border" title="border" />
+          <img src="/images/border1.png" alt="border" loading="lazy" title="border" />
           <p class="text-about-two">
             يعود أصل اسم (سامراء) في أصله إلى سائر الأسماء الآرامية بالعراق التي كانت تنتهي بحرف الألف المقصور مثل (كربلا)
             (بعقوبا) وفي مراحل تاريخية لاحقة من تاريخ اللغة العربية التي ورثت تلك التسميات لبعض مدنها في أرض الرافدين أضيفت
@@ -423,9 +669,6 @@ export class PageHome extends AppElement {
           <a href="/about" class="button-about">اقرأ أكثر</a>
       
         </div>
-        <div class="image_about">
-          <img src="/images/background-homePage.jpg" alt="about" title="about" />
-        </div>
       </div>
       <!-- Part Date -->
       <div class="date">
@@ -434,12 +677,12 @@ export class PageHome extends AppElement {
             <div>نداء ليلية</div>
           </div>
           <div class="circle2">
-            <div>نداء الصباح</div>
             <div>نداء ليلية</div>
+            <div>نداء الصباح</div>
           </div>
           <div class="circle3">
-            <div>نداء الصباح</div>
             <div>نداء ليلية</div>
+            <div>نداء الصباح</div>
           </div>
         </div>
         <div class="Circle_part_date">
@@ -447,6 +690,58 @@ export class PageHome extends AppElement {
           <p class="day">${this.__day}</p>
         </div>
       </div>
+      </div>
+      <!-- Part Project -->
+      <div class="part-project">
+        <h2>مشاريع العتبة العسکریة المقدسة</h2>
+        <p>منجزة & قيد الانجاز</p>
+        <img src="/images/border1.png" alt="border" loading="lazy" title="border" />
+        <div class="box-project">
+          <div class="img-project">
+            ${repeat(project_img, (item) => html`
+            <a class="item-project-img" href="${item.link}">
+              <img src=${item.image} alt="image-${item.name}" titel="image-${item.name}" loading="lazy" />
+              <p>${item.name}</p>
+            </a>
+            `)}
+          </div>
+          <div class="project">
+            ${repeat(project, (item) => html`
+            <a class="item-project" href="${item.link}">
+              <p>${item.name}</p>
+              <p>${item.number}</p>
+            </a>
+            `)}
+          </div>
+        </div>
+      </div>
+      <!-- Part vicarious shrine -->
+      <div class="part-vicarious-shrine">
+        <div>
+          <h2>الزيارة بالانابة لضريح العسكرية المقدسة</h2>
+          <p>خدمة يوفرها الموقع الرسمي للعتبة العسكرية المقدسة، بزيارة العسكرية المقدسة نيابة عن جميع الاسماء التي يتم ادراجها
+            في الحقول ادناه</p>
+          <form>
+            <input type="text" minlength="5" required placeholder="اسم"
+              oninvalid="this.setCustomValidity('الرجاء ملء بعناية')" oninput="setCustomValidity('')" />
+            <input type="submit" value="إرسال" />
+          </form>
+        </div>
+        <img src="/Images/image-part-vicarious-shrine.png" alt="vicarious-shrine" title="vicarious-shrine" loading="lazy" />
+      </div>
+      <!-- Part Posts -->
+      <div class="part-posts">
+        <h2>اخبار جديدة</h2>
+        <img src="/images/border1.png" alt="border" title="border" />
+        <div>
+          ${repeat(posts, (item) => html`
+          <a href="${item.link}">
+            <img src=${item.image} alt="image post ${item.titel}" titel="image post ${item.titel}" loading="lazy" />
+            <h4>${item.titel}</h4>
+            <p>${item.description}</p>
+          </a>
+          `)}
+        </div>
       </div>
     `;
   }
