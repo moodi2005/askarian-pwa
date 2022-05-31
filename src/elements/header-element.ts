@@ -15,11 +15,14 @@ const list = [
     { name: "الحج إلى الضريح", link: "/shrine" ,page:"shrine"},
     { name: "مقالات", link: "/blog",page:"blog" },
 ]
-
+declare global {
+    interface HTMLElementTagNameMap {
+      "ion-icon": HTMLElement;
+    }
+  }
 @customElement('header-element')
 export class HeaderElement extends LitElement {
 
-    
   @property({attribute:true,type:String})
   path = ""
 
