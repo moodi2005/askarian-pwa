@@ -21,11 +21,11 @@ declare global {
 }
 
 const list = [
-  { name: "الصفحة الرئيسية", link: "/", },
-  { name: "معلومات عنا", link: "/about" },
+  { name: "تاريخ سامراء", link: "/about", },
+  { name: "يعيش", link: "/live" },
   { name: html`<img class="logo" src="/images/logo.png" title="Logo" alt="Logo">`, link: "/" },
-  { name: "الصفحة الرئيسية", link: "/home" },
-  { name: "الصفحة الرئيسية", link: "/" },
+  { name: "الحج إلى الضريح", link: "/shrine" },
+  { name: "مقالات", link: "/blog" },
 ]
 
 interface project_Image {
@@ -499,7 +499,7 @@ export class PageHome extends AppElement {
       
       .part-posts>div>a{
         width:17vw;
-        min-height:25em;
+        min-height:22em;
         display:flex;
         flex-direction:column;
         align-items:flex-start;
@@ -588,6 +588,35 @@ export class PageHome extends AppElement {
       .part-vicarious-shrine>img{
         left:0em;
       }
+      .part-posts>div>a{
+        width:40%;
+        margin:2em .5em;
+      }
+      .part-posts>div>a>img{
+        width:40vw;
+      }
+      @media only screen and (max-width: 676px) {
+        .part-vicarious-shrine>img{
+          display:none;
+        }
+        .part-vicarious-shrine>div{
+          width:100%;
+          padding:0;
+        }
+        .part-vicarious-shrine>div>h2{
+          text-align:center;
+        }
+        .part-vicarious-shrine > div > form > input[type=text]:nth-child(1){
+          margin:0;
+        }
+        .part-posts>div>a{
+        width:100%;
+        margin:2em .5em;
+       }
+      .part-posts>div>a>img{
+        width:100vw;
+       }
+      }
       @media only screen and (max-width: 320px) {
         .Circle_part_date{
           width:100vw;
@@ -601,21 +630,6 @@ export class PageHome extends AppElement {
         }
       }
       
-    }
-    @media only screen and (max-width: 676px) {
-      .part-vicarious-shrine>img{
-        display:none;
-      }
-      .part-vicarious-shrine>div{
-        width:100%;
-        padding:0;
-      }
-      .part-vicarious-shrine>div>h2{
-        text-align:center;
-      }
-      .part-vicarious-shrine > div > form > input[type=text]:nth-child(1){
-        margin:0;
-      }
     }
   `;
 
@@ -749,7 +763,4 @@ export class PageHome extends AppElement {
   protected __time: any = { hours: "00", minutes: "00" }
   @state()
   protected __day: string = "فی السّبت ، ۱۲ جمادی الثانی"
-
-
-
 }
