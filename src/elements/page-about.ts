@@ -4,6 +4,7 @@ import {customElement} from 'lit/decorators/custom-element.js';
 import {AppElement} from '../app-debt/app-element';
 
 import type {ListenerInterface} from '@alwatr/signal';
+
 import type {TemplateResult} from 'lit';
 
 declare global {
@@ -27,6 +28,9 @@ export class PageAbout extends AppElement {
       display: flex;
       flex-direction: column;
     }
+    *{
+      box-sizing:border-box;
+    }
   `;
 
   protected _listenerList: Array<unknown> = [];
@@ -42,6 +46,7 @@ export class PageAbout extends AppElement {
   }
 
   protected override render(): TemplateResult {
-    return html`<h1>Page About</h1>`;
+    return html`
+      <h1>Page About</h1>`;
   }
 }

@@ -71,6 +71,9 @@ export class PageHome extends AppElement {
       margin:0;
       padding:0;
     }
+    *{
+      box-sizing:border-box;
+    }
     p,h1,h2,h3,h4,h5,h6,div,input{
       font-family: 'Tajawal', sans-serif;
     }
@@ -109,7 +112,7 @@ export class PageHome extends AppElement {
       align-items:center;
       justify-content:center;
     }
-    .filter_background>header{
+    .filter_background>.header{
       width:100%;
       position:absolute;
       top:0;
@@ -521,13 +524,14 @@ export class PageHome extends AppElement {
 
   
     @media only screen and (max-width: 768px) {
-      .filter_background>header{
+      .filter_background>.header{
         display:none;
       }
       .about{
         margin-top:1em;
       }
       .text-about{
+        width:100vw;
         order:1;
         align-items:center;
       }
@@ -570,10 +574,13 @@ export class PageHome extends AppElement {
         height:auto;
         min-height: 42em;
       }
+      .time{
+        font-size:60px;
+      }
       .Circle_part_date{
         width: 52vw;
         height: 26vw;
-        min-width:23em;
+        min-width:22em;
         min-height: 10em;
         bottom: 0;
         border-radius:250px 250px 0 0;
@@ -594,6 +601,9 @@ export class PageHome extends AppElement {
       }
       .part-posts>div>a>img{
         width:40vw;
+      }
+      .part-vicarious-shrine>div>form>input[type=text]{
+        width:100vw;
       }
       @media only screen and (max-width: 676px) {
         .part-vicarious-shrine>img{
@@ -650,13 +660,13 @@ export class PageHome extends AppElement {
       <div class="background_homePage">
         <div class="filter_background">
           <!-- Menu -->
-          <header>
+          <div class="header">
             <ul class="menu">
               ${repeat(list, (item) => html`
               <li><a href="${item.link}">${item.name}</a></li>`
      )}
             </ul>
-          </header>
+          </div>
           <h1 title="titel" class="titel">العتبة العسكرية المقدسة</h1>
           <!-- Scroll -->
           <div class="box-scroll">

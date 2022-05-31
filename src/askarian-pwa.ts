@@ -12,6 +12,7 @@ import { mainNavigation } from './config';
 
 import './elements/page-home';
 import './elements/page-about';
+import "./elements/header-element";
 
 
 import type { RoutesConfig } from '@alwatr/router';
@@ -77,9 +78,9 @@ export class AskarianPwa extends AppElement {
       padding:0;
       font-family: 'Tajawal', sans-serif;
     }
-
-
-
+    *{
+      box-sizing:border-box;
+    }
     .page-container {
       position: relative;
       flex-grow: 1;
@@ -170,7 +171,7 @@ export class AskarianPwa extends AppElement {
       width:100%;
     }
     footer{
-      min-height:60em;
+      min-height:47em;
     }
     }
   `;
@@ -228,41 +229,42 @@ export class AskarianPwa extends AppElement {
 
   override render(): TemplateResult {
     return html`
-      <main class="page-container">${router.outlet(this._routes)}</main>
-      <footer>
-        <img src="/images/footer_border.png" class="border-footer" loading="lazy" alt="border footer" />
-        <div class="menu_footer">
-          <div>
-            <div>
-              <h6>${footer.name[0]}</h6>
-              <img src="/images/border1.png" loading="lazy" alt="border footer" />
-              ${repeat(footer.one, (item) => html`
-              <a href=${item.link}>${item.name}</a>
-              `)}
+          <header-element ?hidden=${this._activePage==="home" && window.screen.width>768}></header-element>
+          <main class="page-container">${router.outlet(this._routes)}</main>
+          <footer>
+            <img src="/images/footer_border.png" class="border-footer" loading="lazy" alt="border footer" />
+            <div class="menu_footer">
+              <div>
+                <div>
+                  <h6>${footer.name[0]}</h6>
+                  <img src="/images/border1.png" loading="lazy" alt="border footer" />
+                  ${repeat(footer.one, (item) => html`
+                  <a href=${item.link}>${item.name}</a>
+                  `)}
+                </div>
+                <div>
+                  <h6>${footer.name[1]}</h6>
+                  <img src="/images/border1.png" loading="lazy" alt="border footer" />
+                  ${repeat(footer.two, (item) => html`
+                  <a href=${item.link}>${item.name}</a>
+                  `)}
+                </div>
+                <div>
+                  <h6>${footer.name[2]}</h6>
+                  <img src="/images/border1.png" loading="lazy" alt="border footer" />
+                  ${repeat(footer.three, (item) => html`
+                  <a href=${item.link}>${item.name}</a>
+                  `)}
+                </div>
+                <div>
+                  <h6>اتصل بنا</h6>
+                  <img src="/images/border1.png" loading="lazy" alt="border footer" />
+                  <p>تذكير: ضع الأيقونة</p>
+                </div>
+              </div>
             </div>
-            <div>
-              <h6>${footer.name[1]}</h6>
-              <img src="/images/border1.png" loading="lazy" alt="border footer" />
-              ${repeat(footer.two, (item) => html`
-              <a href=${item.link}>${item.name}</a>
-              `)}
-            </div>
-            <div>
-              <h6>${footer.name[2]}</h6>
-              <img src="/images/border1.png" loading="lazy" alt="border footer" />
-              ${repeat(footer.three, (item) => html`
-              <a href=${item.link}>${item.name}</a>
-              `)}
-            </div>
-            <div>
-              <h6>اتصل بنا</h6>
-              <img src="/images/border1.png" loading="lazy" alt="border footer" />
-              <p>تذكير: ضع الأيقونة</p>
-            </div>
-          </div>
-        </div>
-        <p class="copy-right">Portions of this content are ©1998–2022 by individual Hussain Holy Askarian IT contributors.</p>
-      </footer>
+            <p class="copy-right">Portions of this content are ©1998–2022 by individual Hussain Holy Askarian IT contributors.</p>
+          </footer>
     `;
   }
 
