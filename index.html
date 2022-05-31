@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
   <head>
     <meta charset="utf-8" />
     <meta
@@ -7,8 +7,8 @@
       content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2, user-scalable=yes, viewport-fit=cover"
     />
 
-    <title>Alwatr PWA Starter</title>
-    <meta name="description" content="An Alwatr Progressive Web Application Starter" />
+    <title>العسکریان</title>
+    <meta name="description" content="العتبة العسكريان" />
     <!-- <link rel="canonical" href="my website without www to prevent duplicate content" /> -->
 
     <base href="/" />
@@ -21,12 +21,12 @@
 
     <!-- Add to home screen for Chrome on Android. Fallback for manifest.json -->
     <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="application-name" content="Alwatr PWA Starter" />
+    <meta name="application-name" content="العتبة العسكريان" />
 
     <!-- Add to home screen for Safari on iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="Alwatr PWA Starter" />
+    <meta name="apple-mobile-web-app-title" content="العتبة العسكريان" />
     <link rel="apple-touch-startup-image" href="images/icon-192.png" />
 
     <!-- Home screen icons -->
@@ -43,6 +43,12 @@
     media="print"
     onload="this.onload=null; this.media='all'"
   /> -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap"
+      rel="stylesheet"
+    />
 
     <link rel="stylesheet" href="src/global.css" />
     <style>
@@ -52,14 +58,14 @@
     </style>
   </head>
   <body>
-    <app-index></app-index>
+    <askarian-pwa></askarian-pwa>
 
-    <script type="module" src="src/app-index.js"></script>
+    <script type="module" src="src/askarian-pwa.js"></script>
 
     <noscript>
       <div class="noscript">
         <p dir="ltr">Please enable JavaScript to view this website.</p>
-        <p dir="rtl">لطفا JavaScript را برای مشاهده این وب سایت فعال کنید.</p>
+        <p dir="rtl">الرجاء تمكين JavaScript لعرض هذا الموقع.</p>
       </div>
     </noscript>
   </body>

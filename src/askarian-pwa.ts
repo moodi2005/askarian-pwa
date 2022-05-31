@@ -1,23 +1,27 @@
-import {router} from '@alwatr/router';
-import {SignalInterface} from '@alwatr/signal';
-import {css, html, nothing} from 'lit';
-import {customElement} from 'lit/decorators/custom-element.js';
-import {state} from 'lit/decorators/state.js';
-import {classMap} from 'lit/directives/class-map.js';
+import { router } from '@alwatr/router';
+import { SignalInterface } from '@alwatr/signal';
+import { css, html, nothing } from 'lit';
+import { customElement } from 'lit/decorators/custom-element.js';
+import { state } from 'lit/decorators/state.js';
+import { classMap } from 'lit/directives/class-map.js';
 
-import {AppElement} from './app-debt/app-element';
-import {mainNavigation} from './config';
+import { AppElement } from './app-debt/app-element';
+import { mainNavigation } from './config';
 
 import './elements/page-home';
 import './elements/page-about';
 
-import type {RoutesConfig} from '@alwatr/router';
-import type {ListenerInterface} from '@alwatr/signal';
-import type {TemplateResult} from 'lit';
+
+import type { RoutesConfig } from '@alwatr/router';
+import type { ListenerInterface } from '@alwatr/signal';
+import type { TemplateResult } from 'lit';
+
+// import colors
+import { background } from "./color"
 
 declare global {
   interface HTMLElementTagNameMap {
-    'app-index': AppIndex;
+    'askarian-pwa': AskarianPwa;
   }
 }
 
@@ -28,13 +32,20 @@ declare global {
  * <app-index></app-index>
  * ```
  */
-@customElement('app-index')
-export class AppIndex extends AppElement {
+@customElement('askarian-pwa')
+export class AskarianPwa extends AppElement {
   static override styles = css`
     :host {
       display: flex;
       flex-direction: column;
+      background-color: ${background};
     }
+    p,img,div,span,h1,h2,h3,h4,h5,h6{
+      margin:0;
+      padding:0;
+    }
+
+
 
     .page-container {
       position: relative;
@@ -95,17 +106,17 @@ export class AppIndex extends AppElement {
   override connectedCallback(): void {
     super.connectedCallback();
     this._listenerList.push(
-        router.signal.addListener(
-            (route) => {
-              this._logger.logMethodArgs('routeChanged', {route});
-              this._activePage = route.sectionList[0]?.toString().trim() || 'home';
-              this.requestUpdate();
-            },
-            {receivePrevious: true},
-        ),
-        this._hideNavigationSignal.addListener((_hideNavigation) => {
-          this._hideNavigation = _hideNavigation;
-        }),
+      router.signal.addListener(
+        (route) => {
+          this._logger.logMethodArgs('routeChanged', { route });
+          this._activePage = route.sectionList[0]?.toString().trim() || 'home';
+          this.requestUpdate();
+        },
+        { receivePrevious: true },
+      ),
+      this._hideNavigationSignal.addListener((_hideNavigation) => {
+        this._hideNavigation = _hideNavigation;
+      }),
     );
     this._hideNavigationSignal.dispatch(false); // @TODO: make signal file and base config
   }
@@ -117,7 +128,6 @@ export class AppIndex extends AppElement {
 
   override render(): TemplateResult {
     return html`
-      ${this._renderNavigation()}
       <main class="page-container">${router.outlet(this._routes)}</main>
     `;
   }
@@ -128,7 +138,7 @@ export class AppIndex extends AppElement {
     const listTemplate = mainNavigation.map((item) => {
       const selected = this._activePage === item.id;
       return html`
-        <a href="${router.makeUrl({sectionList: [item.id]})}" class="nav__item ${classMap({active: selected})}">
+        <a href="${router.makeUrl({ sectionList: [item.id] })}" class="nav__item ${classMap({ active: selected })}">
           <span class="nav__item-text">${item.title}</span>
         </a>
       `;

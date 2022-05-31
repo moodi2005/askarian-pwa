@@ -8,6 +8,7 @@
   margin: 0.5em 0;
 }
 
+
 audio,
 canvas,
 progress,
@@ -183,12 +184,10 @@ body {
   max-height: 100%;
   transform: translateZ(0);
   text-rendering: optimizeLegibility;
-  overflow: hidden;
   touch-action: manipulation;
   -webkit-user-drag: none;
   -ms-content-zooming: none;
   word-wrap: break-word;
-  overscroll-behavior-y: none;
   text-size-adjust: none;
   margin: 0;
   padding: 0;
@@ -197,18 +196,6 @@ body {
 a {
   background-color: transparent;
   color: var(--color-primary, #3880ff);
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin-top: 16px;
-  margin-bottom: 10px;
-  font-weight: 500;
-  line-height: 1.2;
 }
 
 h1 {
