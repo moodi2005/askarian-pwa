@@ -4,19 +4,25 @@ import { query } from 'lit/decorators/query.js'
 import { property } from 'lit/decorators/property.js'
 
 
+
 import { repeat } from 'lit/directives/repeat.js';
 import { OrangeHover, color_header, color_header_mobile, color_header_text } from "../color"
 
 const list = [
-    { name: "الصفحة الرئيسية", link: "/", },
-    { name: "تاريخ سامراء", link: "/about", },
-    { name: "يعيش", link: "/live" },
-    { name: "الحج إلى الضريح", link: "/shrine" },
-    { name: "مقالات", link: "/blog" },
+    { name: "الصفحة الرئيسية", link: "/",page:"home" },
+    { name: "تاريخ سامراء", link: "/about",page:"about" },
+    { name: "يعيش", link: "/live",page:"live" },
+    { name: "الحج إلى الضريح", link: "/shrine" ,page:"shrine"},
+    { name: "مقالات", link: "/blog",page:"blog" },
 ]
 
 @customElement('header-element')
 export class HeaderElement extends LitElement {
+
+    
+  @property({attribute:true,type:String})
+  path = ""
+
     static override styles = [
         css`
             :host {
@@ -37,11 +43,6 @@ export class HeaderElement extends LitElement {
                 display:flex;
                 align-items:center;
                 justify-content:flex-start;
-            }
-            p,img,div,span,h1,h2,h3,h4,h5,h6,a{
-                margin:0;
-                padding:0;
-                font-family: 'Tajawal', sans-serif;
             }
             .logo{
                 width:10em;
@@ -156,6 +157,7 @@ export class HeaderElement extends LitElement {
     ];
 
     override render() {
+        console.log(this.path);
         return html`
         <div class="box-mobile">
             <img src="/images/logo.png" alt="logo" title="logo" />
@@ -169,7 +171,7 @@ export class HeaderElement extends LitElement {
                 <div class="menu">
                     <ul class="menu">
                         ${repeat(list, (item) => html`
-                        <li @click=${this.colse}><a id=${location.pathname==item.link ? "active" : ""}
+                        <li @click=${this.colse}><a id=${this.path==item.page ? "active" : ""}
                                 href="${item.link}">${item.name}</a></li>`
              )}
                     </ul>
