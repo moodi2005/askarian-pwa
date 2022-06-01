@@ -201,17 +201,11 @@ export class HeaderElement extends LitElement {
     button_close!: HTMLButtonElement;
     @query(".box-desktop")
     menu!: HTMLElement;
-    @property({ type: Boolean })
-    desktop = false
     colse(_e: Event) {
-        if (this.desktop) {
             this.menu.setAttribute("id","close-box")
             this.menu.setAttribute("id","close-box")
-            this.desktop = false;
-        }
     }
     open(_e: Event) {
         this.menu.setAttribute("id","open-box")
-        this.desktop = true;
     }
 }
