@@ -79,7 +79,16 @@ export class HeaderElement extends LitElement {
             .box-mobile{
                 display:none;
             }
+            #open-box,#close-box{
+                width:100%;
+            }
             @media only screen and (max-width: 768px) {
+                #open-box{
+                    width:100%;
+                }
+                #close-box{
+                    width:0;
+                }
                 .box-desktop{
                     position: fixed;
                     top: 0; 
@@ -196,12 +205,13 @@ export class HeaderElement extends LitElement {
     desktop = false
     colse(_e: Event) {
         if (this.desktop) {
-            this.menu.setAttribute("style", "width:0")
+            this.menu.setAttribute("id","close-box")
+            this.menu.setAttribute("id","close-box")
             this.desktop = false;
         }
     }
     open(_e: Event) {
-        this.menu.setAttribute("style", "width:100%");
+        this.menu.setAttribute("id","open-box")
         this.desktop = true;
     }
 }
