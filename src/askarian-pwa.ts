@@ -164,6 +164,7 @@ export class AskarianPwa extends AppElement {
       bottom:1em;
       border-top:1px solid ${Gray};
     }
+
     @media only screen and (max-width: 768px) {
     .menu_footer>div>div{
       width:100%;

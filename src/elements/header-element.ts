@@ -9,22 +9,22 @@ import { repeat } from 'lit/directives/repeat.js';
 import { OrangeHover, color_header, color_header_mobile, color_header_text } from "../color"
 
 const list = [
-    { name: "الصفحة الرئيسية", link: "/",page:"home" },
-    { name: "تاريخ سامراء", link: "/about",page:"about" },
-    { name: "يعيش", link: "/live",page:"live" },
-    { name: "الحج إلى الضريح", link: "/shrine" ,page:"shrine"},
-    { name: "مقالات", link: "/blog",page:"blog" },
+    { name: "الصفحة الرئيسية", link: "/", page: "home" },
+    { name: "تاريخ سامراء", link: "/about", page: "about" },
+    { name: "يعيش", link: "/live", page: "live" },
+    { name: "الحج إلى الضريح", link: "/shrine", page: "shrine" },
+    { name: "مقالات", link: "/blog", page: "blog" },
 ]
 declare global {
     interface HTMLElementTagNameMap {
-      "ion-icon": HTMLElement;
+        "ion-icon": HTMLElement;
     }
-  }
+}
 @customElement('header-element')
 export class HeaderElement extends LitElement {
 
-  @property({attribute:true,type:String})
-  path = ""
+    @property({ attribute: true, type: String })
+    path = ""
 
     static override styles = [
         css`
@@ -33,22 +33,27 @@ export class HeaderElement extends LitElement {
             }
             .box-desktop{
                 width:100%;
-                height:10em;
+                height:5em;
                 background-color:${color_header};
                 display:flex;
                 align-items:center;
-                justify-content:space-around;
+                justify-content:center;
                 padding:0 2em;
                 box-sizing:border-box;
                 transition:300ms linear transform;
+                border-bottom:3px solid #b8c3cc;
+                box-shadow: 0 2px 13px 1px #174c6b5e;
+                position:relative;
             }
             .box-menu{
                 display:flex;
                 align-items:center;
                 justify-content:flex-start;
+                position:absolute;
+                right:2em;
             }
             .logo{
-                width:10em;
+                width:7em;
             }
             .menu{
                 list-style:none;
@@ -62,6 +67,10 @@ export class HeaderElement extends LitElement {
             }
             .menu>li>a:hover,.icons>ion-icon:hover,#active{
                 color: ${OrangeHover};
+            }
+            .icons{
+                position:absolute;
+                left:2em;
             }
             .icons>ion-icon{
                 font-size:25px;
@@ -178,7 +187,6 @@ export class HeaderElement extends LitElement {
         <div class="box-desktop">
             <div class="box-menu">
                 <ion-icon @click=${this.colse} class="close" name="close-circle-outline"></ion-icon>
-                <img class="logo" src="/images/logo.png" alt="logo" title="logo" />
                 <img src="/images/border1.png" class="border-menu" alt="logo" title="logo" />
                 <div class="menu">
                     <ul class="menu">
@@ -188,8 +196,8 @@ export class HeaderElement extends LitElement {
              )}
                     </ul>
                 </div>
-        
             </div>
+            <img class="logo" src="/images/logo.png" alt="logo" title="logo" />
             <div class="icons">
                 <ion-icon name="search-outline"></ion-icon>
                 <ion-icon name="globe-outline" title="Language"></ion-icon>
@@ -202,10 +210,10 @@ export class HeaderElement extends LitElement {
     @query(".box-desktop")
     menu!: HTMLElement;
     colse(_e: Event) {
-            this.menu.setAttribute("id","close-box")
-            this.menu.setAttribute("id","close-box")
+        this.menu.setAttribute("id", "close-box")
+        this.menu.setAttribute("id", "close-box")
     }
     open(_e: Event) {
-        this.menu.setAttribute("id","open-box")
+        this.menu.setAttribute("id", "open-box")
     }
 }
