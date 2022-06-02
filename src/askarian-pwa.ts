@@ -12,7 +12,9 @@ import { mainNavigation } from './config';
 
 import './elements/page-home';
 import './elements/page-about';
+import "./elements/page-live";
 import "./elements/header-element";
+import "./elements/page-panorama";
 
 
 import type { RoutesConfig } from '@alwatr/router';
@@ -72,6 +74,7 @@ export class AskarianPwa extends AppElement {
       display: flex;
       flex-direction: column;
       background-color: ${background};
+      position:relative;
     }
     *{
       margin:0;
@@ -164,6 +167,11 @@ export class AskarianPwa extends AppElement {
       bottom:1em;
       border-top:1px solid ${Gray};
     }
+    header-element{
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
 
     @media only screen and (max-width: 768px) {
     .menu_footer>div>div{
@@ -197,6 +205,12 @@ export class AskarianPwa extends AppElement {
       },
       about: {
         render: () => html`<page-about></page-about>`,
+      },
+      live: {
+        render: () => html`<page-live></page-live>`,
+      },
+      panorama: {
+        render: () => html`<page-panorama></page-panorama>`,
       },
     },
   };

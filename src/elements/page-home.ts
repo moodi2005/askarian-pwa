@@ -24,7 +24,7 @@ const list = [
   { name: "تاريخ سامراء", link: "/about", },
   { name: "يعيش", link: "/live" },
   { name: html`<img class="logo" src="/images/logo.png" title="Logo" alt="Logo">`, link: "/" },
-  { name: "الحج إلى الضريح", link: "/shrine" },
+  { name: "الحج إلى الضريح", link: "/panorama" },
   { name: "مقالات", link: "/blog" },
 ]
 
