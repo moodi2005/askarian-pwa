@@ -15,6 +15,7 @@ import './elements/page-about';
 import "./elements/page-live";
 import "./elements/header-element";
 import "./elements/page-panorama";
+import "./elements/page-articles";
 
 
 import type { RoutesConfig } from '@alwatr/router';
@@ -211,6 +212,9 @@ export class AskarianPwa extends AppElement {
       },
       panorama: {
         render: () => html`<page-panorama></page-panorama>`,
+      },
+      blog: {
+        render: () => html`<page-articles></page-articles>`,
       },
     },
   };

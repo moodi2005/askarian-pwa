@@ -44,6 +44,9 @@ export class PageLive extends AppElement {
   override render(): TemplateResult {
     return html`
     <div><p>يعيش</p></div>
+    <textarea name="content" id="editor">
+          &lt;p&gt;This is some sample content.&lt;/p&gt;
+        </textarea>
     `;
   }
 }
