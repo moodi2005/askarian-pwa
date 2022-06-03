@@ -5,24 +5,12 @@ import { property } from 'lit/decorators/property.js'
 
 import { repeat } from 'lit/directives/repeat.js';
 import { OrangeHover, color_header, color_header_mobile, color_header_text, color_header_text_mobile } from "../color"
+import { config, menu } from '../types';
+import "../askarian-pwa";
 
-const list = [
-    { name: "الصفحة الرئيسية", link: "/", page: "home" },
-    { name: "تاريخ سامراء", link: "/about", page: "about" },
-    { name: "يعيش", link: "/live", page: "live" },
-    { name: "الحج إلى الضريح", link: "/panorama", page: "panorama" },
-    { name: "مقالات", link: "/blog", page: "blog" },
-]
-declare global {
-    interface HTMLElementTagNameMap {
-        "ion-icon": HTMLElement;
-    }
-}
+
 @customElement('header-element')
 export class HeaderElement extends LitElement {
-
-    @property({ attribute: true, type: String })
-    path = ""
 
     static override styles = [
         css`
@@ -214,10 +202,10 @@ export class HeaderElement extends LitElement {
                 <img src="/images/border1.png" class="border-menu" alt="logo" />
                 <div class="menu">
                     <ul class="menu">
-                        ${repeat(list, (item) => html`
-                        <li @click=${this.colse}><a id=${this.path == item.link.replace("/","") ? "active" : "" }
+                        ${repeat(this.config.menu, (item: menu) => html`
+                        <li @click=${this.colse}><a id=${this.path==item.link.replace("/", "") ? "active" : ""}
                                 href="${item.link}">${item.name}</a></li>`
-                   )}
+             )}
                     </ul>
                 </div>
             </div>
@@ -236,11 +224,17 @@ export class HeaderElement extends LitElement {
     button_close!: HTMLButtonElement;
     @query(".box-desktop")
     menu!: HTMLElement;
+    @property({ attribute: true, type: String })
+    path = ""
+    @property({ attribute: true, type: Object })
+    config: config | any = {}
     colse(_e: Event) {
         this.menu.setAttribute("id", "close-box")
         this.menu.setAttribute("id", "close-box")
+
+
     }
     open(_e: Event) {
-        this.menu.setAttribute("id", "open-box")
+        this.menu.setAttribute("id", "open-box");
     }
 }

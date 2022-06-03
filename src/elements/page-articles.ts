@@ -1,6 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js'
 import { repeat } from 'lit/directives/repeat.js';
+import { property } from 'lit/decorators/property.js';
+
 
 import { getJson } from '@alwatr/fetch';
 
@@ -101,7 +103,7 @@ export class PageArticles extends LitElement {
 
     override render() {
         return html`
-        <h1>مقالات</h1>
+        <h1>${this.config.titel}</h1>
         <div class="articles">
             ${repeat(articles, (item: article) => html`
             <div class="article">
@@ -116,4 +118,6 @@ export class PageArticles extends LitElement {
         </div>
         `;
     }
+    @property({ attribute: true, type: Object })
+    config: any = {};
 }

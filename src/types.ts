@@ -15,7 +15,7 @@ export interface post {
 
 export interface articles extends Array<article> { }
 
-interface menu {
+export interface menu {
     name: string,
     link: string,
     titel: string
