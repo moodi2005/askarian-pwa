@@ -3,8 +3,6 @@ import { customElement } from 'lit/decorators/custom-element.js'
 import { query } from 'lit/decorators/query.js'
 import { property } from 'lit/decorators/property.js'
 
-
-
 import { repeat } from 'lit/directives/repeat.js';
 import { OrangeHover, color_header, color_header_mobile, color_header_text, color_header_text_mobile } from "../color"
 
@@ -217,7 +215,7 @@ export class HeaderElement extends LitElement {
                 <div class="menu">
                     <ul class="menu">
                         ${repeat(list, (item) => html`
-                        <li @click=${this.colse}><a id=${this.path == item.page ? "active" : "" }
+                        <li @click=${this.colse}><a id=${this.path == item.link.replace("/","") ? "active" : "" }
                                 href="${item.link}">${item.name}</a></li>`
                    )}
                     </ul>

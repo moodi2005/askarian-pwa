@@ -1,12 +1,14 @@
 import { css, html } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
+import { property } from 'lit/decorators/property.js';
 import { state } from 'lit/decorators/state.js';
 import { repeat } from 'lit/directives/repeat.js';
+
+import {homePage} from "../types"
 
 
 
 import { AppElement } from '../app-debt/app-element';
-import './test-element';
 
 import type { ListenerInterface } from '@alwatr/signal';
 import type { TemplateResult } from 'lit';
@@ -25,7 +27,7 @@ const list = [
   { name: "يعيش", link: "/live" },
   { name: html`<img class="logo" src="/images/logo.png" title="Logo" alt="Logo">`, link: "/" },
   { name: "الحج إلى الضريح", link: "/panorama" },
-  { name: "مقالات", link: "/articles" },
+  { name: "مقالات", link: "/blog" },
 ]
 
 interface project_Image {
@@ -661,7 +663,7 @@ export class PageHome extends AppElement {
      )}
             </ul>
           </div>
-          <h1 title="titel" class="titel">العتبة العسكرية المقدسة</h1>
+          <h1 title="titel" class="titel">${this.config.titel}</h1>
           <!-- Scroll -->
           <div class="box-scroll">
             <div class="scroll"><span></span></div>
@@ -675,32 +677,26 @@ export class PageHome extends AppElement {
           <img src="/images/background-homePage.jpg" loading="lazy" alt="about" title="about" />
         </div>
         <div class="text-about">
-          <p class="perfix_titel">تاريخ</p>
-          <h2>سامراء وأئمة سامراء</h2>
+          <p class="perfix_titel">${this.config.part_about?.titelTop}</p>
+          <h2>${this.config.part_about?.titel}</h2>
           <img src="/images/border1.png" alt="border" loading="lazy" title="border" />
-          <p class="text-about-two">
-            يعود أصل اسم (سامراء) في أصله إلى سائر الأسماء الآرامية بالعراق التي كانت تنتهي بحرف الألف المقصور مثل (كربلا)
-            (بعقوبا) وفي مراحل تاريخية لاحقة من تاريخ اللغة العربية التي ورثت تلك التسميات لبعض مدنها في أرض الرافدين أضيفت
-            علامة الهمزة إلى مفردتي (سامرا) و(كربلا) فأصبحتا (سامراء وكربلاء) في حين استبدل حرف الألف بحرف التاء من اسم مدينة
-            بعقوبا فأضحى يكتب (بعقوبة) ومعلوم أن مدينة سامراء في معظم تاريخ الدولة العباسية كانت باهرة في...
-          </p>
-          <a href="/about" class="button-about">اقرأ أكثر</a>
-      
+          <p class="text-about-two">${this.config.part_about?.description}</p>
+          <a href="/about" class="button-about">${this.config.part_about?.button}</a>
         </div>
       </div>
       <!-- Part Date -->
       <div class="date">
         <div class="border_circle_part_date">
           <div class="circle1">
-            <div>نداء ليلية</div>
+            <div>${this.config.times[2]}</div>
           </div>
           <div class="circle2">
-            <div>نداء ليلية</div>
-            <div>نداء الصباح</div>
+            <div>${this.config.times[3]}</div>
+            <div>${this.config.times[1]}</div>
           </div>
           <div class="circle3">
-            <div>نداء ليلية</div>
-            <div>نداء الصباح</div>
+            <div>${this.config.times[4]}</div>
+            <div>${this.config.times[0]}</div>
           </div>
         </div>
         <div class="Circle_part_date">
@@ -711,8 +707,8 @@ export class PageHome extends AppElement {
       </div>
       <!-- Part Project -->
       <div class="part-project">
-        <h2>مشاريع العتبة العسکریة المقدسة</h2>
-        <p>منجزة & قيد الانجاز</p>
+        <h2>${this.config.projectPart?.titel}</h2>
+        <p>${this.config.projectPart?.description}</p>
         <img src="/images/border1.png" alt="border" loading="lazy" title="border" />
         <div class="box-project">
           <div class="img-project">
@@ -736,20 +732,19 @@ export class PageHome extends AppElement {
       <!-- Part vicarious shrine -->
       <div class="part-vicarious-shrine">
         <div>
-          <h2>الزيارة بالانابة لضريح العسكرية المقدسة</h2>
-          <p>خدمة يوفرها الموقع الرسمي للعتبة العسكرية المقدسة، بزيارة العسكرية المقدسة نيابة عن جميع الاسماء التي يتم ادراجها
-            في الحقول ادناه</p>
+          <h2>${this.config.vicariousPart?.titel}</h2>
+          <p>${this.config.vicariousPart?.description}</p>
           <form>
-            <input type="text" minlength="5" required placeholder="اسم"
-              oninvalid="this.setCustomValidity('الرجاء ملء بعناية')" oninput="setCustomValidity('')" />
-            <input type="submit" value="إرسال" />
+            <input type="text" minlength="5" required placeholder="${this.config.vicariousPart?.input}"
+              oninvalid="this.setCustomValidity('${this.config.vicariousPart?.oninvalid}')" oninput="setCustomValidity('')" />
+            <input type="submit" value="${this.config.vicariousPart?.input}" />
           </form>
         </div>
         <img src="/Images/image-part-vicarious-shrine.png" alt="vicarious-shrine" title="vicarious-shrine" loading="lazy" />
       </div>
       <!-- Part Posts -->
       <div class="part-posts">
-        <h2>اخبار جديدة</h2>
+        <h2>${this.config.news?.titel}</h2>
         <img src="/images/border1.png" alt="border" title="border" />
         <div>
           ${repeat(posts, (item) => html`
@@ -766,5 +761,7 @@ export class PageHome extends AppElement {
   @state()
   protected __time: any = { hours: "00", minutes: "00" }
   @state()
-  protected __day: string = "فی السّبت ، ۱۲ جمادی الثانی"
+  protected __day: string = "فی السّبت ، ۱۲ جمادی الثانی";
+  @property({attribute:true,type:Object})
+  config:homePage|any={};
 }

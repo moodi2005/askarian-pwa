@@ -1,14 +1,15 @@
 import { router } from '@alwatr/router';
 import { SignalInterface } from '@alwatr/signal';
+import { getJson } from '@alwatr/fetch';
 import { css, html, nothing } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { state } from 'lit/decorators/state.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { repeat } from 'lit/directives/repeat.js';
 
-
 import { AppElement } from './app-debt/app-element';
 import { mainNavigation } from './config';
+import type { config } from "./types"
 
 import './elements/page-home';
 import './elements/page-about';
@@ -16,6 +17,7 @@ import "./elements/page-live";
 import "./elements/header-element";
 import "./elements/page-panorama";
 import "./elements/page-articles";
+import "./elements/post-page";
 
 
 import type { RoutesConfig } from '@alwatr/router';
@@ -25,49 +27,25 @@ import type { TemplateResult } from 'lit';
 // import colors
 import { background, Orange, Gray } from "./color"
 
+// get config and menu and footer
+let json: any = localStorage.getItem("config");
+if (!json) {
+  const get: any = await getJson("/json/config.json");
+  localStorage.setItem("config", JSON.stringify(get));
+  json = get;
+} else {
+  json = JSON.parse(json);
+}
+
+const config: config = json;
+
 declare global {
   interface HTMLElementTagNameMap {
     'askarian-pwa': AskarianPwa;
   }
 }
 
-interface menu_footer {
-  name: string,
-  link: string
-}
-const footer: { name: Array<string>; one: Array<menu_footer>; two: Array<menu_footer>; three: Array<menu_footer> } = {
-  name: [
-    "Menu1",
-    "Menu2",
-    "Menu3",
-  ],
-  one: [
-    { name: "link 1", link: "/" },
-    { name: "link 2", link: "/" },
-    { name: "link 3", link: "/" },
-    { name: "link 4", link: "/" }
-  ],
-  two: [
-    { name: "link 1", link: "/" },
-    { name: "link 2", link: "/" },
-    { name: "link 3", link: "/" },
-    { name: "link 4", link: "/" }
-  ],
-  three: [
-    { name: "link 1", link: "/" },
-    { name: "link 2", link: "/" },
-    { name: "link 3", link: "/" },
-    { name: "link 4", link: "/" }
-  ]
-}
 
-/**
- * APP PWA Root Element
- *
- * ```html
- * <app-index></app-index>
- * ```
- */
 @customElement('askarian-pwa')
 export class AskarianPwa extends AppElement {
   static override styles = css`
@@ -202,19 +180,22 @@ export class AskarianPwa extends AppElement {
     map: (route) => (this._activePage = route.sectionList[0]?.toString().trim() || 'home'),
     list: {
       home: {
-        render: () => html`<page-home></page-home>`,
+        render: () => html`<page-home .config=${config.homePage}></page-home>`,
       },
       about: {
         render: () => html`<page-about></page-about>`,
       },
       live: {
-        render: () => html`<page-live></page-live>`,
+        render: () => html`<page-live .config=${config.live}></page-live>`,
       },
       panorama: {
-        render: () => html`<page-panorama></page-panorama>`,
+        render: () => html`<page-panorama .config=${config.panorama}></page-panorama>`,
       },
       blog: {
-        render: () => html`<page-articles></page-articles>`,
+        render: () => html`<page-articles .config=${config.articles}></page-articles>`,
+      },
+      post: {
+        render: () => html`<post-page></post-page>`,
       },
     },
   };
@@ -246,30 +227,31 @@ export class AskarianPwa extends AppElement {
 
   override render(): TemplateResult {
     return html`
-          <header-element path=${this._activePage} ?hidden=${this._activePage==="home" && window.screen.width>768}></header-element>
+          <header-element path=${this._activePage} ?hidden=${this._activePage === "home" && window.screen.width > 768}>
+          </header-element>
           <main class="page-container">${router.outlet(this._routes)}</main>
           <footer>
             <img src="/images/footer_border.png" class="border-footer" loading="lazy" alt="border footer" />
             <div class="menu_footer">
               <div>
                 <div>
-                  <h6>${footer.name[0]}</h6>
+                  <h6>${config.footer.name[0]}</h6>
                   <img src="/images/border1.png" loading="lazy" alt="border footer" />
-                  ${repeat(footer.one, (item) => html`
+                  ${repeat(config.footer.one, (item) => html`
                   <a href=${item.link}>${item.name}</a>
                   `)}
                 </div>
                 <div>
-                  <h6>${footer.name[1]}</h6>
+                  <h6>${config.footer.name[1]}</h6>
                   <img src="/images/border1.png" loading="lazy" alt="border footer" />
-                  ${repeat(footer.two, (item) => html`
+                  ${repeat(config.footer.two, (item) => html`
                   <a href=${item.link}>${item.name}</a>
                   `)}
                 </div>
                 <div>
-                  <h6>${footer.name[2]}</h6>
+                  <h6>${config.footer.name[2]}</h6>
                   <img src="/images/border1.png" loading="lazy" alt="border footer" />
-                  ${repeat(footer.three, (item) => html`
+                  ${repeat(config.footer.three, (item) => html`
                   <a href=${item.link}>${item.name}</a>
                   `)}
                 </div>

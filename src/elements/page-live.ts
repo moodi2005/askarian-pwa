@@ -1,9 +1,10 @@
-import {css, html} from 'lit';
-import {customElement} from 'lit/decorators/custom-element.js';
+import { css, html } from 'lit';
+import { customElement } from 'lit/decorators/custom-element.js';
+import { property } from 'lit/decorators/property.js';
 
-import {AppElement} from '../app-debt/app-element';
+import { AppElement } from '../app-debt/app-element';
 
-import type {TemplateResult} from 'lit';
+import type { TemplateResult } from 'lit';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -43,10 +44,12 @@ export class PageLive extends AppElement {
 
   override render(): TemplateResult {
     return html`
-    <div><p>يعيش</p></div>
-    <textarea name="content" id="editor">
-          &lt;p&gt;This is some sample content.&lt;/p&gt;
-        </textarea>
+    <div>
+      <p>${this.config.titel}</p>
+    </div>
     `;
   }
+  @property({ attribute: true, type: Object })
+  config: any = {};
+
 }

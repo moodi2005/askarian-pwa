@@ -1,5 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import {customElement} from 'lit/decorators/custom-element.js';
+import { property } from 'lit/decorators/property.js';
+
 
 import './header-element';
 
@@ -38,6 +40,8 @@ export class PagePanorama extends LitElement {
   ];
 
   override render() {
-    return html` <ion-icon name="cog-outline"></ion-icon><h2>تحت التشيد</h2> `;
+    return html` <ion-icon name="cog-outline"></ion-icon><h2>${this.config.titel}</h2> `;
   }
+  @property({attribute:true,type:Object})
+  config:any={};
 }
