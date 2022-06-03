@@ -17,7 +17,7 @@ import './elements/page-live';
 import './elements/header-element';
 import './elements/page-panorama';
 import './elements/page-articles';
-import './elements/post-page';
+import './elements/page-post';
 
 import type { RoutesConfig } from '@alwatr/router';
 import type { ListenerInterface } from '@alwatr/signal';
@@ -200,7 +200,7 @@ export class AskarianPwa extends AppElement {
         render: () => html`<page-articles .config=${config.articles}></page-articles>`,
       },
       post: {
-        render: () => html`<post-page></post-page>`,
+        render: () => html`<page-post titelSite=${config.titelSite}></page-post>`,
       },
     },
   };

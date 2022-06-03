@@ -1,15 +1,17 @@
 export interface article {
     id: number,
-    name: string,
+    titel: string,
     description: string,
     image: string,
-    date: Date
+    link:string,
+    date: string
 }
 
 export interface post {
     titel: string,
     image: any,
     text: string,
+    link:string,
     date: string,
 }
 

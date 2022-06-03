@@ -4,7 +4,7 @@ import { query } from 'lit/decorators/query.js'
 import { property } from 'lit/decorators/property.js'
 
 import { repeat } from 'lit/directives/repeat.js';
-import { OrangeHover, color_header, color_header_mobile, color_header_text, color_header_text_mobile } from "../color"
+import { OrangeHover, color_header, color_header_mobile, color_header_text, color_header_text_mobile, glod } from "../color"
 import { config, menu } from '../types';
 import "../askarian-pwa";
 
@@ -83,6 +83,52 @@ export class HeaderElement extends LitElement {
             }
             #open-box,#close-box{
                 width:100%;
+            }
+            .language{
+                width:100%;
+                height:100vh;
+                position:fixed;
+                bottom:-100vh;
+                right:0;
+                z-index:40;
+                backdrop-filter: blur(10px);
+                background-color:#272727dd;
+                display:flex;
+                flex-direction:column;
+                justify-content:center;
+                align-items:center;
+                transition:300ms linear bottom;
+            }
+            .language>img{
+                width:15em;
+            }
+            .language>ion-icon{
+                position:absolute;
+                height:2em;
+                color:${color_header_text_mobile};
+                cursor:pointer;
+                left:.4em;
+                top:0;
+                font-size:40px;
+            }
+            .language>ion-icon:active{
+                color:red;
+            }
+            .list-lang{
+                width:25em;
+                height:6em;
+                display:flex;
+                justify-content:space-around;
+                align-items:center;
+            }
+            .list-lang>span{
+                font-size:20px;
+                color:#fff;
+                cursor:pointer;
+                transition:300ms linear color;
+            }
+            .list-lang>span:hover{
+                color:${glod}
             }
             @media only screen and (max-width: 1024px) {
                 .logo{
@@ -191,6 +237,18 @@ export class HeaderElement extends LitElement {
     ];
 
     override render() {
+        const Language = html`
+        <div class="language">
+            <ion-icon @click=${this.close_lang} name="close-circle-outline"></ion-icon>
+            <img src="/images/logo.png" alt="logo" title="logo" />
+            <div class="list-lang">
+                <span class="fa">فارسی</span>
+                <span class="ar">العربی</span>
+                <span class="en">English</span>
+            </div>
+        </div>
+        `
+
         return html`
         <div class="box-mobile">
             <img src="/images/logo.png" alt="logo" title="logo" />
@@ -203,9 +261,9 @@ export class HeaderElement extends LitElement {
                 <div class="menu">
                     <ul class="menu">
                         ${repeat(this.config.menu, (item: menu) => html`
-                        <li @click=${this.colse}><a id=${this.path==item.link.replace("/", "") ? "active" : ""}
+                        <li @click=${this.colse}><a id=${this.path == item.link.replace("/", "" ) ? "active" : "" }
                                 href="${item.link}">${item.name}</a></li>`
-             )}
+                   )}
                     </ul>
                 </div>
             </div>
@@ -215,15 +273,18 @@ export class HeaderElement extends LitElement {
             </div>
             <div class="icons">
                 <ion-icon name="search-outline"></ion-icon>
-                <ion-icon name="globe-outline" title="Language"></ion-icon>
+                <ion-icon name="globe-outline" @click=${this.open_lang} title="Language"></ion-icon>
             </div>
         </div>
+        ${Language}
         `;
     }
     @query(".close")
     button_close!: HTMLButtonElement;
     @query(".box-desktop")
     menu!: HTMLElement;
+    @query(".language")
+    language!: HTMLElement;
     @property({ attribute: true, type: String })
     path = ""
     @property({ attribute: true, type: Object })
@@ -231,10 +292,14 @@ export class HeaderElement extends LitElement {
     colse(_e: Event) {
         this.menu.setAttribute("id", "close-box")
         this.menu.setAttribute("id", "close-box")
-
-
     }
     open(_e: Event) {
         this.menu.setAttribute("id", "open-box");
+    }
+    open_lang(_e: Event) {
+        this.language.setAttribute("style", "bottom:0")
+    }
+    close_lang(_e: Event) {
+        this.language.setAttribute("style", "bottom:-100vh")
     }
 }

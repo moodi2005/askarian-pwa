@@ -6,10 +6,20 @@ import { property } from 'lit/decorators/property.js';
 
 import { getJson } from '@alwatr/fetch';
 
-import { article } from "../types"
+import { article,articles } from "../types"
 import {glod} from "../color"
 
-const articles: any = await getJson('/json/articles.json');
+
+// get posts
+let json: any = localStorage.getItem('articles');
+if (!json) {
+  const get: any = await getJson('/json/articles.json');
+  localStorage.setItem('articles', JSON.stringify(get));
+  json = get;
+} else {
+  json = JSON.parse(json);
+}
+const articles:articles = json;
 
 
 
@@ -31,6 +41,7 @@ export class PageArticles extends LitElement {
             .articles{
                 width:60.9em;
                 max-width:80%;
+                min-height:80vh;
                 display:flex;
                 justify-content:flex-start;
                 align-items:flex-start;
@@ -107,10 +118,10 @@ export class PageArticles extends LitElement {
         <div class="articles">
             ${repeat(articles, (item: article) => html`
             <div class="article">
-                <a href="/post/${item.id}/">
-                    <img src=${item.image} alt="image-${item.name}" loding="lazy"/>
+                <a href="/post/${item.link}/">
+                    <img src=${item.image} alt="image-${item.titel}" loding="lazy"/>
                     <span></span>
-                    <h2>${item.name}</h2>
+                    <h2>${item.titel}</h2>
                 </a>
                 <p>${item.description}...</p>
             </div>
