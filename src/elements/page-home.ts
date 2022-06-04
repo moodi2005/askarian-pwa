@@ -519,11 +519,11 @@ export class PageHome extends AppElement {
     }
 
     @media only screen and (max-width: 1040px) {
-      .image_about{
-        margin-top:5em
+      .image_about {
+        margin-top: 5em;
       }
-      .about{
-        margin:2em 0;
+      .about {
+        margin: 2em 0;
       }
     }
     @media only screen and (max-width: 768px) {
@@ -668,14 +668,16 @@ export class PageHome extends AppElement {
           <!-- Menu -->
           <div class="header">
             <ul class="menu">
-              ${repeat(this.config.menu, (item:menu,index:number) => {
-                if(this.config.menu.length/2===index+1){
-                return  html`
-                   <li><a href="${item.link}">${item.name}</a></li>
-                   <li><a href="/"><img class='logo' src="/images/logo.png" title="Logo" alt="Logo" /></a></li>
-                   `
-                }else{
-                 return html` <li><a href="${item.link}">${item.name}</a></li>`
+              ${repeat(this.config.menu, (item: menu, index: number) => {
+                if (this.config.menu.length / 2 === index + 1) {
+                  return html`
+                    <li><a href="${item.link}">${item.name}</a></li>
+                    <li>
+                      <a href="/"><img class="logo" src="/images/logo.png" title="Logo" alt="Logo" /></a>
+                    </li>
+                  `;
+                } else {
+                  return html` <li><a href="${item.link}">${item.name}</a></li>`;
                 }
               })}
             </ul>
@@ -789,7 +791,7 @@ export class PageHome extends AppElement {
   @state()
   protected __day: string = 'فی السّبت ، ۱۲ جمادی الثانی';
   @property({attribute: true, type: Object})
-  config: homePage|any = {};
+  config: homePage | any = {};
   @property({attribute: false, type: Object})
   times: times = {
     Fajr: '00:00',
@@ -817,7 +819,6 @@ export class PageHome extends AppElement {
     } else {
       json = JSON.parse(json);
     }
-
 
     const times: any = json,
       date = times.data[day].date.hijri;

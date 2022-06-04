@@ -128,7 +128,6 @@ export class PageAbout extends AppElement {
     } else {
       json = JSON.parse(json);
     }
-    console.log(json.ar.replaceAll("'",'"'));
     this.content.innerHTML = json.ar;
   }
 }
