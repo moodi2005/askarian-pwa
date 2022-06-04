@@ -32,7 +32,7 @@ export class PageArticles extends LitElement {
                 flex-direction:column;
                 justify-content:center;
                 align-items:center;
-                width:100%:
+                width:100%;
             }
             h1{
                 font-size:30px;
@@ -119,7 +119,7 @@ export class PageArticles extends LitElement {
             ${repeat(articles, (item: article) => html`
             <div class="article">
                 <a href="/post/${item.link}/">
-                    <img src=${item.image} alt="image-${item.titel}" loding="lazy"/>
+                    <img src=${item.image} alt="image-${item.titel}" loading="lazy"/>
                     <span></span>
                     <h2>${item.titel}</h2>
                 </a>
