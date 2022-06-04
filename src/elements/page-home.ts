@@ -4,7 +4,7 @@ import { property } from 'lit/decorators/property.js';
 import { state } from 'lit/decorators/state.js';
 import { repeat } from 'lit/directives/repeat.js';
 
-import {homePage} from "../types"
+import { homePage } from "../types"
 
 
 
@@ -598,9 +598,7 @@ export class PageHome extends AppElement {
       .part-posts>div>a>img{
         width:40vw;
       }
-      .part-vicarious-shrine>div>form>input[type=text]{
-        width:100vw;
-      }
+
       @media only screen and (max-width: 676px) {
         .part-vicarious-shrine>img{
           display:none;
@@ -622,6 +620,9 @@ export class PageHome extends AppElement {
       .part-posts>div>a>img{
         width:100vw;
        }
+       .image_about{
+         width:95%;
+       }
       }
       @media only screen and (max-width: 320px) {
         .Circle_part_date{
@@ -633,6 +634,9 @@ export class PageHome extends AppElement {
         }
         .part-project>h2{
           text-align:center
+        }
+        .part-vicarious-shrine>div>form>input[type=text]{
+        width:99%;
         }
       }
       
@@ -660,7 +664,7 @@ export class PageHome extends AppElement {
             <ul class="menu">
               ${repeat(list, (item) => html`
               <li><a href="${item.link}">${item.name}</a></li>`
-     )}
+             )}
             </ul>
           </div>
           <h1 title="titel" class="titel">${this.config.titel}</h1>
@@ -762,6 +766,6 @@ export class PageHome extends AppElement {
   protected __time: any = { hours: "00", minutes: "00" }
   @state()
   protected __day: string = "فی السّبت ، ۱۲ جمادی الثانی";
-  @property({attribute:true,type:Object})
-  config:homePage|any={};
+  @property({ attribute: true, type: Object })
+  config: homePage | any = {};
 }

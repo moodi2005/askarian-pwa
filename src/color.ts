@@ -9,4 +9,5 @@ export const color_header = css`#ffffff`;
 export const color_header_text = css`#464646`;
 export const color_header_mobile = css`#ffffff`;
 export const color_header_text_mobile = css`#ffd700`;
+export const color_description = css`#a1abb3`;
 

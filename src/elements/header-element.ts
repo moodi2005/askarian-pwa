@@ -2,10 +2,11 @@ import { LitElement, html, css } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js'
 import { query } from 'lit/decorators/query.js'
 import { property } from 'lit/decorators/property.js'
+import { getJson } from '@alwatr/fetch';
 
 import { repeat } from 'lit/directives/repeat.js';
-import { OrangeHover, color_header, color_header_mobile, color_header_text, color_header_text_mobile, glod } from "../color"
-import { config, menu } from '../types';
+import { background, OrangeHover, color_header, color_header_mobile, color_header_text, color_header_text_mobile, glod, color_description } from "../color"
+import { config, menu, articles, article } from '../types';
 import "../askarian-pwa";
 
 
@@ -17,7 +18,9 @@ export class HeaderElement extends LitElement {
             :host {
                 width:100%;
                 position:relative;
-            }
+                display:flex;
+                justify-content:center;
+                  }
             .box-desktop{
                 width:100%;
                 height:5em;
@@ -84,12 +87,14 @@ export class HeaderElement extends LitElement {
             #open-box,#close-box{
                 width:100%;
             }
-            .language{
-                width:100%;
-                height:100vh;
-                position:fixed;
-                bottom:-100vh;
-                right:0;
+            .language,.search{
+                width:0;
+                height:0;
+                position:absolute;
+                top:0;
+                margin:0 auto;
+                border-radius:50% 50% 0 0;
+                overflow:hidden;
                 z-index:40;
                 backdrop-filter: blur(10px);
                 background-color:#272727dd;
@@ -97,21 +102,26 @@ export class HeaderElement extends LitElement {
                 flex-direction:column;
                 justify-content:center;
                 align-items:center;
-                transition:300ms linear bottom;
+                transition:200ms linear height,200ms linear width,200ms linear border-radius;
+            }
+            #open_language_box,#open_search_box{
+                width:100%;
+                height:100vh;
+                border-radius:0;
             }
             .language>img{
                 width:15em;
             }
-            .language>ion-icon{
+            .language>ion-icon,.search>ion-icon{
                 position:absolute;
                 height:2em;
                 color:${color_header_text_mobile};
                 cursor:pointer;
-                left:.4em;
+                left:1em;
                 top:0;
-                font-size:40px;
+                font-size:35px;
             }
-            .language>ion-icon:active{
+            .language>ion-icon:active,.search>ion-icon:active{
                 color:red;
             }
             .list-lang{
@@ -129,6 +139,74 @@ export class HeaderElement extends LitElement {
             }
             .list-lang>span:hover{
                 color:${glod}
+            }
+            .head_hidden{
+                display:none;
+            }
+            .search>input{
+                width:20em;
+                height:1.5em;
+                outline:none;
+                color:#fff;
+                background-color:transparent;
+                border:0;
+                border-bottom:4px solid #c4c0c0;
+                transition:300ms linear border-bottom;
+                font-size:40px;
+            }
+            .search>input:focus{
+                border-bottom:4px solid #ffffff;
+            }
+            .search>input::placeholder,.search>input{
+                font-family: 'Tajawal', sans-serif;
+            }
+            .search>div{
+                margin-top:2em;
+                display:flex;
+                flex-direction:column;
+                align-items:center;
+                justify-content:center;
+            }
+            .search>div>a{
+                text-decoration:none;
+            }
+            .articel{
+                width:47em;
+                max-width:100%;
+                height:4em;
+                background-color:${background};
+                display:flex;
+                justify-content:flex-start;
+                flex-wrap:wrap;
+                align-items:center;
+                border-radius:5px;
+                margin:0.4em 0;
+                overflow:hidden;
+                transition:300ms linear  box-shadow;
+            }
+            .articel:hover{
+                box-shadow:0 0 10px 0 ${OrangeHover};
+            }
+            .articel>img{
+                width:4em;
+                height:4em;
+            }
+            .articel>div{
+                display:flex;
+                flex-direction:column;
+                justify-content:center;
+                align-items:flex-start;
+                padding:0 .2em;
+            }
+            .articel>div>h4{
+                font-size:20px;
+                color:black;
+            }
+            .articel>div>p{
+                color:${color_description};
+            }
+            .articel *{
+                margin:0;
             }
             @media only screen and (max-width: 1024px) {
                 .logo{
@@ -154,9 +232,9 @@ export class HeaderElement extends LitElement {
                     display:none;
                 }
                 .box-desktop{
-                    position: inherit;
-                    right:-100%;
-                    bottom: 0; 
+                    position: absolute;
+                    right:0;
+                    top: 0; 
                     z-index:20;
                     background-color:${color_header_mobile};
                     width:0;
@@ -242,64 +320,118 @@ export class HeaderElement extends LitElement {
             <ion-icon @click=${this.close_lang} name="close-circle-outline"></ion-icon>
             <img src="/images/logo.png" alt="logo" title="logo" />
             <div class="list-lang">
-                <span class="fa">فارسی</span>
-                <span class="ar">العربی</span>
-                <span class="en">English</span>
+                <span class="fa" @click=${this.close_lang}>فارسی</span>
+                <span class="ar" @click=${this.close_lang}>العربی</span>
+                <span class="en" @click=${this.close_lang}>English</span>
+            </div>
+        </div>
+        `
+        const search = html`
+        <div class="search">
+            <ion-icon @click=${this.close_search} name="close-circle-outline"></ion-icon>
+            <input @keydown=${this.search} type="text" placeholder="${this.config.textSearch}" autofocus />
+            <div>
+                ${repeat(this.list, (item: article) => html`
+                <a @click=${this.close_search} href="/post/${item.link}">
+                    <div class="articel"><img src=${item.image} alt=${item.titel} />
+                        <div>
+                            <h4>${item.titel}</h4>
+                            <p>${item.description}</p>
+                        </div>
+                    </div>
+                </a>
+                `)}
             </div>
         </div>
         `
 
         return html`
-        <div class="box-mobile">
-            <img src="/images/logo.png" alt="logo" title="logo" />
-            <ion-icon class="open" @click=${this.open} name="menu-outline"></ion-icon>
-        </div>
-        <div class="box-desktop">
-            <div class="box-menu">
-                <ion-icon @click=${this.colse} class="close" name="close-circle-outline"></ion-icon>
-                <img src="/images/border1.png" class="border-menu" alt="logo" />
-                <div class="menu">
-                    <ul class="menu">
-                        ${repeat(this.config.menu, (item: menu) => html`
-                        <li @click=${this.colse}><a id=${this.path == item.link.replace("/", "" ) ? "active" : "" }
-                                href="${item.link}">${item.name}</a></li>`
-                   )}
-                    </ul>
+                ${Language}
+                ${search}
+                
+                <div class="box-mobile">
+                    <img src="/images/logo.png" alt="logo" title="logo" />
+                    <ion-icon class="open" @click=${this.open} name="menu-outline"></ion-icon>
                 </div>
-            </div>
-            <div class="box-logo">
-                <img class="logo" src="/images/logo.png" alt="logo" title="logo" />
-                <!-- <span class="line-hover"></span> -->
-            </div>
-            <div class="icons">
-                <ion-icon name="search-outline"></ion-icon>
-                <ion-icon name="globe-outline" @click=${this.open_lang} title="Language"></ion-icon>
-            </div>
-        </div>
-        ${Language}
+                <div class="box-desktop ${this.hidden_head === true ? " head_hidden" : ""}">
+                    <div class="box-menu">
+                        <ion-icon @click=${this.colse} class="close" name="close-circle-outline"></ion-icon>
+                        <img src="/images/border1.png" class="border-menu" alt="logo" />
+                        <div class="menu">
+                            <ul class="menu">
+                                ${repeat(this.config.menu, (item: menu) => html`
+                                <li @click=${this.colse}><a id=${this.path==item.link.replace("/", "") ? "active" : ""}
+                                        href="${item.link}">${item.name}</a></li>`
+                     )}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="box-logo">
+                        <img class="logo" src="/images/logo.png" alt="logo" title="logo" />
+                        <!-- <span class="line-hover"></span> -->
+                    </div>
+                    <div class="icons">
+                        <ion-icon name="search-outline" @click=${this.open_search}></ion-icon>
+                        <ion-icon name="globe-outline" @click=${this.open_lang} title="Language"></ion-icon>
+                    </div>
+                </div>
         `;
     }
+ 
     @query(".close")
     button_close!: HTMLButtonElement;
     @query(".box-desktop")
     menu!: HTMLElement;
     @query(".language")
     language!: HTMLElement;
+    @query(".search")
+    searchElement!: HTMLElement;
+    @query(".search>input")
+    inputsearch!: HTMLInputElement;
     @property({ attribute: true, type: String })
     path = ""
+    @property({ attribute: true, type: Boolean })
+    hidden_head = false;
     @property({ attribute: true, type: Object })
     config: config | any = {}
+    @property({ attribute: false, type: Array })
+    list: articles | [] = [];
     colse(_e: Event) {
         this.menu.setAttribute("id", "close-box")
-        this.menu.setAttribute("id", "close-box")
+        this.menu.setAttribute("id", "close-box");
     }
     open(_e: Event) {
         this.menu.setAttribute("id", "open-box");
     }
     open_lang(_e: Event) {
-        this.language.setAttribute("style", "bottom:0")
+        this.language.setAttribute("id", "open_language_box");
     }
     close_lang(_e: Event) {
-        this.language.setAttribute("style", "bottom:-100vh")
+        this.language.removeAttribute("id");
+    }
+    open_search(_e: Event) {
+        this.searchElement.setAttribute("id", "open_search_box");
+    }
+    close_search(_e: Event) {
+        this.searchElement.removeAttribute("id");
+        this.inputsearch.value = "";
+        this.list = [];
+
+    }
+    async search(e: Event) {
+        let value = (e.target as HTMLInputElement).value;
+
+        //   Get list articles
+        let json: any = localStorage.getItem('articles');
+        if (!json) {
+            const get: any = await getJson('/json/articles.json');
+            localStorage.setItem('articles', JSON.stringify(get));
+            json = get;
+        } else {
+            json = JSON.parse(json);
+        }
+        const articles: articles = json,
+            list: articles | [] = articles.length > 0 && value.length > 0 ? articles.filter((item: article) => (item.titel + item.description).indexOf(value) !== -1) : [];
+        this.list = list;
     }
 }

@@ -7,10 +7,10 @@ import { property } from 'lit/decorators/property.js';
 import { getJson } from '@alwatr/fetch';
 
 import { article,articles } from "../types"
-import {glod} from "../color"
+import {glod,color_description} from "../color"
 
 
-// get posts
+// get list articles
 let json: any = localStorage.getItem('articles');
 if (!json) {
   const get: any = await getJson('/json/articles.json');
@@ -98,7 +98,7 @@ export class PageArticles extends LitElement {
                 transition:200ms linear color;
             }
             .article>p{
-                color:#a1abb3;
+                color:${color_description};
                 text-align:justify;
                 margin:.8em;
                 font-size:14px;

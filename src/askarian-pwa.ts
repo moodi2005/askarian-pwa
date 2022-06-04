@@ -59,12 +59,13 @@ export class AskarianPwa extends AppElement {
       background-color: ${background};
       position: relative;
     }
-    * {
+    *{
       margin: 0;
       padding: 0;
       font-family: 'Tajawal', sans-serif;
       box-sizing: border-box;
     }
+    *>input::placeholder
     .page-container {
       position: relative;
       flex-grow: 1;
@@ -238,10 +239,7 @@ export class AskarianPwa extends AppElement {
 
   override render(): TemplateResult {
     return html`
-      <header-element path=${this._activePage} .config=${config} ?hidden=${this._activePage==='home' && window.screen.width>
-        768}
-        >
-      </header-element>
+      <header-element path=${this._activePage} .config=${config} ?hidden_head=${this._activePage==='home'}></header-element>
       <main class="page-container">${router.outlet(this._routes)}</main>
       <footer>
         <img src="/images/footer_border.png" class="border-footer" loading="lazy" alt="border footer" />

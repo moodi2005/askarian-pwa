@@ -126,8 +126,9 @@ export class PagePost extends LitElement {
     }
     const articles:articles = json_articles;
 
+    
     const article:article|undefined = articles.filter((item:article)=>item.link===path)[0];
-
+    
     if(article){
       const json: any = await getJson(`/json/post/post-${article.id}.json`);
       this.post = article;
