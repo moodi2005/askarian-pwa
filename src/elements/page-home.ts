@@ -1,19 +1,18 @@
 import {css, html} from 'lit';
-import {customElement} from 'lit/decorators/custom-element.js';
-import {property} from 'lit/decorators/property.js';
+import type {TemplateResult} from 'lit';
 import {state} from 'lit/decorators/state.js';
 import {repeat} from 'lit/directives/repeat.js';
+import {property} from 'lit/decorators/property.js';
+import {customElement} from 'lit/decorators/custom-element.js';
 
-import {homePage, menu, times} from '../types';
+import {article, homePage, menu, news_projects, project, project_img, times} from '../types';
 
 import {AppElement} from '../app-debt/app-element';
 
-import type {ListenerInterface} from '@alwatr/signal';
-import type {TemplateResult} from 'lit';
+import {getJson} from '@alwatr/fetch';
 
 // Get color
 import {glod, Orange, background, OrangeHover, Gray} from '../color';
-import {getJson} from '@alwatr/fetch';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -21,38 +20,22 @@ declare global {
   }
 }
 
-interface project_Image {
-  name: string;
-  link: string;
-  image: string;
+// Get News
+function setCookie(key: string, value: string, expDays: number) {
+  let date = new Date();
+  date.setTime(date.getTime() + expDays * 60 * 60 * 1000);
+  const expires = 'expires=' + date.toUTCString();
+  document.cookie = key + '=' + value + '; ' + expires + '; path=/';
 }
-const project_img: Array<project_Image> = [
-  {name: 'الصفحة الرئيسية', link: '/', image: '/images/background-part-about.jpg'},
-  {name: 'الصفحة الرئيسية', link: '/', image: '/images/background-part-about.jpg'},
-];
 
-interface project {
-  name: string;
-  link: string;
-  number: number;
+let news_json: any = document.cookie;
+if (!news_json) {
+  const get: any = await getJson('/json/news-projects.json');
+  setCookie('news-projects', JSON.stringify(get), 1);
+} else {
+  news_json = JSON.parse(document.cookie.split('news-projects=')[1]);
 }
-const project: Array<project> = [
-  {name: 'الصفحة الرئيسية', link: '/', number: 0},
-  {name: 'الصفحة الرئيسية', link: '/', number: 0},
-];
-
-interface post {
-  titel: string;
-  description: string;
-  link: string;
-  image: string;
-}
-const posts: Array<post> = [
-  {titel: 'خبر الاول', description: 'توضيحات', link: '/', image: '/images/background-homePage.jpg'},
-  {titel: 'خبر الاول', description: 'توضيحات', link: '/', image: '/images/background-homePage.jpg'},
-  {titel: 'خبر الاول', description: 'توضيحات', link: '/', image: '/images/background-homePage.jpg'},
-  {titel: 'خبر الاول', description: 'توضيحات', link: '/', image: '/images/background-homePage.jpg'},
-];
+const news_projects = news_json;
 
 @customElement('page-home')
 export class PageHome extends AppElement {
@@ -78,12 +61,14 @@ export class PageHome extends AppElement {
     .background_homePage {
       width: 100%;
       height: 100vh;
+      min-height: 30.9em;
       background: url(images/background-homePage.jpg) no-repeat center center / cover;
       position: relative;
     }
     .filter_background {
       width: 100%;
       height: 100vh;
+      min-height: 100%;
       position: absolute;
       top: 0;
       right: 0;
@@ -221,6 +206,7 @@ export class PageHome extends AppElement {
     }
     .text-about > h2 {
       font-size: 2.5em;
+      text-align: center;
       margin: 0.3em 0;
     }
     .text-about-two {
@@ -492,13 +478,13 @@ export class PageHome extends AppElement {
       justify-content: center;
       align-items: center;
       flex-wrap: wrap;
-      margin: 1em 0;
+      margin: 3em 0;
       width: 100%;
     }
 
     .part-posts > div > a {
-      width: 17vw;
-      min-height: 22em;
+      width: 16vw;
+      min-height: 24em;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -507,7 +493,7 @@ export class PageHome extends AppElement {
       position: relative;
       border-radius: 10px;
       overflow: hidden;
-      margin: 0 0.8em;
+      margin: 0 1em;
       box-shadow: 0 0 20px 0 #000000;
     }
     .part-posts > div > a > h4 {
@@ -515,7 +501,12 @@ export class PageHome extends AppElement {
       color: black;
     }
     .part-posts > div > a > img {
-      width: 17vw;
+      width: 100%;
+    }
+    .part-posts > div > a > p {
+      color: ${Gray};
+      text-align: justify;
+      margin-top: 1em;
     }
 
     @media only screen and (max-width: 1040px) {
@@ -621,8 +612,7 @@ export class PageHome extends AppElement {
           margin: 0;
         }
         .part-posts > div > a {
-          width: 100%;
-          margin: 2em 0.5em;
+          width: 80%;
         }
         .part-posts > div > a > img {
           width: 100vw;
@@ -645,21 +635,13 @@ export class PageHome extends AppElement {
         .part-vicarious-shrine > div > form > input[type='text'] {
           width: 99%;
         }
+        .border_circle_part_date > div > div {
+          width: 8em;
+          font-size: 16px;
+        }
       }
     }
   `;
-
-  protected _listenerList: Array<unknown> = [];
-
-  override connectedCallback(): void {
-    super.connectedCallback();
-    // this._listenerList.push(router.signal.addListener(() => this.requestUpdate()));
-  }
-
-  override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    this._listenerList.forEach((listener) => (listener as ListenerInterface<keyof AlwatrSignals>).remove());
-  }
 
   override render(): TemplateResult {
     return html`
@@ -732,8 +714,8 @@ export class PageHome extends AppElement {
         <div class="box-project">
           <div class="img-project">
             ${repeat(
-              project_img,
-              (item) => html`
+              news_projects.project_img,
+              (item: project_img) => html`
                 <a class="item-project-img" href="${item.link}">
                   <img src=${item.image} alt="image-${item.name}" title="image-${item.name}" loading="lazy" />
                   <p>${item.name}</p>
@@ -743,8 +725,8 @@ export class PageHome extends AppElement {
           </div>
           <div class="project">
             ${repeat(
-              project,
-              (item) => html`
+              news_projects.project,
+              (item: project) => html`
                 <a class="item-project" href="${item.link}">
                   <p>${item.name}</p>
                   <p>${item.number}</p>
@@ -775,8 +757,8 @@ export class PageHome extends AppElement {
         <img src="/images/border1.png" alt="border" title="border" />
         <div>
           ${repeat(
-            posts,
-            (item) => html`
+            news_projects.news,
+            (item: article) => html`
               <a href="${item.link}">
                 <img src=${item.image} alt="image post ${item.titel}" title="image post ${item.titel}" loading="lazy" />
                 <h4>${item.titel}</h4>
@@ -792,6 +774,8 @@ export class PageHome extends AppElement {
   protected __day: string = 'فی السّبت ، ۱۲ جمادی الثانی';
   @property({attribute: true, type: Object})
   config: homePage | any = {};
+  @property({attribute: true, type: Object})
+  news_projects: news_projects | any = {};
   @property({attribute: false, type: Object})
   times: times = {
     Fajr: '00:00',
@@ -806,23 +790,25 @@ export class PageHome extends AppElement {
   };
 
   protected override async firstUpdated() {
+    // Get Times
     const day: number = new Date().getUTCDay();
-    let json: any = localStorage.getItem('times');
+    let times_json: any = localStorage.getItem('times');
     if (
-      !json ||
-      JSON.parse(json).data[day].date.gregorian.month.number === new Date().getUTCMonth() + 1 ||
-      JSON.parse(json).date.gregorian.year == new Date().getUTCFullYear()
+      !times_json ||
+      !(JSON.parse(times_json).data[day].date.gregorian.month.number === new Date().getUTCMonth() + 1 ||
+      JSON.parse(times_json).data.gregorian.year == new Date().getUTCFullYear())
     ) {
       const get: any = await getJson('https://api.aladhan.com/v1/calendar?latitude=34.19883&longitude=43.873345');
       localStorage.setItem('times', JSON.stringify(get));
-      json = get;
+      times_json = get;
     } else {
-      json = JSON.parse(json);
+      times_json = JSON.parse(times_json);
     }
 
-    const times: any = json,
+    const times: any = times_json,
       date = times.data[day].date.hijri;
     this.times = times.data[day].timings;
     this.__day = `فی ${date.weekday.ar} , ${date.day} ${date.month.ar}`;
   }
+
 }

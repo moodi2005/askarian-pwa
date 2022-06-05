@@ -38,20 +38,26 @@ interface menuFoter {
   name: string;
   link: string;
 }
-// project_img: Array<{ name: string, link: string, image: string }>,
-// project:Array<{name:string,link:string,number:number}>,
-// "project_img": [
-//     { "name": "الصفحة الرئيسية", "link": "/", "image": "/images/background-part-about.jpg" },
-//     { "name": "الصفحة الرئيسية", "link": "/", "image": "/images/background-part-about.jpg" }
-//   ],
-//   "project": [
-//     { "name": "الصفحة الرئيسية", "link": "/", "number": 0 },
-//     { "name": "الصفحة الرئيسية", "link": "/", "number": 0 }
-//   ],
+export interface project_img {
+  name: string;
+  link: string;
+  image: string;
+}
+export interface project {
+  name: string;
+  link: string;
+  number: number;
+}
+
+export interface news_projects {
+  news: Array<article>;
+  project_img: Array<project_img>;
+  project: Array<project>;
+}
 
 export interface homePage {
   titel?: string;
-  menu:[menu]
+  menu: [menu];
   part_about?: {
     titelTop: string;
     titel: string;
