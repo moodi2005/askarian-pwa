@@ -124,18 +124,22 @@ export class HeaderElement extends LitElement {
       .language > img {
         width: 15em;
       }
-      .language > ion-icon,
-      .search > ion-icon {
-        position: absolute;
+      .box-close-lang{
+        position:absolute;
+        width:100%;
+        top:0;
+        display:flex;
+        align-items:center;
+        justify-content:flex-end;
+      }
+      .box-close-lang> ion-icon {
         height: 2em;
         color: ${color_header_text_mobile};
         cursor: pointer;
-        left: 1em;
-        top: 0;
         font-size: 35px;
+        margin: 0 0.3em;
       }
-      .language > ion-icon:active,
-      .search > ion-icon:active {
+      .box-close-lang > ion-icon:active {
         color: red;
       }
       .list-lang {
@@ -176,14 +180,14 @@ export class HeaderElement extends LitElement {
       .search > input {
         font-family: 'Tajawal', sans-serif;
       }
-      .search > div {
+      .box-search{
         margin-top: 2em;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
       }
-      .search > div > a {
+      .box-search > a {
         width: 100%;
         display: flex;
         justify-content: center;
@@ -241,7 +245,7 @@ export class HeaderElement extends LitElement {
       @media only screen and (max-width: 768px) {
         #open-box {
           height: 100vh;
-          padding: 2em 0;
+          padding: 0.5em 0px 2em 0;
           display: flex;
         }
         #close-box {
@@ -289,15 +293,23 @@ export class HeaderElement extends LitElement {
           display: block;
           margin: 1em 0;
         }
+        .box-close {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          order: -2;
+        }
         .close,
         .open {
           display: block;
-          position: absolute;
           font-size: 40px;
-          left: 0.1em;
-          top: 0.3em;
           color: ${color_header_text_mobile};
+          margin: 0 0.2em;
           cursor: pointer;
+        }
+        .open {
+          position: static;
         }
         .close:active,
         .box-mobile > ion-icon:active {
@@ -331,7 +343,7 @@ export class HeaderElement extends LitElement {
           order: -1;
         }
         .articel > div > p {
-          font-size:0;
+          font-size: 0;
         }
       }
     `,
@@ -340,20 +352,20 @@ export class HeaderElement extends LitElement {
   override render() {
     const Language = html`
       <div class="language">
-        <ion-icon @click=${this.close_lang} name="close-circle-outline"></ion-icon>
+        <div class="box-close-lang"><ion-icon @click=${this.close_lang} name="close-circle-outline"></ion-icon></div>
         <img src="/images/logo.png" alt="logo" title="logo" />
         <div class="list-lang">
-          <span class="fa" @click=${this.close_lang}>فارسی</span>
-          <span class="ar" @click=${this.close_lang}>العربی</span>
-          <span class="en" @click=${this.close_lang}>English</span>
+          <span class="fa" @click=${this.change_language}>فارسی</span>
+          <span class="ar" @click=${this.change_language}>العربی</span>
+          <span class="en" @click=${this.change_language}>English</span>
         </div>
       </div>
     `;
     const search = html`
       <div class="search">
-        <ion-icon @click=${this.close_search} name="close-circle-outline"></ion-icon>
+        <div class="box-close-lang"><ion-icon @click=${this.close_search} name="close-circle-outline"></ion-icon></div>
         <input @keydown=${this.search} type="text" placeholder="${this.config.textSearch}" autofocus />
-        <div>
+        <div class="box-search">
           ${repeat(
             this.list,
             (item: article) => html`
@@ -380,8 +392,10 @@ export class HeaderElement extends LitElement {
         <ion-icon class="open" @click=${this.open} name="menu-outline"></ion-icon>
       </div>
       <div class="box-desktop ${this.hidden_head === true ? ' head_hidden' : ''}">
-        <div class="box-menu">
+        <div class="box-close">
           <ion-icon @click=${this.colse} class="close" name="close-circle-outline"></ion-icon>
+        </div>
+        <div class="box-menu">
           <img src="/images/border1.png" class="border-menu" alt="logo" />
           <div class="menu">
             <ul class="menu">
@@ -451,10 +465,10 @@ export class HeaderElement extends LitElement {
     let value = (e.target as HTMLInputElement).value;
 
     //   Get list articles
-    let json: any = localStorage.getItem('articles');
+    let json: any = localStorage.getItem(`articles-${this.lang}`);
     if (!json) {
-      const get: any = await getJson('/json/articles.json');
-      localStorage.setItem('articles', JSON.stringify(get));
+      const get: any = await getJson(`/json/articles-${this.lang}.json`);
+      localStorage.setItem(`articles-${this.lang}`, JSON.stringify(get));
       json = get;
     } else {
       json = JSON.parse(json);
@@ -465,5 +479,9 @@ export class HeaderElement extends LitElement {
           ? articles.filter((item: article) => (item.titel + item.description).indexOf(value) !== -1)
           : [];
     this.list = list;
+  }
+  change_language(e: Event) {
+    localStorage.setItem('language', `${(e.target as HTMLSpanElement).className}`);
+    document.location.reload();
   }
 }

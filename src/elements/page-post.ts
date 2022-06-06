@@ -23,7 +23,7 @@ export class PagePost extends LitElement {
         width: 40%;
         background-color: #ffff;
         border-radius: 10px;
-        margin: 8em 3em 4em 0;
+        margin: 8em 3em 4em 3em;
         box-shadow: 0 0 25px rgb(227 229 230 / 50%);
         overflow: hidden;
       }
@@ -41,8 +41,11 @@ export class PagePost extends LitElement {
         height: 16vw;
         border: 4px solid #e4e8eb;
         background-color: transparent;
-        border-radius: 10px 103px 10px 10px;
+        border-radius: 10px 50% 10px 10px;
         box-shadow: 0 0 25px rgb(227 229 230 / 50%);
+      }
+      .ltr_border_redius{
+        border-radius:50% 10px  10px  10px ;
       }
       main > p {
         text-align: justify;
@@ -79,7 +82,7 @@ export class PagePost extends LitElement {
   override render() {
     return html`
       <div class="sidebar">
-        <div class="image-post" title="${this.post.titel}"></div>
+        <div class="image-post ${this.lang==="en" ? "ltr_border_redius" : ""}" title="${this.post.titel}"></div>
         <div class="menu-sidebar">
           <p>أحدث المقالات</p>
           <ul>
@@ -119,20 +122,29 @@ export class PagePost extends LitElement {
       const expires = 'expires=' + date.toUTCString();
       document.cookie = key + '=' + value + '; ' + expires + '; path=/';
     }
-
+    function getCookie(cName: string) {
+      const name = cName + '=';
+      const cDecoded = decodeURIComponent(document.cookie); //to be careful
+      const cArr = cDecoded.split('; ');
+      let res: string = '';
+      cArr.forEach((val) => {
+        if (val.indexOf(name) === 0) res = val.substring(name.length);
+      });
+      return res;
+    }
 
     // get path
     const path = location.pathname.split('/')[2],
-     type_post = location.pathname.split('/')[1];
-     let articles:Array<article> = []
+      type_post = location.pathname.split('/')[1];
+    let articles: Array<article> = [];
 
     switch (type_post) {
       case 'post':
         // get articles
-        let json_articles: any = localStorage.getItem('articles');
+        let json_articles: any = localStorage.getItem(`articles-${this.lang}`);
         if (!json_articles) {
-          const get: any = await getJson('/json/articles.json');
-          localStorage.setItem('articles', JSON.stringify(get));
+          const get: any = await getJson(`/json/articles-${this.lang}.json`);
+          localStorage.setItem(`articles-${this.lang}`, JSON.stringify(get));
           json_articles = get;
         } else {
           json_articles = JSON.parse(json_articles);
@@ -143,11 +155,11 @@ export class PagePost extends LitElement {
         // get news
         let news_json: any = document.cookie;
         if (!news_json) {
-          const get: any = await getJson('/json/news-projects.json');
-          setCookie('news-projects', JSON.stringify(get), 1);
+          const get: any = await getJson(`/json/news-projects-${this.lang}.json`);
+          setCookie(`news-projects-${this.lang}`, JSON.stringify(get), 1);
           news_json = get;
         } else {
-          news_json = JSON.parse(document.cookie.split('news-projects=')[1]);
+          news_json = JSON.parse(getCookie(`news-projects-${this.lang}`));
         }
         articles = news_json.news;
         break;
@@ -156,11 +168,11 @@ export class PagePost extends LitElement {
         // get news
         let news_json: any = document.cookie;
         if (!news_json) {
-          const get: any = await getJson('/json/news-projects.json');
-          setCookie('news-projects', JSON.stringify(get), 1);
+          const get: any = await getJson(`/json/news-projects-${this.lang}.json`);
+          setCookie(`news-projects-${this.lang}`, JSON.stringify(get), 1);
           news_json = get;
         } else {
-          news_json = JSON.parse(document.cookie.split('news-projects=')[1]);
+          news_json = JSON.parse(getCookie(`news-projects-${this.lang}`));
         }
         articles = news_json.project;
         break;
@@ -175,7 +187,7 @@ export class PagePost extends LitElement {
       const json: any = await getJson(`/json/${type_post}/${type_post}-${article.id}.json`);
       this.post = article;
       this.image.setAttribute('style', `background:url(${article.image}) no-repeat center center /cover;`);
-      this.text_post.innerHTML = json.text;
+      this.text_post.innerHTML = json[this.lang];
       // set titel
       document.title = `${article.titel} | ${this.titelSite}`;
     } else location.pathname = '404';

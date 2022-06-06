@@ -27,16 +27,16 @@ function setCookie(key: string, value: string, expDays: number) {
   const expires = 'expires=' + date.toUTCString();
   document.cookie = key + '=' + value + '; ' + expires + '; path=/';
 }
-
-let news_json: any = document.cookie;
-if (!news_json) {
-  const get: any = await getJson('/json/news-projects.json');
-  setCookie('news-projects', JSON.stringify(get), 1);
-  news_json = get;
-} else {
-  news_json = JSON.parse(document.cookie.split('news-projects=')[1]);
+function getCookie(cName: string) {
+  const name = cName + '=';
+  const cDecoded = decodeURIComponent(document.cookie); //to be careful
+  const cArr = cDecoded.split('; ');
+  let res: string = '';
+  cArr.forEach((val) => {
+    if (val.indexOf(name) === 0) res = val.substring(name.length);
+  });
+  return res;
 }
-const news_projects = news_json;
 
 @customElement('page-home')
 export class PageHome extends AppElement {
@@ -292,6 +292,7 @@ export class PageHome extends AppElement {
       background: #fff;
       border-radius: 50%;
       display: flex;
+      text-align: center;
       justify-content: center;
       flex-direction: column;
       cursor: pointer;
@@ -350,7 +351,7 @@ export class PageHome extends AppElement {
     }
     .item-project-img {
       width: 40em;
-      height: ${30 /news_projects.project.length}em;
+      height: 15em;
       display: flex;
       justify-content: center;
       overflow: hidden;
@@ -374,7 +375,7 @@ export class PageHome extends AppElement {
       border-radius: 15px;
     }
     .item-project-img:hover > p {
-      bottom: ${30 / news_projects.project.length / 5}em;
+      bottom:3em;
     }
     .project {
       width: 20em;
@@ -406,17 +407,23 @@ export class PageHome extends AppElement {
       min-height: 16em;
       background: url(/images/background-part-vicarious-shrine.jpg) no-repeat center center / cover;
       display: flex;
-      justify-content: flex-start;
+      justify-content: space-around;
       align-items: center;
       position: relative;
       margin: 10em 0 1em 0;
     }
-    .part-vicarious-shrine > img {
+    .box-two-vicarious-shrine {
+      width: 18em;
+      position: relative;
+      height: 18em;
+    }
+
+    .box-two-vicarious-shrine > img {
       position: absolute;
       bottom: 0;
-      left: 5vw;
+      left: 0;
     }
-    .part-vicarious-shrine > div {
+    .box-vicarious-shrine {
       padding: 0 1em;
       width: 30%;
       height: 100%;
@@ -426,20 +433,20 @@ export class PageHome extends AppElement {
       align-items: flex-start;
       flex-direction: column;
     }
-    .part-vicarious-shrine > div > h2 {
+    .box-vicarious-shrine > h2 {
       font-size: 30px;
     }
-    .part-vicarious-shrine > div > p {
+    .box-vicarious-shrine > p {
       text-align: start;
       color: ${Gray};
     }
-    .part-vicarious-shrine > div > form {
+    .box-vicarious-shrine > form {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
     }
-    .part-vicarious-shrine > div > form > input[type='text'] {
+    .box-vicarious-shrine > form > input[type='text'] {
       width: 25em;
       height: 3.5em;
       text-align: start;
@@ -449,7 +456,7 @@ export class PageHome extends AppElement {
       margin: 0.5em;
       outline: none;
     }
-    .part-vicarious-shrine > div > form > input[type='submit'] {
+    .box-vicarious-shrine > form > input[type='submit'] {
       width: 10em;
       height: 2.5em;
       border: 2px solid ${Orange};
@@ -462,7 +469,7 @@ export class PageHome extends AppElement {
       cursor: pointer;
       transition: 300ms linear background-color;
     }
-    .part-vicarious-shrine > div > form > input[type='submit']:hover {
+    .box-vicarious-shrine > form > input[type='submit']:hover {
       background-color: ${Orange};
     }
     /* Styles Part Ports */
@@ -587,7 +594,7 @@ export class PageHome extends AppElement {
       .item-project-img > p {
         bottom: 2em;
       }
-      .part-vicarious-shrine > img {
+      .box-two-vicarious-shrine > img {
         left: 0em;
       }
       .part-news > div > a {
@@ -599,17 +606,23 @@ export class PageHome extends AppElement {
       }
 
       @media only screen and (max-width: 676px) {
-        .part-vicarious-shrine > img {
+        .part-vicarious-shrine {
+          justify-content: center;
+        }
+        .box-two-vicarious-shrine {
           display: none;
         }
-        .part-vicarious-shrine > div {
+        .box-vicarious-shrine {
           width: 100%;
           padding: 0;
         }
-        .part-vicarious-shrine > div > h2 {
+        .box-vicarious-shrine {
+          align-items: center;
+        }
+        .box-vicarious-shrine > h2 {
           text-align: center;
         }
-        .part-vicarious-shrine > div > form > input[type='text']:nth-child(1) {
+        .box-vicarious-shrine > form > input[type='text']:nth-child(1) {
           margin: 0;
         }
         .part-news > div > a {
@@ -633,7 +646,7 @@ export class PageHome extends AppElement {
         .part-project > h2 {
           text-align: center;
         }
-        .part-vicarious-shrine > div > form > input[type='text'] {
+        .box-vicarious-shrine > form > input[type='text'] {
           width: 99%;
         }
         .border_circle_part_date > div > div {
@@ -643,6 +656,7 @@ export class PageHome extends AppElement {
       }
     }
   `;
+  static news_projects: any;
 
   override render(): TemplateResult {
     return html`
@@ -669,7 +683,7 @@ export class PageHome extends AppElement {
           <!-- Scroll -->
           <div class="box-scroll">
             <div class="scroll"><span></span></div>
-            <p>يرجى التمرير</p>
+            <p>${this.config.text_scroll}</p>
           </div>
         </div>
       </div>
@@ -714,32 +728,41 @@ export class PageHome extends AppElement {
         <img src="/images/border1.png" alt="border" loading="lazy" title="border" />
         <div class="box-project">
           <div class="img-project">
-            ${repeat(
-              news_projects.project,
-              (item: project) => html`
-                <a class="item-project-img" href="/project/${item.link}">
-                  <img src=${item.image} alt="image-${item.titel}" title="image-${item.titel}" loading="lazy" />
-                  <p>${item.titel}</p>
-                </a>
-              `
-            )}
+            ${
+              this.news_projects
+                ? repeat(
+                    this.news_projects.project,
+                    (item: project) => html`
+                      <a class="item-project-img" href="/project/${item.link}">
+                        <img src=${item.image} alt="image-${item.titel}" title="image-${item.titel}" loading="lazy" />
+                        <p>${item.titel}</p>
+                      </a>
+                    `
+                  )
+                  
+                : ''
+            }
           </div>
           <div class="project">
-            ${repeat(
-              news_projects.project_list,
-              (item: project_list) => html`
-                <div class="item-project">
-                  <p>${item.name}</p>
-                  <p>${item.number}</p>
-                </div>
-              `
-            )}
+            ${
+              this.news_projects
+                ? repeat(
+                    this.news_projects.project_list,
+                    (item: project_list) => html`
+                      <div class="item-project">
+                        <p>${item.name}</p>
+                        <p>${item.number}</p>
+                      </div>
+                    `
+                  )
+                : ''
+            }
           </div>
         </div>
       </div>
       <!-- Part vicarious shrine -->
       <div class="part-vicarious-shrine">
-        <div>
+        <div class="box-vicarious-shrine">
           <h2>${this.config.vicariousPart.titel}</h2>
           <p>${this.config.vicariousPart.description}</p>
           <form>
@@ -750,23 +773,32 @@ export class PageHome extends AppElement {
             <input type="submit" value="${this.config.vicariousPart.button}" />
           </form>
         </div>
-        <img src="/Images/image-part-vicarious-shrine.png" alt="vicarious-shrine" title="vicarious-shrine" loading="lazy" />
+        <div class="box-two-vicarious-shrine"><img src="/Images/image-part-vicarious-shrine.png" alt="vicarious-shrine" title="vicarious-shrine" loading="lazy" /></div>
       </div>
       <!-- Part News -->
       <div class="part-news">
         <h2>${this.config.news?.titel}</h2>
         <img src="/images/border1.png" alt="border" title="border" />
         <div>
-          ${repeat(
-            news_projects.news,
-            (item: article) => html`
-              <a href="/news/${item.link}">
-                <img src=${item.image} alt="image post ${item.titel}" title="image post ${item.titel}" loading="lazy" />
-                <h4>${item.titel}</h4>
-                <p>${item.description}</p>
-              </a>
-            `
-          )}
+          ${
+            this.news_projects
+              ? repeat(
+                  this.news_projects.news,
+                  (item: article) => html`
+                    <a href="/news/${item.link}">
+                      <img
+                        src=${item.image}
+                        alt="image post ${item.titel}"
+                        title="image post ${item.titel}"
+                        loading="lazy"
+                      />
+                      <h4>${item.titel}</h4>
+                      <p>${item.description}</p>
+                    </a>
+                  `
+                )
+              : ''
+          }
         </div>
       </div>
     `;
@@ -776,7 +808,7 @@ export class PageHome extends AppElement {
   @property({attribute: true, type: Object})
   config: homePage | any = {};
   @property({attribute: true, type: Object})
-  news_projects: news_projects | any = {};
+  news_projects: news_projects | any = null;
   @property({attribute: false, type: Object})
   times: times = {
     Fajr: '00:00',
@@ -811,6 +843,19 @@ export class PageHome extends AppElement {
     const times: any = times_json,
       date = times.data[day].date.hijri;
     this.times = times.data[day].timings;
-    this.__day = `فی ${date.weekday.ar} , ${date.day} ${date.month.ar}`;
+    this.__day = `${this.lang === 'en' ? 'of' : 'فی'} ${date.weekday[this.lang === 'en' ? 'en' : 'ar']} , ${date.day} ${
+      date.month[this.lang === 'en' ? 'en' : 'ar']
+    }`;
+    // Get News and Project
+    let news_json: any = document.cookie;
+    if (news_json.indexOf(this.lang) === -1) {
+      const get: any = await getJson(`/json/news-projects-${this.lang}.json`);
+      setCookie(`news-projects-${this.lang}`, JSON.stringify(get), 1);
+      news_json = get;
+    } else {
+      news_json = JSON.parse(getCookie(`news-projects-${this.lang}`));
+    }
+    this.news_projects = news_json;
+    this.requestUpdate();
   }
 }

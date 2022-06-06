@@ -1,0 +1,72 @@
+{
+  "titelSite": "Al Askarian",
+  "menu": [
+    {"name": "Main Page", "link": "/", "titel": "Main Page"},
+    {"name": "About Samarra", "link": "/about", "titel": "About Samarra"},
+    {"name": "Live", "link": "/live", "titel": "Live"},
+    {"name": "Pilgrimage to the shrine", "link": "/panorama", "titel": "Pilgrimage to the shrine"},
+    {"name": "Blog", "link": "/blog", "titel": "Blog"}
+  ],
+  "footer": {
+    "name": ["Menu1", "Menu2", "Menu3"],
+    "one": [
+      {"name": "link 1", "link": "/"},
+      {"name": "link 2", "link": "/"},
+      {"name": "link 3", "link": "/"},
+      {"name": "link 4", "link": "/"}
+    ],
+    "two": [
+      {"name": "link 1", "link": "/"},
+      {"name": "link 2", "link": "/"},
+      {"name": "link 3", "link": "/"},
+      {"name": "link 4", "link": "/"}
+    ],
+    "three": [
+      {"name": "link 1", "link": "/"},
+      {"name": "link 2", "link": "/"},
+      {"name": "link 3", "link": "/"},
+      {"name": "link 4", "link": "/"}
+    ]
+  },
+  "homePage": {
+    "titel": "Holy shrine of Askarian",
+    "text_scroll":"Please scroll",
+    "menu": [
+      {"name": "About Samarra", "link": "/about"},
+      {"name": "Live", "link": "/live"},
+      {"name": "Pilgrimage to the shrine", "link": "/panorama"},
+      {"name": "Blog", "link": "/blog"}
+    ],
+    "part_about": {
+      "titelTop": "History",
+      "titel": "Samarra and the imams of Samarra",
+      "description": "The origin of the name (Samarra) goes back to the rest of the Aramaic names in Iraq that used to end with the missing letter Alif, such as (Karbala) (Baquba). ) and (Karbala) and became (Samarra and Karbala), while the letter Alif was replaced by the letter t from the name of the city of Baquba, and it became written (Baqubah) and it is known that the city of Samarra in most of the history of the Abbasid state was brilliant in...",
+      "button": "Read more"
+    },
+    "times": ["morning call", "Sunrise", "noon call", "Evening call to prayer", "midnight"],
+    "projectPart": {
+      "titel": "Projects of the Military Holy Shrine",
+      "description": "Completed & In Progress"
+    },
+    "vicariousPart": {
+      "titel": "Vicarious visit to the holy military shrine",
+      "description": "A service provided by the official website of the Holy Military Shrine, to visit the Holy Military on behalf of all the names that are listed in the fields below",
+      "button": "send",
+      "input": "Full Name",
+      "oninvalid": "Please fill out carefully"
+    },
+    "news": {
+      "titel": "new news"
+    }
+  },
+  "live": {
+    "titel": "Live"
+  },
+  "panorama": {
+    "titel": "under construction"
+  },
+  "articles": {
+    "titel": "Blog"
+  },
+  "textSearch": "Search..."
+}

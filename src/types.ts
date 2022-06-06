@@ -56,6 +56,7 @@ export interface news_projects {
 
 export interface homePage {
   titel?: string;
+  text_scroll:string;
   menu: [menu];
   part_about?: {
     titelTop: string;
@@ -86,6 +87,7 @@ export interface config {
   footer: {name: Array<string>; one: Array<menuFoter>; two: Array<menuFoter>; three: Array<menuFoter>};
   homePage: {
     titel: string;
+    text_scroll:string;
     part_about?: {
       titelTop: string;
       titel: string;

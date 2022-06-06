@@ -1,15 +1,15 @@
-import { router } from '@alwatr/router';
-import { SignalInterface } from '@alwatr/signal';
-import { getJson } from '@alwatr/fetch';
-import { css, html, nothing } from 'lit';
-import { customElement } from 'lit/decorators/custom-element.js';
-import { state } from 'lit/decorators/state.js';
-import { classMap } from 'lit/directives/class-map.js';
-import { repeat } from 'lit/directives/repeat.js';
+import {router} from '@alwatr/router';
+import {SignalInterface} from '@alwatr/signal';
+import {getJson} from '@alwatr/fetch';
+import {css, html, nothing} from 'lit';
+import {customElement} from 'lit/decorators/custom-element.js';
+import {state} from 'lit/decorators/state.js';
+import {classMap} from 'lit/directives/class-map.js';
+import {repeat} from 'lit/directives/repeat.js';
 
-import { AppElement } from './app-debt/app-element';
-import { mainNavigation } from './config';
-import type { config } from './types';
+import {AppElement} from './app-debt/app-element';
+import {mainNavigation} from './config';
+import type {config} from './types';
 
 import './elements/page-home';
 import './elements/page-about';
@@ -18,19 +18,22 @@ import './elements/header-element';
 import './elements/page-panorama';
 import './elements/page-articles';
 import './elements/page-post';
+import './elements/page-404'
 
-import type { RoutesConfig } from '@alwatr/router';
-import type { ListenerInterface } from '@alwatr/signal';
-import type { TemplateResult } from 'lit';
+import type {RoutesConfig} from '@alwatr/router';
+import type {ListenerInterface} from '@alwatr/signal';
+import type {TemplateResult} from 'lit';
 
 // import colors
-import { background, Orange, Gray } from './color';
+import {background, Orange, Gray} from './color';
 
+// Language
+let lang: any = localStorage.getItem('language') ? localStorage.getItem('language') : "ar";
 // get config and menu and footer
-let json: any = localStorage.getItem('config');
+let json: any = localStorage.getItem(`config-${lang}`);
 if (!json) {
-  const get: any = await getJson('/json/config.json');
-  localStorage.setItem('config', JSON.stringify(get));
+  const get: any = await getJson(`/json/config-${lang}.json`);
+  localStorage.setItem(`config-${lang}`, JSON.stringify(get));
   json = get;
 } else {
   json = JSON.parse(json);
@@ -59,14 +62,14 @@ export class AskarianPwa extends AppElement {
       background-color: ${background};
       position: relative;
     }
-    *,*::placeholder{
+    *,
+    *::placeholder {
       margin: 0;
       padding: 0;
       font-family: 'Tajawal', sans-serif;
       box-sizing: border-box;
     }
-    *>input::placeholder
-    .page-container {
+    * > input::placeholder .page-container {
       position: relative;
       flex-grow: 1;
       flex-shrink: 1;
@@ -171,6 +174,13 @@ export class AskarianPwa extends AppElement {
   constructor() {
     super();
     router.initial();
+    // Set language
+    if(location.search.split("lang=")[1]){
+      localStorage.setItem('language',location.search.split("lang=")[1]);
+    }
+    if (lang === 'en') {
+      document.dir = 'ltr';
+    }
   }
 
   @state()
@@ -181,15 +191,13 @@ export class AskarianPwa extends AppElement {
   protected _activePage = 'home';
 
   protected _routes: RoutesConfig = {
-    // TODO: refactor route, we need to get active page!
-    // TODO: ability to redirect!
     map: (route) => (this._activePage = route.sectionList[0]?.toString().trim() || 'home'),
     list: {
       home: {
-        render: () => html`<page-home .config=${config.homePage}></page-home>`,
+        render: () => html`<page-home .config=${config.homePage} lang="${lang}"></page-home>`,
       },
       about: {
-        render: () => html`<page-about></page-about>`,
+        render: () => html`<page-about lang="${lang}"></page-about>`,
       },
       live: {
         render: () => html`<page-live .config=${config.live}></page-live>`,
@@ -198,16 +206,19 @@ export class AskarianPwa extends AppElement {
         render: () => html`<page-panorama .config=${config.panorama}></page-panorama>`,
       },
       blog: {
-        render: () => html`<page-articles .config=${config.articles}></page-articles>`,
+        render: () => html`<page-articles .config=${config.articles} lang="${lang}"></page-articles>`,
       },
       post: {
-        render: () => html`<page-post titelSite=${config.titelSite}></page-post>`,
+        render: () => html`<page-post titelSite=${config.titelSite} lang="${lang}"></page-post>`,
       },
       news: {
-        render: () => html`<page-post titelSite=${config.titelSite}></page-post>`,
+        render: () => html`<page-post titelSite=${config.titelSite} lang="${lang}"></page-post>`,
       },
       project: {
-        render: () => html`<page-post titelSite=${config.titelSite}></page-post>`,
+        render: () => html`<page-post titelSite=${config.titelSite} lang="${lang}"></page-post>`,
+      },
+      404: {
+        render: () => html`<page-404 titelSite=${config.titelSite} lang="${lang}"></page-404>`,
       },
     },
   };
@@ -219,7 +230,7 @@ export class AskarianPwa extends AppElement {
     this._listenerList.push(
       router.signal.addListener(
         (route) => {
-          this._logger.logMethodArgs('routeChanged', { route });
+          this._logger.logMethodArgs('routeChanged', {route});
           this._activePage = route.sectionList[0]?.toString().trim() || 'home';
           this.requestUpdate();
           // set titel page
@@ -229,7 +240,7 @@ export class AskarianPwa extends AppElement {
           if (!(page === undefined)) document.title = `${page.titel}  | ${config.titelSite}  `;
           else document.title = `${config.titelSite}`;
         },
-        { receivePrevious: true }
+        {receivePrevious: true}
       ),
       this._hideNavigationSignal.addListener((_hideNavigation) => {
         this._hideNavigation = _hideNavigation;
@@ -245,7 +256,12 @@ export class AskarianPwa extends AppElement {
 
   override render(): TemplateResult {
     return html`
-      <header-element path=${this._activePage} .config=${config} ?hidden_head=${this._activePage==='home'}></header-element>
+      <header-element
+        path=${this._activePage}
+        .config=${config}
+        lang="${lang}"
+        ?hidden_head=${this._activePage === 'home'}
+      ></header-element>
       <main class="page-container">${router.outlet(this._routes)}</main>
       <footer>
         <img src="/images/footer_border.png" class="border-footer" loading="lazy" alt="border footer" />
@@ -286,7 +302,7 @@ export class AskarianPwa extends AppElement {
     const listTemplate = mainNavigation.map((item) => {
       const selected = this._activePage === item.id;
       return html`
-        <a href="${router.makeUrl({ sectionList: [item.id] })}" class="nav__item ${classMap({ active: selected })}">
+        <a href="${router.makeUrl({sectionList: [item.id]})}" class="nav__item ${classMap({active: selected})}">
           <span class="nav__item-text">${item.title}</span>
         </a>
       `;
