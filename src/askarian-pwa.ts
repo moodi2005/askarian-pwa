@@ -59,7 +59,7 @@ export class AskarianPwa extends AppElement {
       background-color: ${background};
       position: relative;
     }
-    *{
+    *,*::placeholder{
       margin: 0;
       padding: 0;
       font-family: 'Tajawal', sans-serif;
@@ -201,6 +201,12 @@ export class AskarianPwa extends AppElement {
         render: () => html`<page-articles .config=${config.articles}></page-articles>`,
       },
       post: {
+        render: () => html`<page-post titelSite=${config.titelSite}></page-post>`,
+      },
+      news: {
+        render: () => html`<page-post titelSite=${config.titelSite}></page-post>`,
+      },
+      project: {
         render: () => html`<page-post titelSite=${config.titelSite}></page-post>`,
       },
     },

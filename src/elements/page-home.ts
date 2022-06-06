@@ -5,7 +5,7 @@ import {repeat} from 'lit/directives/repeat.js';
 import {property} from 'lit/decorators/property.js';
 import {customElement} from 'lit/decorators/custom-element.js';
 
-import {article, homePage, menu, news_projects, project, project_img, times} from '../types';
+import {article, homePage, menu, news_projects, project_list, project, times} from '../types';
 
 import {AppElement} from '../app-debt/app-element';
 
@@ -20,7 +20,7 @@ declare global {
   }
 }
 
-// Get News
+// Get News and Projects
 function setCookie(key: string, value: string, expDays: number) {
   let date = new Date();
   date.setTime(date.getTime() + expDays * 60 * 60 * 1000);
@@ -32,6 +32,7 @@ let news_json: any = document.cookie;
 if (!news_json) {
   const get: any = await getJson('/json/news-projects.json');
   setCookie('news-projects', JSON.stringify(get), 1);
+  news_json = get;
 } else {
   news_json = JSON.parse(document.cookie.split('news-projects=')[1]);
 }
@@ -180,7 +181,7 @@ export class PageHome extends AppElement {
       border: 6px solid ${Orange};
       border-radius: 10px;
       position: relative;
-      margin: 0 10em;
+      margin: 0 5em;
     }
     .image_about > img {
       width: 40vw;
@@ -345,11 +346,11 @@ export class PageHome extends AppElement {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: space-around;
     }
     .item-project-img {
       width: 40em;
-      height: 15em;
+      height: ${30 /news_projects.project.length}em;
       display: flex;
       justify-content: center;
       overflow: hidden;
@@ -360,7 +361,7 @@ export class PageHome extends AppElement {
     .item-project-img > p {
       position: absolute;
       font-size: 30px;
-      bottom: -30px;
+      bottom: -100%;
       color: ${Orange};
       transition: 300ms linear bottom;
     }
@@ -373,7 +374,7 @@ export class PageHome extends AppElement {
       border-radius: 15px;
     }
     .item-project-img:hover > p {
-      bottom: 3em;
+      bottom: ${30 / news_projects.project.length / 5}em;
     }
     .project {
       width: 20em;
@@ -465,7 +466,7 @@ export class PageHome extends AppElement {
       background-color: ${Orange};
     }
     /* Styles Part Ports */
-    .part-posts {
+    .part-news {
       width: 100%;
       margin-bottom: 5em;
       display: flex;
@@ -473,7 +474,7 @@ export class PageHome extends AppElement {
       justify-content: center;
       align-items: center;
     }
-    .part-posts > div {
+    .part-news > div {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -482,9 +483,9 @@ export class PageHome extends AppElement {
       width: 100%;
     }
 
-    .part-posts > div > a {
+    .part-news > div > a {
       width: 16vw;
-      min-height: 24em;
+      min-width: 14em;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -496,17 +497,17 @@ export class PageHome extends AppElement {
       margin: 0 1em;
       box-shadow: 0 0 20px 0 #000000;
     }
-    .part-posts > div > a > h4 {
+    .part-news > div > a > h4 {
       font-size: 30px;
       color: black;
     }
-    .part-posts > div > a > img {
+    .part-news > div > a > img {
       width: 100%;
     }
-    .part-posts > div > a > p {
+    .part-news > div > a > p {
       color: ${Gray};
-      text-align: justify;
-      margin-top: 1em;
+      text-align: start;
+      margin: 1em 0.6em;
     }
 
     @media only screen and (max-width: 1040px) {
@@ -589,11 +590,11 @@ export class PageHome extends AppElement {
       .part-vicarious-shrine > img {
         left: 0em;
       }
-      .part-posts > div > a {
+      .part-news > div > a {
         width: 40%;
         margin: 2em 0.5em;
       }
-      .part-posts > div > a > img {
+      .part-news > div > a > img {
         width: 40vw;
       }
 
@@ -611,10 +612,10 @@ export class PageHome extends AppElement {
         .part-vicarious-shrine > div > form > input[type='text']:nth-child(1) {
           margin: 0;
         }
-        .part-posts > div > a {
+        .part-news > div > a {
           width: 80%;
         }
-        .part-posts > div > a > img {
+        .part-news > div > a > img {
           width: 100vw;
         }
         .image_about {
@@ -678,11 +679,11 @@ export class PageHome extends AppElement {
           <img src="/images/background-homePage.jpg" loading="lazy" alt="about" title="about" />
         </div>
         <div class="text-about">
-          <p class="perfix_titel">${this.config.part_about?.titelTop}</p>
+          <p class="perfix_titel">${this.config.part_about.titelTop}</p>
           <h2>${this.config.part_about?.titel}</h2>
           <img src="/images/border1.png" alt="border" loading="lazy" title="border" />
-          <p class="text-about-two">${this.config.part_about?.description}</p>
-          <a href="/about" class="button-about">${this.config.part_about?.button}</a>
+          <p class="text-about-two">${this.config.part_about.description}</p>
+          <a href="/about" class="button-about">${this.config.part_about.button}</a>
         </div>
       </div>
       <!-- Part Date -->
@@ -708,29 +709,29 @@ export class PageHome extends AppElement {
       </div>
       <!-- Part Project -->
       <div class="part-project">
-        <h2>${this.config.projectPart?.titel}</h2>
-        <p>${this.config.projectPart?.description}</p>
+        <h2>${this.config.projectPart.titel}</h2>
+        <p>${this.config.projectPart.description}</p>
         <img src="/images/border1.png" alt="border" loading="lazy" title="border" />
         <div class="box-project">
           <div class="img-project">
             ${repeat(
-              news_projects.project_img,
-              (item: project_img) => html`
-                <a class="item-project-img" href="${item.link}">
-                  <img src=${item.image} alt="image-${item.name}" title="image-${item.name}" loading="lazy" />
-                  <p>${item.name}</p>
+              news_projects.project,
+              (item: project) => html`
+                <a class="item-project-img" href="/project/${item.link}">
+                  <img src=${item.image} alt="image-${item.titel}" title="image-${item.titel}" loading="lazy" />
+                  <p>${item.titel}</p>
                 </a>
               `
             )}
           </div>
           <div class="project">
             ${repeat(
-              news_projects.project,
-              (item: project) => html`
-                <a class="item-project" href="${item.link}">
+              news_projects.project_list,
+              (item: project_list) => html`
+                <div class="item-project">
                   <p>${item.name}</p>
                   <p>${item.number}</p>
-                </a>
+                </div>
               `
             )}
           </div>
@@ -739,27 +740,27 @@ export class PageHome extends AppElement {
       <!-- Part vicarious shrine -->
       <div class="part-vicarious-shrine">
         <div>
-          <h2>${this.config.vicariousPart?.titel}</h2>
-          <p>${this.config.vicariousPart?.description}</p>
+          <h2>${this.config.vicariousPart.titel}</h2>
+          <p>${this.config.vicariousPart.description}</p>
           <form>
-            <input type="text" minlength="5" required placeholder="${this.config.vicariousPart?.input}"
+            <input type="text" minlength="5" required placeholder="${this.config.vicariousPart.input}"
               oninvalid="this.setCustomValidity('${
-                this.config.vicariousPart?.oninvalid
+                this.config.vicariousPart.oninvalid
               }')" oninput="setCustomValidity('')" />
-            <input type="submit" value="${this.config.vicariousPart?.input}" />
+            <input type="submit" value="${this.config.vicariousPart.button}" />
           </form>
         </div>
         <img src="/Images/image-part-vicarious-shrine.png" alt="vicarious-shrine" title="vicarious-shrine" loading="lazy" />
       </div>
-      <!-- Part Posts -->
-      <div class="part-posts">
+      <!-- Part News -->
+      <div class="part-news">
         <h2>${this.config.news?.titel}</h2>
         <img src="/images/border1.png" alt="border" title="border" />
         <div>
           ${repeat(
             news_projects.news,
             (item: article) => html`
-              <a href="${item.link}">
+              <a href="/news/${item.link}">
                 <img src=${item.image} alt="image post ${item.titel}" title="image post ${item.titel}" loading="lazy" />
                 <h4>${item.titel}</h4>
                 <p>${item.description}</p>
@@ -795,8 +796,10 @@ export class PageHome extends AppElement {
     let times_json: any = localStorage.getItem('times');
     if (
       !times_json ||
-      !(JSON.parse(times_json).data[day].date.gregorian.month.number === new Date().getUTCMonth() + 1 ||
-      JSON.parse(times_json).data.gregorian.year == new Date().getUTCFullYear())
+      !(
+        JSON.parse(times_json).data[day].date.gregorian.month.number === new Date().getUTCMonth() + 1 ||
+        JSON.parse(times_json).data.gregorian.year == new Date().getUTCFullYear()
+      )
     ) {
       const get: any = await getJson('https://api.aladhan.com/v1/calendar?latitude=34.19883&longitude=43.873345');
       localStorage.setItem('times', JSON.stringify(get));
@@ -810,5 +813,4 @@ export class PageHome extends AppElement {
     this.times = times.data[day].timings;
     this.__day = `فی ${date.weekday.ar} , ${date.day} ${date.month.ar}`;
   }
-
 }

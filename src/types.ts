@@ -38,21 +38,20 @@ interface menuFoter {
   name: string;
   link: string;
 }
-export interface project_img {
-  name: string;
+export interface project {
+  titel: string;
   link: string;
   image: string;
 }
-export interface project {
+export interface project_list {
   name: string;
-  link: string;
   number: number;
 }
 
 export interface news_projects {
   news: Array<article>;
-  project_img: Array<project_img>;
   project: Array<project>;
+  project_list: Array<project>;
 }
 
 export interface homePage {

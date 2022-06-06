@@ -4,37 +4,16 @@
       "id": 1,
       "titel": "خبر الاول",
       "description": "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.",
-      "link": "/news",
-      "image": "/images/background-homePage.jpg"
-    },
-    {
-      "id": 2,
-      "titel": "خبر الثانی",
-      "description": "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.",
-      "link": "/news",
-      "image": "/images/background-homePage.jpg"
-    },
-    {
-      "id": 3,
-      "titel": "خبر الثالث",
-      "description": "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.",
-      "link": "/news",
-      "image": "/images/background-homePage.jpg"
-    },
-    {
-      "id": 4,
-      "titel": "خبر اربع",
-      "description": "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.",
-      "link": "/news",
+      "link": "news-one",
       "image": "/images/background-homePage.jpg"
     }
   ],
-  "project_img":[
-    {"name": "المشروع الاول", "link": "/", "image": "/images/background-part-about.jpg"},
-    {"name": "المشروع الثاني", "link": "/", "image": "/images/background-part-about.jpg"}
+  "project": [
+    {"titel": "المشروع الاول", "link": "project-one", "image": "/images/background-part-about.jpg", "id": 1},
+    {"titel": "المشروع الثاني", "link": "project-two", "image": "/images/background-part-about.jpg", "id": 2}
   ],
-  "project":[
-    {"name": "القسم الأول", "link": "/", "number": 0},
-    {"name": "الفئة الثانية", "link": "/", "number": 0}
+  "project_list": [
+    {"name": "القسم الأول", "number": 0},
+    {"name": "الفئة الثانية", "number": 0}
   ]
 }
