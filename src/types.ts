@@ -9,7 +9,7 @@ export interface article {
 
 export interface post {
   titel: string;
-  image: any;
+  image: string;
   text: string;
   link: string;
   date: string;
@@ -27,7 +27,7 @@ export interface times {
   Midnight: string;
 }
 
-export interface articles extends Array<article> {}
+export type articles = Array<article>;
 
 export interface menu {
   name: string;
@@ -43,12 +43,12 @@ export interface project {
   link: string;
   image: string;
 }
-export interface project_list {
+export interface ProjectList {
   name: string;
   number: number;
 }
 
-export interface news_projects {
+export interface NewsProjects {
   news: Array<article>;
   project: Array<project>;
   project_list: Array<project>;
@@ -56,7 +56,7 @@ export interface news_projects {
 
 export interface homePage {
   titel?: string;
-  text_scroll:string;
+  text_scroll: string;
   menu: [menu];
   part_about?: {
     titelTop: string;
@@ -87,7 +87,7 @@ export interface config {
   footer: {name: Array<string>; one: Array<menuFoter>; two: Array<menuFoter>; three: Array<menuFoter>};
   homePage: {
     titel: string;
-    text_scroll:string;
+    text_scroll: string;
     part_about?: {
       titelTop: string;
       titel: string;

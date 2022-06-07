@@ -1,11 +1,10 @@
-import {LitElement, html, css} from 'lit';
+import {LitElement, html, css, TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators/custom-element.js';
-import { property } from 'lit/decorators/property.js';
-
+import {property} from 'lit/decorators/property.js';
 
 import './header-element';
 
-import {glod} from "../color"
+import {Glod} from '../color';
 
 @customElement('page-panorama')
 export class PagePanorama extends LitElement {
@@ -22,11 +21,11 @@ export class PagePanorama extends LitElement {
             ion-icon{
                 font-size:80px;
                 animation: rotate 2s linear 300ms  normal infinite forwards;
-                color:${glod};
+                color:${Glod};
              }
              h2{
                  font-size:40px;
-                 color:${glod};
+                 color:${Glod};
              }
             @keyframes rotate {
               from{
@@ -39,9 +38,12 @@ export class PagePanorama extends LitElement {
         `,
   ];
 
-  override render() {
-    return html` <ion-icon name="cog-outline"></ion-icon><h2>${this.config.titel}</h2> `;
+  override render(): TemplateResult {
+    return html`
+      <ion-icon name="cog-outline"></ion-icon>
+      <h2>${this.config.titel}</h2>
+    `;
   }
-  @property({attribute:true,type:Object})
-  config:any={};
+  @property({attribute: true, type: Object})
+    config: Record<string, number> = {};
 }

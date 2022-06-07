@@ -1,12 +1,10 @@
+import {getJson} from '@alwatr/fetch';
 import {css, html, CSSResultGroup} from 'lit';
 import {customElement} from 'lit/decorators/custom-element.js';
-import {query} from 'lit/decorators/query.js';
 import {property} from 'lit/decorators/property.js';
+import {query} from 'lit/decorators/query.js';
 
 import {AppElement} from '../app-debt/app-element';
-
-import {getJson} from '@alwatr/fetch';
-
 
 import type {TemplateResult} from 'lit';
 
@@ -54,9 +52,9 @@ export class PageAbout extends AppElement {
       border-radius: 10px 103px 10px 10px;
       box-shadow: 0 0 25px rgb(227 229 230 / 50%);
     }
-    .ltr_border_redius{
-        border-radius:50% 10px  10px  10px ;
-      }
+    .ltr_border_redius {
+      border-radius: 50% 10px 10px 10px;
+    }
     .content > p {
       text-align: justify;
       padding: 0 0.2em;
@@ -87,11 +85,10 @@ export class PageAbout extends AppElement {
     }
   `;
 
-
   protected override render(): TemplateResult {
     return html`
       <div class="sidebar">
-        <div class="image-post ${this.lang==="en" ? "ltr_border_redius" : ""}" title="Samarra"></div>
+        <div class="image-post ${this.lang === 'en' ? 'ltr_border_redius' : ''}" title="Samarra"></div>
         <div class="menu-sidebar">
           <p>أحدث المقالات</p>
           <ul>
@@ -109,19 +106,18 @@ export class PageAbout extends AppElement {
   }
 
   @query('.content>p')
-  content!: HTMLParagraphElement;
-  @property({attribute:true,type:String})
-  override lang:string=''
+    content!: HTMLParagraphElement;
+  @property({attribute: true, type: String})
+  override lang = '';
 
-  protected override async firstUpdated() {
-    let json: any = localStorage.getItem('about');
-    if (!json) {
-      const get: any = await getJson('/json/about.json');
+  protected override async firstUpdated(): Promise<void> {
+    const TextAbout: string | null = localStorage.getItem('about');
+    if (!TextAbout) {
+      const get: Record<string, string> = await getJson('/json/about.json');
       localStorage.setItem('about', JSON.stringify(get));
-      json = get;
+      this.content.innerHTML = get[this.lang];
     } else {
-      json = JSON.parse(json);
+      this.content.innerHTML = JSON.parse(TextAbout);
     }
-    this.content.innerHTML = json[this.lang];
   }
 }

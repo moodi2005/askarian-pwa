@@ -1,8 +1,8 @@
 {
-  "name": "alwatr-pwa-starter",
-  "version": "0.0.0",
-  "description": "Alwatr PWA Starter",
-  "author": "MohammadMahdi Zamanian <mm25zamanian@gmail.com> (https://mm25zamanian.ir)",
+  "name": "askarian",
+  "version": "1.0.1",
+  "description": "Askarian Pwa",
+  "author": "IT Askarian",
   "type": "module",
   "license": "MIT",
   "private": true,
@@ -31,9 +31,8 @@
     "@alwatr/logger": "^0.9.0",
     "@alwatr/router": "^0.9.0",
     "@alwatr/signal": "^0.9.0",
-    "@ckeditor/ckeditor5-build-decoupled-document": "^34.1.0",
-    "@webcomponents/webcomponentsjs": "^2.6.0",
     "lit": "^2.2.1",
+    "terser": "^5.14.0",
     "tslib": "^2.3.1"
   },
   "devDependencies": {

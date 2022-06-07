@@ -1,18 +1,17 @@
+import {getJson} from '@alwatr/fetch';
 import {css, html} from 'lit';
-import type {TemplateResult} from 'lit';
+import {customElement} from 'lit/decorators/custom-element.js';
+import {property} from 'lit/decorators/property.js';
 import {state} from 'lit/decorators/state.js';
 import {repeat} from 'lit/directives/repeat.js';
-import {property} from 'lit/decorators/property.js';
-import {customElement} from 'lit/decorators/custom-element.js';
-
-import {article, homePage, menu, news_projects, project_list, project, times} from '../types';
 
 import {AppElement} from '../app-debt/app-element';
-
-import {getJson} from '@alwatr/fetch';
+import {Glod, Orange, Background, OrangeHover, Gray} from '../color';
+import {article, homePage, menu, NewsProjects, ProjectList, project, times} from '../types';
 
 // Get color
-import {glod, Orange, background, OrangeHover, Gray} from '../color';
+
+import type {TemplateResult} from 'lit';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -21,17 +20,17 @@ declare global {
 }
 
 // Get News and Projects
-function setCookie(key: string, value: string, expDays: number) {
-  let date = new Date();
+function setCookie(key: string, value: string, expDays: number): void {
+  const date = new Date();
   date.setTime(date.getTime() + expDays * 60 * 60 * 1000);
   const expires = 'expires=' + date.toUTCString();
   document.cookie = key + '=' + value + '; ' + expires + '; path=/';
 }
-function getCookie(cName: string) {
+function getCookie(cName: string): string {
   const name = cName + '=';
-  const cDecoded = decodeURIComponent(document.cookie); //to be careful
+  const cDecoded = decodeURIComponent(document.cookie); // to be careful
   const cArr = cDecoded.split('; ');
-  let res: string = '';
+  let res = '';
   cArr.forEach((val) => {
     if (val.indexOf(name) === 0) res = val.substring(name.length);
   });
@@ -59,14 +58,14 @@ export class PageHome extends AppElement {
       display: flex;
       flex-direction: column;
     }
-    .background_homePage {
+    .Background_homePage {
       width: 100%;
       height: 100vh;
       min-height: 30.9em;
-      background: url(images/background-homePage.jpg) no-repeat center center / cover;
+      background: url(images/Background-homePage.jpg) no-repeat center center / cover;
       position: relative;
     }
-    .filter_background {
+    .filter_Background {
       width: 100%;
       height: 100vh;
       min-height: 100%;
@@ -86,13 +85,13 @@ export class PageHome extends AppElement {
         opacity: 1;
       }
     }
-    .filter_background {
+    .filter_Background {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
     }
-    .filter_background > .header {
+    .filter_Background > .header {
       width: 100%;
       position: absolute;
       top: 0;
@@ -114,14 +113,14 @@ export class PageHome extends AppElement {
     }
     .menu > li > a:hover,
     .menu > li > a:active {
-      color: ${glod};
+      color: ${Glod};
     }
     .logo {
       width: 7em;
     }
     .titel {
       font-size: 5vw;
-      color: ${glod};
+      color: ${Glod};
     }
 
     .box-scroll {
@@ -136,7 +135,7 @@ export class PageHome extends AppElement {
       width: 1.2em;
       height: 2.5em;
       border-radius: 15px;
-      border: 2px solid ${glod};
+      border: 2px solid ${Glod};
       display: flex;
       justify-content: center;
       position: relative;
@@ -147,7 +146,7 @@ export class PageHome extends AppElement {
       position: absolute;
       top: 0.1em;
       border-radius: 50%;
-      background-color: ${glod};
+      background-color: ${Glod};
       animation: scroll 2s linear 300ms normal infinite forwards;
     }
     @keyframes scroll {
@@ -161,14 +160,14 @@ export class PageHome extends AppElement {
       }
     }
     .box-scroll > p {
-      color: ${glod};
+      color: ${Glod};
       font-size: 1em;
     }
     /* css about */
     .about {
       width: 100%;
       min-height: 40em;
-      background: url(images/background-part-about-home-page.png) no-repeat top right;
+      background: url(images/Background-part-about-home-page.png) no-repeat top right;
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
@@ -236,7 +235,7 @@ export class PageHome extends AppElement {
     .date {
       width: 100%;
       height: 45em;
-      background: url(images/background-part-about.jpg) no-repeat center center / cover;
+      background: url(images/Background-part-about.jpg) no-repeat center center / cover;
       position: relative;
       display: flex;
       justify-content: center;
@@ -247,7 +246,7 @@ export class PageHome extends AppElement {
       width: 27em;
       height: 12em;
       border-radius: 20vw 20vw 0 0;
-      background-color: ${background};
+      background-color: ${Background};
       position: absolute;
       bottom: 0;
       display: flex;
@@ -271,7 +270,7 @@ export class PageHome extends AppElement {
       min-width: 50em;
       min-height: 29em;
       max-height: 30em;
-      border: 2px solid ${background};
+      border: 2px solid ${Background};
       border-radius: 110vw 110vw 0 0;
       position: absolute;
       bottom: 0;
@@ -297,7 +296,7 @@ export class PageHome extends AppElement {
       flex-direction: column;
       cursor: pointer;
       align-items: center;
-      transition: 300ms linear outline, 300ms linear background-color, 300ms linear color;
+      transition: 300ms linear outline, 300ms linear Background-color, 300ms linear color;
       outline: 0px solid ${OrangeHover};
     }
     .border_circle_part_date > div > div:hover,
@@ -375,7 +374,7 @@ export class PageHome extends AppElement {
       border-radius: 15px;
     }
     .item-project-img:hover > p {
-      bottom:3em;
+      bottom: 3em;
     }
     .project {
       width: 20em;
@@ -405,7 +404,7 @@ export class PageHome extends AppElement {
     .part-vicarious-shrine {
       width: 100%;
       min-height: 16em;
-      background: url(/images/background-part-vicarious-shrine.jpg) no-repeat center center / cover;
+      background: url(/images/Background-part-vicarious-shrine.jpg) no-repeat center center / cover;
       display: flex;
       justify-content: space-around;
       align-items: center;
@@ -467,7 +466,7 @@ export class PageHome extends AppElement {
       background-color: transparent;
       color: #fff;
       cursor: pointer;
-      transition: 300ms linear background-color;
+      transition: 300ms linear Background-color;
     }
     .box-vicarious-shrine > form > input[type='submit']:hover {
       background-color: ${Orange};
@@ -526,7 +525,7 @@ export class PageHome extends AppElement {
       }
     }
     @media only screen and (max-width: 768px) {
-      .filter_background > .header {
+      .filter_Background > .header {
         display: none;
       }
       .about {
@@ -656,27 +655,25 @@ export class PageHome extends AppElement {
       }
     }
   `;
-  static news_projects: any;
-
   override render(): TemplateResult {
     return html`
-      <div class="background_homePage">
-        <div class="filter_background">
+      <div class="Background_homePage">
+        <div class="filter_Background">
           <!-- Menu -->
           <div class="header">
             <ul class="menu">
               ${repeat(this.config.menu, (item: menu, index: number) => {
-                if (this.config.menu.length / 2 === index + 1) {
-                  return html`
+    if (this.config.menu.length / 2 === index + 1) {
+      return html`
                     <li><a href="${item.link}">${item.name}</a></li>
                     <li>
                       <a href="/"><img class="logo" src="/images/logo.png" title="Logo" alt="Logo" /></a>
                     </li>
                   `;
-                } else {
-                  return html` <li><a href="${item.link}">${item.name}</a></li>`;
-                }
-              })}
+    } else {
+      return html` <li><a href="${item.link}">${item.name}</a></li>`;
+    }
+  })}
             </ul>
           </div>
           <h1 title="titel" class="titel">${this.config.titel}</h1>
@@ -690,7 +687,7 @@ export class PageHome extends AppElement {
       <!-- Part About -->
       <div class="about">
         <div class="image_about">
-          <img src="/images/background-homePage.jpg" loading="lazy" alt="about" title="about" />
+          <img src="/images/Background-homePage.jpg" loading="lazy" alt="about" title="about" />
         </div>
         <div class="text-about">
           <p class="perfix_titel">${this.config.part_about.titelTop}</p>
@@ -729,34 +726,33 @@ export class PageHome extends AppElement {
         <div class="box-project">
           <div class="img-project">
             ${
-              this.news_projects
-                ? repeat(
+              this.news_projects ?
+                repeat(
                     this.news_projects.project,
                     (item: project) => html`
                       <a class="item-project-img" href="/project/${item.link}">
                         <img src=${item.image} alt="image-${item.titel}" title="image-${item.titel}" loading="lazy" />
                         <p>${item.titel}</p>
                       </a>
-                    `
-                  )
-                  
-                : ''
-            }
+                    `,
+                ) :
+                ''
+}
           </div>
           <div class="project">
             ${
-              this.news_projects
-                ? repeat(
+              this.news_projects ?
+                repeat(
                     this.news_projects.project_list,
-                    (item: project_list) => html`
+                    (item: ProjectList) => html`
                       <div class="item-project">
                         <p>${item.name}</p>
                         <p>${item.number}</p>
                       </div>
-                    `
-                  )
-                : ''
-            }
+                    `,
+                ) :
+                ''
+}
           </div>
         </div>
       </div>
@@ -768,12 +764,15 @@ export class PageHome extends AppElement {
           <form>
             <input type="text" minlength="5" required placeholder="${this.config.vicariousPart.input}"
               oninvalid="this.setCustomValidity('${
-                this.config.vicariousPart.oninvalid
-              }')" oninput="setCustomValidity('')" />
+  this.config.vicariousPart.oninvalid
+}')" oninput="setCustomValidity('')" />
             <input type="submit" value="${this.config.vicariousPart.button}" />
           </form>
         </div>
-        <div class="box-two-vicarious-shrine"><img src="/Images/image-part-vicarious-shrine.png" alt="vicarious-shrine" title="vicarious-shrine" loading="lazy" /></div>
+        <div class="box-two-vicarious-shrine">
+          <img src="/Images/image-part-vicarious-shrine.png" alt="vicarious-shrine" 
+          title="vicarious-shrine" loading="lazy" />
+        </div>
       </div>
       <!-- Part News -->
       <div class="part-news">
@@ -781,8 +780,8 @@ export class PageHome extends AppElement {
         <img src="/images/border1.png" alt="border" title="border" />
         <div>
           ${
-            this.news_projects
-              ? repeat(
+            this.news_projects ?
+              repeat(
                   this.news_projects.news,
                   (item: article) => html`
                     <a href="/news/${item.link}">
@@ -795,67 +794,73 @@ export class PageHome extends AppElement {
                       <h4>${item.titel}</h4>
                       <p>${item.description}</p>
                     </a>
-                  `
-                )
-              : ''
-          }
+                  `,
+              ) :
+              ''
+}
         </div>
       </div>
     `;
   }
   @state()
-  protected __day: string = 'فی السّبت ، ۱۲ جمادی الثانی';
+  protected __day = 'فی السّبت ، ۱۲ جمادی الثانی';
   @property({attribute: true, type: Object})
-  config: homePage | any = {};
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    config: homePage | any = {};
   @property({attribute: true, type: Object})
-  news_projects: news_projects | any = null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    news_projects: NewsProjects | any = null;
   @property({attribute: false, type: Object})
-  times: times = {
-    Fajr: '00:00',
-    Sunrise: '00:00',
-    Dhuhr: '00:00',
-    Asr: '00:00',
-    Sunset: '00:00',
-    Maghrib: '00:00',
-    Isha: '00:00',
-    Imsak: '00:00',
-    Midnight: '00:00',
-  };
+    times: times = {
+      Fajr: '00:00',
+      Sunrise: '00:00',
+      Dhuhr: '00:00',
+      Asr: '00:00',
+      Sunset: '00:00',
+      Maghrib: '00:00',
+      Isha: '00:00',
+      Imsak: '00:00',
+      Midnight: '00:00',
+    };
 
-  protected override async firstUpdated() {
+  protected override async firstUpdated(): Promise<void> {
     // Get Times
+    const TextTime: string | null = localStorage.getItem('times');
     const day: number = new Date().getUTCDay();
-    let times_json: any = localStorage.getItem('times');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let JsonTime: any;
     if (
-      !times_json ||
+      !TextTime ||
       !(
-        JSON.parse(times_json).data[day].date.gregorian.month.number === new Date().getUTCMonth() + 1 ||
-        JSON.parse(times_json).data.gregorian.year == new Date().getUTCFullYear()
+        JSON.parse(TextTime).data[day].date.gregorian.month.number === new Date().getUTCMonth() + 1 ||
+        JSON.parse(TextTime).data.gregorian.year == new Date().getUTCFullYear()
       )
     ) {
-      const get: any = await getJson('https://api.aladhan.com/v1/calendar?latitude=34.19883&longitude=43.873345');
+      const get: Record<string, symbol> = await getJson(
+          'https://api.aladhan.com/v1/calendar?latitude=34.19883&longitude=43.873345',
+      );
       localStorage.setItem('times', JSON.stringify(get));
-      times_json = get;
+      JsonTime = get;
     } else {
-      times_json = JSON.parse(times_json);
+      JsonTime = JSON.parse(TextTime);
     }
 
-    const times: any = times_json,
-      date = times.data[day].date.hijri;
-    this.times = times.data[day].timings;
+    const date = JsonTime.data[day].date.hijri;
+    this.times = JsonTime.data[day].timings;
     this.__day = `${this.lang === 'en' ? 'of' : 'فی'} ${date.weekday[this.lang === 'en' ? 'en' : 'ar']} , ${date.day} ${
       date.month[this.lang === 'en' ? 'en' : 'ar']
     }`;
     // Get News and Project
-    let news_json: any = document.cookie;
-    if (news_json.indexOf(this.lang) === -1) {
+    let NewsJson: string = document.cookie;
+    if (NewsJson.indexOf(this.lang) === -1) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const get: any = await getJson(`/json/news-projects-${this.lang}.json`);
       setCookie(`news-projects-${this.lang}`, JSON.stringify(get), 1);
-      news_json = get;
+      NewsJson = get;
     } else {
-      news_json = JSON.parse(getCookie(`news-projects-${this.lang}`));
+      NewsJson = JSON.parse(getCookie(`news-projects-${this.lang}`));
     }
-    this.news_projects = news_json;
+    this.news_projects = NewsJson;
     this.requestUpdate();
   }
 }

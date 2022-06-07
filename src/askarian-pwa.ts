@@ -1,15 +1,14 @@
+import {getJson} from '@alwatr/fetch';
 import {router} from '@alwatr/router';
 import {SignalInterface} from '@alwatr/signal';
-import {getJson} from '@alwatr/fetch';
-import {css, html, nothing} from 'lit';
+import {css, html} from 'lit';
 import {customElement} from 'lit/decorators/custom-element.js';
 import {state} from 'lit/decorators/state.js';
-import {classMap} from 'lit/directives/class-map.js';
 import {repeat} from 'lit/directives/repeat.js';
 
 import {AppElement} from './app-debt/app-element';
-import {mainNavigation} from './config';
-import type {config} from './types';
+import {Background, Orange, Gray} from './color';
+import {config} from './types';
 
 import './elements/page-home';
 import './elements/page-about';
@@ -18,28 +17,11 @@ import './elements/header-element';
 import './elements/page-panorama';
 import './elements/page-articles';
 import './elements/page-post';
-import './elements/page-404'
+import './elements/page-404';
 
 import type {RoutesConfig} from '@alwatr/router';
 import type {ListenerInterface} from '@alwatr/signal';
 import type {TemplateResult} from 'lit';
-
-// import colors
-import {background, Orange, Gray} from './color';
-
-// Language
-let lang: any = localStorage.getItem('language') ? localStorage.getItem('language') : "ar";
-// get config and menu and footer
-let json: any = localStorage.getItem(`config-${lang}`);
-if (!json) {
-  const get: any = await getJson(`/json/config-${lang}.json`);
-  localStorage.setItem(`config-${lang}`, JSON.stringify(get));
-  json = get;
-} else {
-  json = JSON.parse(json);
-}
-
-const config: config = json;
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -47,10 +29,20 @@ declare global {
   }
 }
 
-declare global {
-  interface HTMLElementTagNameMap {
-    'ion-icon': HTMLElement;
-  }
+// Language
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const lang: any = localStorage.getItem('lang') ? localStorage.getItem('lang') : 'ar';
+
+// get config and menu and footer
+const TextConfig: string | null = localStorage.getItem(`config-${lang}`);
+let config: config;
+if (!TextConfig) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const get: any = await getJson(`/json/config-${lang}.json`);
+  localStorage.setItem(`config-${lang}`, JSON.stringify(config));
+  config = get;
+} else {
+  config = JSON.parse(TextConfig);
 }
 
 @customElement('askarian-pwa')
@@ -59,7 +51,7 @@ export class AskarianPwa extends AppElement {
     :host {
       display: flex;
       flex-direction: column;
-      background-color: ${background};
+      background-color: ${Background};
       position: relative;
     }
     *,
@@ -85,20 +77,20 @@ export class AskarianPwa extends AppElement {
     nav .nav__item {
       padding: 8px;
       color: #fff;
-      transition: color 256ms ease, background-color 256ms ease;
+      transition: color 256ms ease, Background-color 256ms ease;
       border-radius: 4px;
       text-decoration: none;
     }
 
     nav .nav__item.active {
-      transition: color 256ms 128ms ease, background-color 256ms 128ms ease;
+      transition: color 256ms 128ms ease, Background-color 256ms 128ms ease;
       background-color: #fff;
       color: #000;
     }
     footer {
       width: 100%;
       min-height: 40em;
-      background: url(/images/background-footer.jpg) no-repeat center center / cover;
+      background: url(/images/Background-footer.jpg) no-repeat center center / cover;
       position: relative;
       display: flex;
       justify-content: center;
@@ -175,8 +167,8 @@ export class AskarianPwa extends AppElement {
     super();
     router.initial();
     // Set language
-    if(location.search.split("lang=")[1]){
-      localStorage.setItem('language',location.search.split("lang=")[1]);
+    if (location.search.split('lang=')[1]) {
+      localStorage.setItem('language', location.search.split('lang=')[1]);
     }
     if (lang === 'en') {
       document.dir = 'ltr';
@@ -228,23 +220,23 @@ export class AskarianPwa extends AppElement {
   override connectedCallback(): void {
     super.connectedCallback();
     this._listenerList.push(
-      router.signal.addListener(
-        (route) => {
-          this._logger.logMethodArgs('routeChanged', {route});
-          this._activePage = route.sectionList[0]?.toString().trim() || 'home';
-          this.requestUpdate();
-          // set titel page
-          const page = config.menu.filter(
-            (item) => item.link === `/${this._activePage === 'home' ? '' : this._activePage}`
-          )[0];
-          if (!(page === undefined)) document.title = `${page.titel}  | ${config.titelSite}  `;
-          else document.title = `${config.titelSite}`;
-        },
-        {receivePrevious: true}
-      ),
-      this._hideNavigationSignal.addListener((_hideNavigation) => {
-        this._hideNavigation = _hideNavigation;
-      })
+        router.signal.addListener(
+            (route) => {
+              this._logger.logMethodArgs('routeChanged', {route});
+              this._activePage = route.sectionList[0]?.toString().trim() || 'home';
+              this.requestUpdate();
+              // set titel page
+              const page = config.menu.filter(
+                  (item) => item.link === `/${this._activePage === 'home' ? '' : this._activePage}`,
+              )[0];
+              if (!(page === undefined)) document.title = `${page.titel}  | ${config.titelSite}  `;
+              else document.title = `${config.titelSite}`;
+            },
+            {receivePrevious: true},
+        ),
+        this._hideNavigationSignal.addListener((_hideNavigation) => {
+          this._hideNavigation = _hideNavigation;
+        }),
     );
     this._hideNavigationSignal.dispatch(false); // @TODO: make signal file and base config
   }
@@ -294,20 +286,5 @@ export class AskarianPwa extends AppElement {
         </p>
       </footer>
     `;
-  }
-
-  protected _renderNavigation(): TemplateResult | typeof nothing {
-    if (this._hideNavigation) return nothing;
-
-    const listTemplate = mainNavigation.map((item) => {
-      const selected = this._activePage === item.id;
-      return html`
-        <a href="${router.makeUrl({sectionList: [item.id]})}" class="nav__item ${classMap({active: selected})}">
-          <span class="nav__item-text">${item.title}</span>
-        </a>
-      `;
-    });
-
-    return html`<nav>${listTemplate}</nav>`;
   }
 }

@@ -1,7 +1,8 @@
-import {LitElement, html, css} from 'lit';
+import {LitElement, html, css, TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators/custom-element.js';
 import {property} from 'lit/decorators/property.js';
-import { glod,OrangeHover } from '../color';
+
+import {Glod, OrangeHover} from '../color';
 
 @customElement('page-404')
 export class Page404 extends LitElement {
@@ -22,25 +23,25 @@ export class Page404 extends LitElement {
         font-size: 60px;
         margin: 0;
       }
-      a{
-          text-decoration:none;
-          color:#fff;
-          background-color:${glod};
-          width:11em;
-          height:3em;
-          display:flex;
-          justify-content:center;
-          align-items:center;
-          border-radius:10px;
-          transition:300ms linear background-color;
+      a {
+        text-decoration: none;
+        color: #fff;
+        background-color: ${Glod};
+        width: 11em;
+        height: 3em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        transition: 300ms linear background-color;
       }
-      a:hover{
-          background-color: ${OrangeHover};
+      a:hover {
+        background-color: ${OrangeHover};
       }
     `,
   ];
 
-  override render() {
+  override render(): TemplateResult {
     return html`
       <div>
         <h1>404</h1>
@@ -50,9 +51,9 @@ export class Page404 extends LitElement {
     `;
   }
   @property({attribute: false, type: String})
-  massage = '';
+    massage = '';
   @property({attribute: false, type: String})
-  button = '';
+    button = '';
   protected override firstUpdated(): void {
     switch (this.lang) {
       case 'fa':

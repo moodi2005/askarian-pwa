@@ -1,12 +1,11 @@
-import {LitElement, html, css} from 'lit';
-import {customElement} from 'lit/decorators/custom-element.js';
-import {repeat} from 'lit/directives/repeat.js';
-import {property} from 'lit/decorators/property.js';
-
 import {getJson} from '@alwatr/fetch';
+import {LitElement, html, css, TemplateResult} from 'lit';
+import {customElement} from 'lit/decorators/custom-element.js';
+import {property} from 'lit/decorators/property.js';
+import {repeat} from 'lit/directives/repeat.js';
 
-import {article} from '../types';
-import {glod, color_description} from '../color';
+import {Glod, ColorDescription} from '../color';
+import {article, articles} from '../types';
 
 @customElement('page-articles')
 export class PageArticles extends LitElement {
@@ -46,13 +45,13 @@ export class PageArticles extends LitElement {
         align-items: center;
       }
       .article:hover {
-        background: linear-gradient(180deg, ${glod} 10%, rgb(209 19 19 / 1%) 62%);
+        background: linear-gradient(180deg, ${Glod} 10%, rgb(209 19 19 / 1%) 62%);
       }
       .article:hover > a > h2 {
-        color: ${glod};
+        color: ${Glod};
       }
       .article:hover > a > span {
-        background-color: ${glod};
+        background-color: ${Glod};
       }
       .article > a {
         display: flex;
@@ -82,7 +81,7 @@ export class PageArticles extends LitElement {
         transition: 200ms linear color;
       }
       .article > p {
-        color: ${color_description};
+        color: ${ColorDescription};
         text-align: justify;
         margin: 0.8em;
         font-size: 14px;
@@ -96,42 +95,44 @@ export class PageArticles extends LitElement {
     `,
   ];
 
-  override render() {
+  override render(): TemplateResult {
     return html`
       <h1>${this.config.titel}</h1>
       <div class="articles">
-        ${this.articles ? repeat(
-          this.articles,
-          (item: article) => html`
-            <div class="article">
-              <a href="/post/${item.link}/">
-                <img src=${item.image} alt="image-${item.titel}" loading="lazy" />
-                <span></span>
-                <h2>${item.titel}</h2>
-              </a>
-              <p>${item.description}...</p>
-            </div>
-          `
-        ) : ""}
+        ${this.articles ?
+          repeat(
+              this.articles,
+              (item: article) => html`
+                <div class="article">
+                  <a href="/post/${item.link}/">
+                    <img src=${item.image} alt="image-${item.titel}" loading="lazy" />
+                    <span></span>
+                    <h2>${item.titel}</h2>
+                  </a>
+                  <p>${item.description}...</p>
+                </div>
+              `,
+          ) :
+          ''}
       </div>
     `;
   }
   @property({attribute: true, type: Object})
-  config: any = {};
-  @property({attribute: true, type: Object})
-  articles: any = null;
+    config: Record<string, never> = {};
+  @property({attribute: true, type: Array})
+    articles: articles | null = null;
 
-  override async firstUpdated() {
+  override async firstUpdated(): Promise<void> {
     // get list articles
-    let json: any = localStorage.getItem(`articles-${this.lang}`);
+    const json: string | null = localStorage.getItem(`articles-${this.lang}`);
     if (!json) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const get: any = await getJson(`/json/articles-${this.lang}.json`);
       localStorage.setItem(`articles-${this.lang}`, JSON.stringify(get));
-      json = get;
+      this.articles = get;
     } else {
-      json = JSON.parse(json);
+      this.articles = JSON.parse(json);
     }
-     this.articles = json;
-     this.requestUpdate();
+    this.requestUpdate();
   }
 }

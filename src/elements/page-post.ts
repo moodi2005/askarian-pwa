@@ -1,9 +1,10 @@
-import {LitElement, html, css} from 'lit';
-import {customElement} from 'lit/decorators/custom-element.js';
-import {query} from 'lit/decorators/query.js';
-import {property} from 'lit/decorators/property.js';
-
+/* eslint-disable no-case-declarations */
 import {getJson} from '@alwatr/fetch';
+import {LitElement, html, css, TemplateResult} from 'lit';
+import {customElement} from 'lit/decorators/custom-element.js';
+import {property} from 'lit/decorators/property.js';
+import {query} from 'lit/decorators/query.js';
+
 import {article} from '../types';
 
 @customElement('page-post')
@@ -44,8 +45,8 @@ export class PagePost extends LitElement {
         border-radius: 10px 50% 10px 10px;
         box-shadow: 0 0 25px rgb(227 229 230 / 50%);
       }
-      .ltr_border_redius{
-        border-radius:50% 10px  10px  10px ;
+      .ltr_border_redius {
+        border-radius: 50% 10px 10px 10px;
       }
       main > p {
         text-align: justify;
@@ -77,12 +78,11 @@ export class PagePost extends LitElement {
       }
     `,
   ];
-  static post: any;
 
-  override render() {
+  override render(): TemplateResult {
     return html`
       <div class="sidebar">
-        <div class="image-post ${this.lang==="en" ? "ltr_border_redius" : ""}" title="${this.post.titel}"></div>
+        <div class="image-post ${this.lang === 'en' ? 'ltr_border_redius' : ''}" title="${this.post.titel}"></div>
         <div class="menu-sidebar">
           <p>أحدث المقالات</p>
           <ul>
@@ -99,34 +99,34 @@ export class PagePost extends LitElement {
     `;
   }
   @query('.text-post')
-  text_post!: HTMLParagraphElement;
+    text_post!: HTMLParagraphElement;
   @query('.image-post')
-  image!: HTMLParagraphElement;
+    image!: HTMLParagraphElement;
   @property({attribute: true})
-  titelSite = '';
+    titelSite = '';
   @property({attribute: false})
-  post: article = {
-    titel: '',
-    link: '',
-    date: '',
-    image: '',
-    id: 0,
-    description: '',
-  };
+    post: article = {
+      titel: '',
+      link: '',
+      date: '',
+      image: '',
+      id: 0,
+      description: '',
+    };
 
-  override async firstUpdated() {
+  override async firstUpdated(): Promise<void> {
     // Function Set Cookie
-    function setCookie(key: string, value: string, expDays: number) {
-      let date = new Date();
+    function setCookie(key: string, value: string, expDays: number): void {
+      const date = new Date();
       date.setTime(date.getTime() + expDays * 60 * 60 * 1000);
       const expires = 'expires=' + date.toUTCString();
       document.cookie = key + '=' + value + '; ' + expires + '; path=/';
     }
-    function getCookie(cName: string) {
+    function getCookie(cName: string): string {
       const name = cName + '=';
-      const cDecoded = decodeURIComponent(document.cookie); //to be careful
+      const cDecoded = decodeURIComponent(document.cookie); // to be careful
       const cArr = cDecoded.split('; ');
-      let res: string = '';
+      let res = '';
       cArr.forEach((val) => {
         if (val.indexOf(name) === 0) res = val.substring(name.length);
       });
@@ -134,47 +134,47 @@ export class PagePost extends LitElement {
     }
 
     // get path
-    const path = location.pathname.split('/')[2],
-      type_post = location.pathname.split('/')[1];
+    const path = location.pathname.split('/')[2];
+    const TypePost = location.pathname.split('/')[1];
     let articles: Array<article> = [];
 
-    switch (type_post) {
+    switch (TypePost) {
       case 'post':
         // get articles
-        let json_articles: any = localStorage.getItem(`articles-${this.lang}`);
-        if (!json_articles) {
+        const JsonArticles: string | null = localStorage.getItem(`articles-${this.lang}`);
+        if (!JsonArticles) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const get: any = await getJson(`/json/articles-${this.lang}.json`);
           localStorage.setItem(`articles-${this.lang}`, JSON.stringify(get));
-          json_articles = get;
+          articles = get;
         } else {
-          json_articles = JSON.parse(json_articles);
+          articles = JSON.parse(JsonArticles);
         }
-        articles: articles = json_articles;
         break;
       case 'news': {
         // get news
-        let news_json: any = document.cookie;
-        if (!news_json) {
+        const NewsJson: string = getCookie(`news-projects-${this.lang}`);
+        if (!NewsJson) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const get: any = await getJson(`/json/news-projects-${this.lang}.json`);
           setCookie(`news-projects-${this.lang}`, JSON.stringify(get), 1);
-          news_json = get;
+          articles = get.news;
         } else {
-          news_json = JSON.parse(getCookie(`news-projects-${this.lang}`));
+          articles = JSON.parse(getCookie(`news-projects-${this.lang}`)).news;
         }
-        articles = news_json.news;
         break;
       }
       case 'project': {
         // get news
-        let news_json: any = document.cookie;
-        if (!news_json) {
+        const TextProject: string = getCookie(`news-projects-${this.lang}`);
+        if (!TextProject) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const get: any = await getJson(`/json/news-projects-${this.lang}.json`);
           setCookie(`news-projects-${this.lang}`, JSON.stringify(get), 1);
-          news_json = get;
+          articles = get.project;
         } else {
-          news_json = JSON.parse(getCookie(`news-projects-${this.lang}`));
+          articles = JSON.parse(getCookie(`news-projects-${this.lang}`)).project;
         }
-        articles = news_json.project;
         break;
       }
       default:
@@ -184,7 +184,8 @@ export class PagePost extends LitElement {
     const article: article | undefined = articles.filter((item: article) => item.link === path)[0];
 
     if (article) {
-      const json: any = await getJson(`/json/${type_post}/${type_post}-${article.id}.json`);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const json: any = await getJson(`/json/${TypePost}/${TypePost}-${article.id}.json`);
       this.post = article;
       this.image.setAttribute('style', `background:url(${article.image}) no-repeat center center /cover;`);
       this.text_post.innerHTML = json[this.lang];

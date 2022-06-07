@@ -30,7 +30,7 @@
   },
   "homePage": {
     "titel": "العتبة العسكرية المقدسة",
-    "text_scroll":"يرجى التمرير",
+    "text_scroll": "يرجى التمرير",
     "menu": [
       {"name": "تاريخ سامراء", "link": "/about"},
       {"name": "يعيش", "link": "/live"},

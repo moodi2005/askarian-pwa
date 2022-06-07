@@ -30,7 +30,7 @@
   },
   "homePage": {
     "titel": "Holy shrine of Askarian",
-    "text_scroll":"Please scroll",
+    "text_scroll": "Please scroll",
     "menu": [
       {"name": "About Samarra", "link": "/about"},
       {"name": "Live", "link": "/live"},

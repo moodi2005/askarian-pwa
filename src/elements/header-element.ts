@@ -1,22 +1,27 @@
-import {LitElement, html, css} from 'lit';
-import {customElement} from 'lit/decorators/custom-element.js';
-import {query} from 'lit/decorators/query.js';
-import {property} from 'lit/decorators/property.js';
 import {getJson} from '@alwatr/fetch';
-
+import {LitElement, html, css, TemplateResult} from 'lit';
+import {customElement} from 'lit/decorators/custom-element.js';
+import {property} from 'lit/decorators/property.js';
+import {query} from 'lit/decorators/query.js';
 import {repeat} from 'lit/directives/repeat.js';
+
 import {
-  background,
+  Background,
   OrangeHover,
-  color_header,
-  color_header_mobile,
-  color_header_text,
-  color_header_text_mobile,
-  glod,
-  color_description,
+  ColorHeader,
+  ColorHeaderMobile,
+  ColorHeaderText,
+  ColorHeaderTextMobile,
+  Glod,
+  ColorDescription,
 } from '../color';
 import {config, menu, articles, article} from '../types';
-import '../askarian-pwa';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'ion-icon': HTMLElement;
+  }
+}
 
 @customElement('header-element')
 export class HeaderElement extends LitElement {
@@ -31,7 +36,7 @@ export class HeaderElement extends LitElement {
       .box-desktop {
         width: 100%;
         height: 5em;
-        background-color: ${color_header};
+        background-color: ${ColorHeader};
         display: flex;
         align-items: center;
         justify-content: center;
@@ -65,7 +70,7 @@ export class HeaderElement extends LitElement {
       .menu > li > a {
         text-decoration: none;
         margin: 0 0.5em;
-        color: ${color_header_text};
+        color: ${ColorHeaderText};
         transition: 300ms linear color;
       }
       .menu > li > a:hover,
@@ -80,7 +85,7 @@ export class HeaderElement extends LitElement {
       .icons > ion-icon {
         font-size: 25px;
         cursor: pointer;
-        color: ${color_header_text};
+        color: ${ColorHeaderText};
         margin: 0 0.5em;
         transition: 300ms linear color;
       }
@@ -124,17 +129,17 @@ export class HeaderElement extends LitElement {
       .language > img {
         width: 15em;
       }
-      .box-close-lang{
-        position:absolute;
-        width:100%;
-        top:0;
-        display:flex;
-        align-items:center;
-        justify-content:flex-end;
+      .box-close-lang {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
       }
-      .box-close-lang> ion-icon {
+      .box-close-lang > ion-icon {
         height: 2em;
-        color: ${color_header_text_mobile};
+        color: ${ColorHeaderTextMobile};
         cursor: pointer;
         font-size: 35px;
         margin: 0 0.3em;
@@ -156,7 +161,7 @@ export class HeaderElement extends LitElement {
         transition: 300ms linear color;
       }
       .list-lang > span:hover {
-        color: ${glod};
+        color: ${Glod};
       }
       .head_hidden {
         display: none;
@@ -180,7 +185,7 @@ export class HeaderElement extends LitElement {
       .search > input {
         font-family: 'Tajawal', sans-serif;
       }
-      .box-search{
+      .box-search {
         margin-top: 2em;
         display: flex;
         flex-direction: column;
@@ -198,7 +203,7 @@ export class HeaderElement extends LitElement {
         width: 47em;
         max-width: 87vw;
         height: 4em;
-        background-color: ${background};
+        background-color: ${Background};
         display: flex;
         justify-content: flex-start;
         flex-wrap: wrap;
@@ -227,7 +232,7 @@ export class HeaderElement extends LitElement {
         color: black;
       }
       .articel > div > p {
-        color: ${color_description};
+        color: ${ColorDescription};
       }
       .articel * {
         margin: 0;
@@ -258,7 +263,7 @@ export class HeaderElement extends LitElement {
           right: 0;
           top: 0;
           z-index: 20;
-          background-color: ${color_header_mobile};
+          background-color: ${ColorHeaderMobile};
           width: 0;
           height: 0;
           overflow: hidden;
@@ -282,11 +287,11 @@ export class HeaderElement extends LitElement {
           justify-content: center;
         }
         .menu > li > a {
-          color: ${color_header_text_mobile};
+          color: ${ColorHeaderTextMobile};
           font-size: 20px;
         }
         .icons > ion-icon {
-          color: ${color_header_text_mobile};
+          color: ${ColorHeaderTextMobile};
           margin: 0.5em;
         }
         .border-menu {
@@ -304,7 +309,7 @@ export class HeaderElement extends LitElement {
         .open {
           display: block;
           font-size: 40px;
-          color: ${color_header_text_mobile};
+          color: ${ColorHeaderTextMobile};
           margin: 0 0.2em;
           cursor: pointer;
         }
@@ -323,7 +328,7 @@ export class HeaderElement extends LitElement {
           top: 0;
           right: 0;
           z-index: 2;
-          background-color: ${color_header_mobile};
+          background-color: ${ColorHeaderMobile};
           display: flex;
           justify-content: space-between;
           align-items: center;
@@ -349,7 +354,7 @@ export class HeaderElement extends LitElement {
     `,
   ];
 
-  override render() {
+  override render(): TemplateResult {
     const Language = html`
       <div class="language">
         <div class="box-close-lang"><ion-icon @click=${this.close_lang} name="close-circle-outline"></ion-icon></div>
@@ -367,8 +372,8 @@ export class HeaderElement extends LitElement {
         <input @keydown=${this.search} type="text" placeholder="${this.config.textSearch}" autofocus />
         <div class="box-search">
           ${repeat(
-            this.list,
-            (item: article) => html`
+      this.list,
+      (item: article) => html`
               <a @click=${this.close_search} href="/post/${item.link}">
                 <div class="articel">
                   <img src=${item.image} alt=${item.titel} />
@@ -378,8 +383,8 @@ export class HeaderElement extends LitElement {
                   </div>
                 </div>
               </a>
-            `
-          )}
+            `,
+  )}
         </div>
       </div>
     `;
@@ -400,11 +405,11 @@ export class HeaderElement extends LitElement {
           <div class="menu">
             <ul class="menu">
               ${repeat(
-                this.config.menu,
-                (item: menu) => html` <li @click=${this.colse}>
+      this.config.menu,
+      (item: menu) => html` <li @click=${this.colse}>
                   <a id=${this.path == item.link.replace('/', '') ? 'active' : ''} href="${item.link}">${item.name}</a>
-                </li>`
-              )}
+                </li>`,
+  )}
             </ul>
           </div>
         </div>
@@ -421,66 +426,106 @@ export class HeaderElement extends LitElement {
   }
 
   @query('.close')
-  button_close!: HTMLButtonElement;
+    button_close!: HTMLButtonElement;
   @query('.box-desktop')
-  menu!: HTMLElement;
+    menu!: HTMLElement;
   @query('.language')
-  language!: HTMLElement;
+    language!: HTMLElement;
   @query('.search')
-  searchElement!: HTMLElement;
+    searchElement!: HTMLElement;
   @query('.search>input')
-  inputsearch!: HTMLInputElement;
+    inputsearch!: HTMLInputElement;
   @property({attribute: true, type: String})
-  path = '';
+    path = '';
   @property({attribute: true, type: Boolean})
-  hidden_head = false;
+    hidden_head = false;
   @property({attribute: true, type: Object})
-  config: config | any = {};
+    config: config = {
+      titelSite: '',
+      menu: [],
+      footer: {
+        name: [],
+        one: [],
+        two: [],
+        three: [],
+      },
+      homePage: {
+        titel: '',
+        text_scroll: '',
+        part_about: undefined,
+        times: [],
+        projectPart: {
+          titel: '',
+          description: '',
+        },
+        vicariousPart: {
+          titel: '',
+          description: '',
+          button: '',
+          input: '',
+          oninvalid: '',
+        },
+        news: {
+          titel: '',
+        },
+      },
+      live: {
+        titel: '',
+      },
+      panorama: {
+        titel: '',
+      },
+      articles: {
+        titel: '',
+      },
+      textSearch: '',
+    };
   @property({attribute: false, type: Array})
-  list: articles | [] = [];
-  colse(_e: Event) {
+    list: articles | [] = [];
+  colse(): void {
     this.menu.setAttribute('id', 'close-box');
     this.menu.setAttribute('id', 'close-box');
   }
-  open(_e: Event) {
+  open(): void {
     this.menu.setAttribute('id', 'open-box');
   }
-  open_lang(_e: Event) {
+  open_lang(): void {
     this.language.setAttribute('id', 'open_language_box');
-    this.colse(_e);
+    this.colse();
   }
-  close_lang(_e: Event) {
+  close_lang(): void {
     this.language.removeAttribute('id');
   }
-  open_search(_e: Event) {
+  open_search(): void {
     this.searchElement.setAttribute('id', 'open_search_box');
-    this.colse(_e);
+    this.colse();
   }
-  close_search(_e: Event) {
+  close_search(): void {
     this.searchElement.removeAttribute('id');
     this.inputsearch.value = '';
     this.list = [];
   }
-  async search(e: Event) {
-    let value = (e.target as HTMLInputElement).value;
+  async search(e: Event): Promise<void> {
+    const value = (e.target as HTMLInputElement).value;
 
     //   Get list articles
-    let json: any = localStorage.getItem(`articles-${this.lang}`);
-    if (!json) {
+    const ArticlesLang: string | null = localStorage.getItem(`articles-${this.lang}`);
+    let articles: articles;
+    if (!ArticlesLang) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const get: any = await getJson(`/json/articles-${this.lang}.json`);
       localStorage.setItem(`articles-${this.lang}`, JSON.stringify(get));
-      json = get;
+      articles = get;
     } else {
-      json = JSON.parse(json);
+      articles = JSON.parse(ArticlesLang);
     }
-    const articles: articles = json,
-      list: articles | [] =
-        articles.length > 0 && value.length > 0
-          ? articles.filter((item: article) => (item.titel + item.description).indexOf(value) !== -1)
-          : [];
+    const list: articles | [] =
+      articles.length > 0 && value.length > 0 ?
+        articles.filter((item: article) => (item.titel + item.description).indexOf(value) !== -1) :
+        [];
     this.list = list;
   }
-  change_language(e: Event) {
+  change_language(e: Event): void {
     localStorage.setItem('language', `${(e.target as HTMLSpanElement).className}`);
     document.location.reload();
   }

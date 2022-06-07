@@ -30,7 +30,7 @@
   },
   "homePage": {
     "titel": "حرم مطهر عسکریان",
-    "text_scroll":"لطفا اسکرول کنید",
+    "text_scroll": "لطفا اسکرول کنید",
     "menu": [
       {"name": "تاريخ سامراء", "link": "/about"},
       {"name": "پخش زنده", "link": "/live"},
