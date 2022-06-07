@@ -117,7 +117,7 @@ export class PageAbout extends AppElement {
       localStorage.setItem('about', JSON.stringify(get));
       this.content.innerHTML = get[this.lang];
     } else {
-      this.content.innerHTML = JSON.parse(TextAbout);
+      this.content.innerHTML = JSON.parse(TextAbout)[this.lang];
     }
   }
 }

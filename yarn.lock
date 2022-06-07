@@ -2352,7 +2352,7 @@
 
 "@webcomponents/webcomponentsjs@^2.5.0":
   version "2.6.0"
-  resolved "https://registry.npmjs.org/@webcomponents/webcomponentsjs/-/webcomponentsjs-2.6.0.tgz"
+  resolved "https://registry.yarnpkg.com/@webcomponents/webcomponentsjs/-/webcomponentsjs-2.6.0.tgz#7d1674c40bddf0c6dd974c44ffd34512fe7274ff"
   integrity sha512-Moog+Smx3ORTbWwuPqoclr+uvfLnciVd6wdCaVscHPrxbmQ/IJKm3wbB7hpzJtXWjAq2l/6QMlO85aZiOdtv5Q==
 
 JSONStream@^1.0.4:
@@ -7718,9 +7718,9 @@ trim-newlines@^3.0.0:
   resolved "https://registry.npmjs.org/trim-newlines/-/trim-newlines-3.0.1.tgz"
   integrity sha512-c1PTsA3tYrIsLGkJkzHF+w9F2EyxfXGo4UyJc4pFL++FMjnq0HJS69T3M7d//gKrFKwy429bouPescbjecU+Zw==
 
-ts-lit-plugin@^1.0.5:
+ts-lit-plugin@^1.2.1:
   version "1.2.1"
-  resolved "https://registry.npmjs.org/ts-lit-plugin/-/ts-lit-plugin-1.2.1.tgz"
+  resolved "https://registry.yarnpkg.com/ts-lit-plugin/-/ts-lit-plugin-1.2.1.tgz#7fca17a454645c14911917fa7f17ade582fa3056"
   integrity sha512-k/Me+aT1N9ckC/KuJCAlAJgCHFezOxuOGOzBE0q42xnKbJnUMNl08WqWF6C7OKecCPHIMRk5Wj5o6MDsmt9+qA==
   dependencies:
     lit-analyzer "1.2.1"

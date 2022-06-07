@@ -32,7 +32,7 @@ export default {
 
     terser({
       // Minify JS
-      ecma: 2020,
+      ecma: 2015,
       module: true,
       warnings: true,
       mangle: {

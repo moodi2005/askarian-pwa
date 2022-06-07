@@ -50,11 +50,14 @@ export class Page404 extends LitElement {
       </div>
     `;
   }
+  @property({attribute: true, type: String})
+    titelSite = '';
   @property({attribute: false, type: String})
     massage = '';
   @property({attribute: false, type: String})
     button = '';
   protected override firstUpdated(): void {
+    document.title = `404 | ${this.titelSite}`;
     switch (this.lang) {
       case 'fa':
         this.massage = 'این صفحه وجود ندارد. می توانید به صفحه اصلی برگردید';

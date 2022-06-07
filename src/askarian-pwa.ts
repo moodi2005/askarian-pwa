@@ -31,7 +31,7 @@ declare global {
 
 // Language
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const lang: any = localStorage.getItem('lang') ? localStorage.getItem('lang') : 'ar';
+const lang: any = localStorage.getItem('language') ? localStorage.getItem('language') : 'ar';
 
 // get config and menu and footer
 const TextConfig: string | null = localStorage.getItem(`config-${lang}`);
@@ -39,7 +39,7 @@ let config: config;
 if (!TextConfig) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const get: any = await getJson(`/json/config-${lang}.json`);
-  localStorage.setItem(`config-${lang}`, JSON.stringify(config));
+  localStorage.setItem(`config-${lang}`, JSON.stringify(get));
   config = get;
 } else {
   config = JSON.parse(TextConfig);
@@ -167,8 +167,8 @@ export class AskarianPwa extends AppElement {
     super();
     router.initial();
     // Set language
-    if (location.search.split('lang=')[1]) {
-      localStorage.setItem('language', location.search.split('lang=')[1]);
+    if (!localStorage.getItem('language')) {
+      localStorage.setItem('language', 'ar');
     }
     if (lang === 'en') {
       document.dir = 'ltr';
