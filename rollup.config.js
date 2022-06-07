@@ -2,7 +2,7 @@ import {rollupPluginHTML} from '@web/rollup-plugin-html';
 import {polyfillsLoader} from '@web/rollup-plugin-polyfills-loader';
 import resolve from '@rollup/plugin-node-resolve';
 import minifyHTML from 'rollup-plugin-minify-html-literals';
-import summary from 'rollup-plugin-summary';
+// import summary from 'rollup-plugin-summary';
 import {getBabelOutputPlugin} from '@rollup/plugin-babel';
 import {terser} from 'rollup-plugin-terser';
 import {copy} from '@web/rollup-plugin-copy';
@@ -32,7 +32,7 @@ export default {
 
     terser({
       // Minify JS
-      ecma: 2015,
+      ecma: 2020,
       module: true,
       warnings: true,
       mangle: {
@@ -73,7 +73,7 @@ export default {
       },
     }),
 
-    summary({showMinifiedSize: false}), // Print bundle summary
+    // summary({showMinifiedSize: false}), // Print bundle summary
 
     copy({
       patterns: ['images/**/*'],
