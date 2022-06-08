@@ -2,7 +2,6 @@ import {LitElement, html, css, TemplateResult} from 'lit';
 import {customElement} from 'lit/decorators/custom-element.js';
 import {property} from 'lit/decorators/property.js';
 
-import {Glod, OrangeHover} from '../color';
 
 @customElement('page-404')
 export class Page404 extends LitElement {
@@ -26,7 +25,7 @@ export class Page404 extends LitElement {
       a {
         text-decoration: none;
         color: #fff;
-        background-color: ${Glod};
+        background-color:  var(--askarian-color-glod, black);
         width: 11em;
         height: 3em;
         display: flex;
@@ -36,7 +35,7 @@ export class Page404 extends LitElement {
         transition: 300ms linear background-color;
       }
       a:hover {
-        background-color: ${OrangeHover};
+        background-color: var(--askarian-color-orange-hover, black);
       }
     `,
   ];

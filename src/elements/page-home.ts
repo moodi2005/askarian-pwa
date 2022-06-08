@@ -6,7 +6,6 @@ import {state} from 'lit/decorators/state.js';
 import {repeat} from 'lit/directives/repeat.js';
 
 import {AppElement} from '../app-debt/app-element';
-import {Glod, Orange, Background, OrangeHover, Gray} from '../color';
 import {article, homePage, menu, NewsProjects, ProjectList, project, times} from '../types';
 
 // Get color
@@ -113,14 +112,14 @@ export class PageHome extends AppElement {
     }
     .menu > li > a:hover,
     .menu > li > a:active {
-      color: ${Glod};
+      color: var(--askarian-glod, black);
     }
     .logo {
       width: 7em;
     }
     .titel {
       font-size: 5vw;
-      color: ${Glod};
+      color: var(--askarian-glod, red);
     }
 
     .box-scroll {
@@ -135,7 +134,7 @@ export class PageHome extends AppElement {
       width: 1.2em;
       height: 2.5em;
       border-radius: 15px;
-      border: 2px solid ${Glod};
+      border: 2px solid  var(--askarian-glod, black);
       display: flex;
       justify-content: center;
       position: relative;
@@ -146,7 +145,7 @@ export class PageHome extends AppElement {
       position: absolute;
       top: 0.1em;
       border-radius: 50%;
-      background-color: ${Glod};
+      background-color:  var(--askarian-glod, black);
       animation: scroll 2s linear 300ms normal infinite forwards;
     }
     @keyframes scroll {
@@ -160,7 +159,7 @@ export class PageHome extends AppElement {
       }
     }
     .box-scroll > p {
-      color: ${Glod};
+      color:  var(--askarian-glod, black);
       font-size: 1em;
     }
     /* css about */
@@ -177,7 +176,7 @@ export class PageHome extends AppElement {
       width: 36vw;
       max-width: 28em;
       height: 30vh;
-      border: 6px solid ${Orange};
+      border: 6px solid  var(--askarian-orange, black);
       border-radius: 10px;
       position: relative;
       margin: 0 5em;
@@ -201,7 +200,7 @@ export class PageHome extends AppElement {
       z-index: 1;
     }
     .perfix_titel {
-      color: ${Orange};
+      color: var(--askarian-orange, black);
       font-size: 25px;
     }
     .text-about > h2 {
@@ -225,7 +224,7 @@ export class PageHome extends AppElement {
       justify-content: center;
       align-items: center;
       margin-top: 1em;
-      background-color: ${Orange};
+      background-color: var(--askarian-orange, black);
       transition: 200ms filter;
     }
     .button-about:hover {
@@ -246,7 +245,7 @@ export class PageHome extends AppElement {
       width: 27em;
       height: 12em;
       border-radius: 20vw 20vw 0 0;
-      background-color: ${Background};
+      background-color: var(--askarian-background, black);
       position: absolute;
       bottom: 0;
       display: flex;
@@ -270,7 +269,7 @@ export class PageHome extends AppElement {
       min-width: 50em;
       min-height: 29em;
       max-height: 30em;
-      border: 2px solid ${Background};
+      border: 2px solid var(--askarian-background, black);
       border-radius: 110vw 110vw 0 0;
       position: absolute;
       bottom: 0;
@@ -297,12 +296,12 @@ export class PageHome extends AppElement {
       cursor: pointer;
       align-items: center;
       transition: 300ms linear outline, 300ms linear Background-color, 300ms linear color;
-      outline: 0px solid ${OrangeHover};
+      outline: 0px solid var(--askarian-orange-hover, black);
     }
     .border_circle_part_date > div > div:hover,
     #active_circle {
-      background-color: ${OrangeHover};
-      outline: 2px solid ${OrangeHover};
+      background-color: var(--askarian-orange-hover, black);
+      outline: 2px solid var(--askarian-orange-hover, black);
       outline-offset: 9px;
       color: #fff;
     }
@@ -362,7 +361,7 @@ export class PageHome extends AppElement {
       position: absolute;
       font-size: 30px;
       bottom: -100%;
-      color: ${Orange};
+      color: var(--askarian-orange, black);
       transition: 300ms linear bottom;
     }
     .item-project-img > img {
@@ -386,7 +385,7 @@ export class PageHome extends AppElement {
     .item-project {
       width: 20em;
       height: 3em;
-      border: 3px solid ${Orange};
+      border: 3px solid var(--askarian-orange, black);
       border-radius: 4px;
       display: flex;
       justify-content: space-between;
@@ -398,7 +397,7 @@ export class PageHome extends AppElement {
       transition: 300ms linear box-shadow;
     }
     .item-project:hover {
-      box-shadow: 0 0 15px 0 ${Orange};
+      box-shadow: 0 0 15px 0 var(--askarian-orange, black);
     }
     /* Styles vicarious shrine */
     .part-vicarious-shrine {
@@ -437,7 +436,7 @@ export class PageHome extends AppElement {
     }
     .box-vicarious-shrine > p {
       text-align: start;
-      color: ${Gray};
+      color:var(--askarian-gray, black);
     }
     .box-vicarious-shrine > form {
       display: flex;
@@ -449,7 +448,7 @@ export class PageHome extends AppElement {
       width: 25em;
       height: 3.5em;
       text-align: start;
-      border: 2px solid ${Orange};
+      border: 2px solid var(--askarian-orange, black);
       border-radius: 7px;
       padding: 0 0.6em;
       margin: 0.5em;
@@ -458,7 +457,7 @@ export class PageHome extends AppElement {
     .box-vicarious-shrine > form > input[type='submit'] {
       width: 10em;
       height: 2.5em;
-      border: 2px solid ${Orange};
+      border: 2px solid var(--askarian-orange, black);
       border-radius: 7px;
       padding: 0 0.6em;
       margin: 0.5em;
@@ -469,7 +468,7 @@ export class PageHome extends AppElement {
       transition: 300ms linear Background-color;
     }
     .box-vicarious-shrine > form > input[type='submit']:hover {
-      background-color: ${Orange};
+      background-color: var(--askarian-orange, black);
     }
     /* Styles Part Ports */
     .part-news {
@@ -511,7 +510,7 @@ export class PageHome extends AppElement {
       width: 100%;
     }
     .part-news > div > a > p {
-      color: ${Gray};
+      color: var(--askarian-gray, black);
       text-align: start;
       margin: 1em 0.6em;
     }

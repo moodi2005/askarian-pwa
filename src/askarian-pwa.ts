@@ -7,7 +7,6 @@ import {state} from 'lit/decorators/state.js';
 import {repeat} from 'lit/directives/repeat.js';
 
 import {AppElement} from './app-debt/app-element';
-import {Background, Orange, Gray} from './color';
 import {config} from './types';
 
 import './elements/page-home';
@@ -18,6 +17,7 @@ import './elements/page-panorama';
 import './elements/page-articles';
 import './elements/page-post';
 import './elements/page-404';
+
 
 import type {RoutesConfig} from '@alwatr/router';
 import type {ListenerInterface} from '@alwatr/signal';
@@ -51,7 +51,7 @@ export class AskarianPwa extends AppElement {
     :host {
       display: flex;
       flex-direction: column;
-      background-color: ${Background};
+      background-color: var(--askarian-background, black);
       position: relative;
     }
     *,
@@ -125,7 +125,7 @@ export class AskarianPwa extends AppElement {
     }
     .menu_footer > div > div > h6 {
       font-size: 25px;
-      color: ${Orange};
+      color:var(--askarian-orange, black);
     }
     .menu_footer > div > div > a,
     .menu_footer > div > div > p {
@@ -136,7 +136,7 @@ export class AskarianPwa extends AppElement {
       transition: 300ms linear color;
     }
     .menu_footer > div > a:hover {
-      color: ${Orange};
+      color:var(--askarian-orange, black);
     }
     .copy-right {
       width: 100%;
@@ -145,7 +145,7 @@ export class AskarianPwa extends AppElement {
       color: #fff;
       position: absolute;
       bottom: 1em;
-      border-top: 1px solid ${Gray};
+      border-top: 1px solid var(--askarian-gray, black);
     }
     header-element {
       position: sticky;

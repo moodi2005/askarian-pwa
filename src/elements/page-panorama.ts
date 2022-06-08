@@ -4,7 +4,6 @@ import {property} from 'lit/decorators/property.js';
 
 import './header-element';
 
-import {Glod} from '../color';
 
 @customElement('page-panorama')
 export class PagePanorama extends LitElement {
@@ -21,11 +20,11 @@ export class PagePanorama extends LitElement {
             ion-icon{
                 font-size:80px;
                 animation: rotate 2s linear 300ms  normal infinite forwards;
-                color:${Glod};
+                color:var(--askarian-glod, black);
              }
              h2{
                  font-size:40px;
-                 color:${Glod};
+                 color: var(--askarian-glod, black);
              }
             @keyframes rotate {
               from{

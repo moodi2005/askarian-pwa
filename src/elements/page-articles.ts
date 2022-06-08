@@ -4,7 +4,6 @@ import {customElement} from 'lit/decorators/custom-element.js';
 import {property} from 'lit/decorators/property.js';
 import {repeat} from 'lit/directives/repeat.js';
 
-import {Glod, ColorDescription} from '../color';
 import {article, articles} from '../types';
 
 @customElement('page-articles')
@@ -45,13 +44,13 @@ export class PageArticles extends LitElement {
         align-items: center;
       }
       .article:hover {
-        background: linear-gradient(180deg, ${Glod} 10%, rgb(209 19 19 / 1%) 62%);
+        background: linear-gradient(180deg, var(--askarian-glod, black) 10%, rgb(209 19 19 / 1%) 62%);
       }
       .article:hover > a > h2 {
-        color: ${Glod};
+        color: var(--askarian-glod, black);
       }
       .article:hover > a > span {
-        background-color: ${Glod};
+        background-color: var(--askarian-glod, black);
       }
       .article > a {
         display: flex;
@@ -81,7 +80,7 @@ export class PageArticles extends LitElement {
         transition: 200ms linear color;
       }
       .article > p {
-        color: ${ColorDescription};
+        color: var(--askarian-color-description, black);
         text-align: justify;
         margin: 0.8em;
         font-size: 14px;

@@ -5,16 +5,7 @@ import {property} from 'lit/decorators/property.js';
 import {query} from 'lit/decorators/query.js';
 import {repeat} from 'lit/directives/repeat.js';
 
-import {
-  Background,
-  OrangeHover,
-  ColorHeader,
-  ColorHeaderMobile,
-  ColorHeaderText,
-  ColorHeaderTextMobile,
-  Glod,
-  ColorDescription,
-} from '../color';
+
 import {config, menu, articles, article} from '../types';
 
 declare global {
@@ -36,7 +27,7 @@ export class HeaderElement extends LitElement {
       .box-desktop {
         width: 100%;
         height: 5em;
-        background-color: ${ColorHeader};
+        background-color: var(--askarian-color-header, black);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -70,13 +61,13 @@ export class HeaderElement extends LitElement {
       .menu > li > a {
         text-decoration: none;
         margin: 0 0.5em;
-        color: ${ColorHeaderText};
+        color: var(--askarian-color-header-text, black);
         transition: 300ms linear color;
       }
       .menu > li > a:hover,
       .icons > ion-icon:hover,
       #active {
-        color: ${OrangeHover};
+        color: var(--askarian-orange-hover, black);
       }
       .icons {
         position: absolute;
@@ -85,7 +76,7 @@ export class HeaderElement extends LitElement {
       .icons > ion-icon {
         font-size: 25px;
         cursor: pointer;
-        color: ${ColorHeaderText};
+        color: var(--askarian-color-header-text, black);
         margin: 0 0.5em;
         transition: 300ms linear color;
       }
@@ -139,7 +130,7 @@ export class HeaderElement extends LitElement {
       }
       .box-close-lang > ion-icon {
         height: 2em;
-        color: ${ColorHeaderTextMobile};
+        color: var(--askarian-color-header-text-mobile, black);
         cursor: pointer;
         font-size: 35px;
         margin: 0 0.3em;
@@ -161,7 +152,7 @@ export class HeaderElement extends LitElement {
         transition: 300ms linear color;
       }
       .list-lang > span:hover {
-        color: ${Glod};
+        color:  var(--askarian-color-glod, black);
       }
       .head_hidden {
         display: none;
@@ -203,7 +194,7 @@ export class HeaderElement extends LitElement {
         width: 47em;
         max-width: 87vw;
         height: 4em;
-        background-color: ${Background};
+        background-color:  var(--askarian-background, black);
         display: flex;
         justify-content: flex-start;
         flex-wrap: wrap;
@@ -214,7 +205,7 @@ export class HeaderElement extends LitElement {
         transition: 300ms linear box-shadow;
       }
       .articel:hover {
-        box-shadow: 0 0 10px 0 ${OrangeHover};
+        box-shadow: 0 0 10px 0  var(--askarian-color-orange-hover, black);
       }
       .articel > img {
         width: 4em;
@@ -232,7 +223,7 @@ export class HeaderElement extends LitElement {
         color: black;
       }
       .articel > div > p {
-        color: ${ColorDescription};
+        color: var(--askarian-color-description, black);
       }
       .articel * {
         margin: 0;
@@ -263,7 +254,7 @@ export class HeaderElement extends LitElement {
           right: 0;
           top: 0;
           z-index: 20;
-          background-color: ${ColorHeaderMobile};
+          background-color: var(--askarian-color-header-mobile, black);
           width: 0;
           height: 0;
           overflow: hidden;
@@ -287,11 +278,11 @@ export class HeaderElement extends LitElement {
           justify-content: center;
         }
         .menu > li > a {
-          color: ${ColorHeaderTextMobile};
+          color:  var(--askarian-color-header-text-mobile, black);
           font-size: 20px;
         }
         .icons > ion-icon {
-          color: ${ColorHeaderTextMobile};
+          color:  var(--askarian-color-header-text-mobile, black);
           margin: 0.5em;
         }
         .border-menu {
@@ -309,7 +300,7 @@ export class HeaderElement extends LitElement {
         .open {
           display: block;
           font-size: 40px;
-          color: ${ColorHeaderTextMobile};
+          color:  var(--askarian-color-header-text-mobile, black);
           margin: 0 0.2em;
           cursor: pointer;
         }
@@ -318,7 +309,7 @@ export class HeaderElement extends LitElement {
         }
         .close:active,
         .box-mobile > ion-icon:active {
-          color: ${OrangeHover};
+          color:  var(--askarian-color-orange-hover, black);
         }
         .box-mobile {
           display: block;
@@ -328,7 +319,7 @@ export class HeaderElement extends LitElement {
           top: 0;
           right: 0;
           z-index: 2;
-          background-color: ${ColorHeaderMobile};
+          background-color:  var(--askarian-color-header-mobile, black);
           display: flex;
           justify-content: space-between;
           align-items: center;
