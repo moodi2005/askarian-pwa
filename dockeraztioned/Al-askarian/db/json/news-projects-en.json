@@ -1,0 +1,19 @@
+{
+  "news": [
+    {
+      "id": 1,
+      "titel": "News One",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "link": "news-one",
+      "image": "/images/background-homePage.jpg"
+    }
+  ],
+  "project": [
+    {"titel": "Project One", "link": "project-one", "image": "/images/background-part-about.jpg", "id": 1},
+    {"titel": "Project two", "link": "project-two", "image": "/images/background-part-about.jpg", "id": 2}
+  ],
+  "project_list": [
+    {"name": "Part One", "number": 0},
+    {"name": "Part Two", "number": 0}
+  ]
+}

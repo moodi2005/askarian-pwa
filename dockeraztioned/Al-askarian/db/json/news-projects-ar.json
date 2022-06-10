@@ -1,0 +1,19 @@
+{
+  "news": [
+    {
+      "id": 1,
+      "titel": "خبر الاول",
+      "description": "لوريم إيبسوم هو ببساطة نص شكلي (بمعنى أن الغاية هي الشكل وليس المحتوى) ويُستخدم في صناعات المطابع ودور النشر. ",
+      "link": "news-one",
+      "image": "/images/background-homePage.jpg"
+    }
+  ],
+  "project": [
+    {"titel": "المشروع الاول", "link": "project-one", "image": "/images/background-part-about.jpg", "id": 1},
+    {"titel": "المشروع الثاني", "link": "project-two", "image": "/images/background-part-about.jpg", "id": 2}
+  ],
+  "project_list": [
+    {"name": "القسم الأول", "number": 0},
+    {"name": "الفئة الثانية", "number": 0}
+  ]
+}

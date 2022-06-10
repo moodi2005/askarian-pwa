@@ -1,0 +1,144 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2, user-scalable=yes, viewport-fit=cover">
+
+    <title>العسکریان</title>
+    <meta name="description" content="العتبة العسكريان">
+    <link rel="canonical" href="mالعتبة العسكريان">
+
+    <base href="/">
+
+    <link rel="icon" href="assets/icon-192.png">
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fafbfc">
+
+    <link rel="manifest" href="assets/manifest.json">
+
+    <!-- Add to home screen for Chrome on Android. Fallback for manifest.json -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="العتبة العسكريان">
+
+    <!-- Add to home screen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="العتبة العسكريان">
+    <link rel="apple-touch-startup-image" href="images/manifest/icon-192.png">
+
+    <!-- Home screen icons -->
+    <!-- <link rel="apple-touch-icon" href="images/icon-192.png" /> -->
+
+    <!-- Tile icon for Windows 8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="images/manifest/icon-192.png">
+    <meta name="msapplication-TileColor" content="#ffd700">
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&amp;display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/global-521630b6.css">    
+  
+<link rel="preload" href="./askarian-pwa-fbb1dae2.js" as="script" crossorigin="anonymous" />
+</head>
+  <body>
+    <askarian-pwa></askarian-pwa>
+
+    
+    <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@6.0.1/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://cdn.jsdelivr.net/npm/ionicons@6.0.1/dist/ionicons/ionicons.js"></script>
+
+    <noscript>
+      <div class="noscript">
+        <p dir="ltr">Please enable JavaScript to view this website.</p>
+        <p dir="rtl">الرجاء تمكين JavaScript لعرض هذا الموقع.</p>
+      </div>
+    </noscript>
+  
+
+<script>(function () {
+  function polyfillsLoader() {
+    function loadScript(src, type, attributes = []) {
+      return new Promise(function (resolve) {
+        var script = document.createElement('script');
+
+        function onLoaded() {
+          if (script.parentElement) {
+            script.parentElement.removeChild(script);
+          }
+
+          resolve();
+        }
+
+        script.src = src;
+        script.onload = onLoaded;
+        attributes.forEach(att => {
+          script.setAttribute(att.name, att.value);
+        });
+
+        script.onerror = function () {
+          console.error('[polyfills-loader] failed to load: ' + src + ' check the network tab for HTTP status.');
+          onLoaded();
+        };
+
+        if (type) script.type = type;
+        document.head.appendChild(script);
+      });
+    }
+
+    var polyfills = [];
+
+    if (!('noModule' in HTMLScriptElement.prototype)) {
+      polyfills.push(loadScript('./polyfills/regenerator-runtime.de2e6a3a74a500cae72a3cab1a403efc.js'));
+    }
+
+    if (!Array.prototype.flat) {
+      polyfills.push(loadScript('./polyfills/systemjs.6744a76d48d4fcc398208e8269c87aa1.js'));
+    }
+
+    if (!('attachShadow' in Element.prototype) || !('getRootNode' in Element.prototype) || window.ShadyDOM && window.ShadyDOM.force) {
+      polyfills.push(loadScript('./polyfills/webcomponents.d7ffce1754011cfedff5f846f12e0c11.js'));
+    }
+
+    if (!('noModule' in HTMLScriptElement.prototype) && 'getRootNode' in Element.prototype) {
+      polyfills.push(loadScript('./polyfills/custom-elements-es5-adapter.3342b468203af1a14ca005e80d14148f.js'));
+    }
+
+    if (!('attachShadow' in Element.prototype)) {
+      polyfills.push(loadScript('./polyfills/lit-polyfill-support.82aa27f27be323af5a455ac87919622a.js'));
+    }
+
+    function loadFiles() {
+      if (!Array.prototype.flat) {
+        System.import('./legacy-askarian-pwa-2e91e162.js');
+      } else {
+        loadScript('./askarian-pwa-fbb1dae2.js', 'module', []);
+      }
+    }
+
+    if (polyfills.length) {
+      Promise.all(polyfills).then(loadFiles);
+    } else {
+      loadFiles();
+    }
+  }
+
+  if (!('noModule' in HTMLScriptElement.prototype)) {
+    var s = document.createElement('script');
+
+    function onLoaded() {
+      document.head.removeChild(s);
+      polyfillsLoader();
+    }
+
+    s.src = "./polyfills/core-js.245d5ffa15f213dd2d5392af3ef88ce6.js";
+    s.onload = onLoaded;
+
+    s.onerror = function () {
+      console.error('[polyfills-loader] failed to load: ' + s.src + ' check the network tab for HTTP status.');
+      onLoaded();
+    };
+
+    document.head.appendChild(s);
+  } else {
+    polyfillsLoader();
+  }
+})();</script></body></html>

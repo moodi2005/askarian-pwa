@@ -1,0 +1,33 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+:root {
+  --background-color: #fafbfc;
+}
+askarian-pwa {
+  --askarian-background: #fafbfc;
+  --askarian-glod: #ffd700;
+  --askarian-orange: #ff9822;
+  --askarian-orange-hover: #ffa806;
+  --askarian-gray: #4b4b4b;
+  --askarian-color-header: #ffffff;
+  --askarian-color-header-text: #464646;
+  --askarian-color-header-mobile: #ffffff;
+  --askarian-color-header-text-mobile: #ffd700;
+  --askarian-color-header-mobile: #ffffff;
+  --askarian-color-description: #a1abb3;
+}
+
+body::-webkit-scrollbar {
+  width: .5em;
+}
+ 
+body::-webkit-scrollbar-track {
+  background-color: var(--askarian-background);
+}
+ 
+body::-webkit-scrollbar-thumb {
+  background-color:#ffd700;
+}

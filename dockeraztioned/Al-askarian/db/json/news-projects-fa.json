@@ -1,0 +1,19 @@
+{
+  "news": [
+    {
+      "id": 1,
+      "titel": "خبر اول",
+      "description": "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.",
+      "link": "news-one",
+      "image": "/images/background-homePage.jpg"
+    }
+  ],
+  "project": [
+    {"titel": "پروژه اول", "link": "project-one", "image": "/images/background-part-about.jpg", "id": 1},
+    {"titel": "پروژه دوم", "link": "project-two", "image": "/images/background-part-about.jpg", "id": 2}
+  ],
+  "project_list": [
+    {"name": "قسمت اول", "number": 0},
+    {"name": "قسمت دوم", "number": 0}
+  ]
+}

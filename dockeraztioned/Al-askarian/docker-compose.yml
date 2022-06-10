@@ -1,0 +1,30 @@
+version: "3.3"
+
+services:
+
+
+   treafik:
+      image: 'traefik:v2.7'
+      container_name: 'traefik'
+      command:
+         --api.insecure=true --providers.docker
+      ports:
+         - "80:80"
+         - "8080:8080"
+      volumes:
+         - '/var/run/docker.sock:/var/run/docker.sock'
+   web:
+      build: './web'
+      container_name: 'web'
+      restart: 'on-failure'
+      hostname: 'web'
+      labels:
+         - traefik.http.routers.nginx.rule=Host(`localhost`)
+         - traefik.http.services.nginx.loadbalancer.server.port=80
+      volumes:
+         - type: bind
+           source: ./db/images/
+           target: /etc/nginx/html/images
+         - type: bind
+           source: ./db/json/
+           target: /etc/nginx/html/json

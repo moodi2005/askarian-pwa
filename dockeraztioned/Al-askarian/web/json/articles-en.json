@@ -1,0 +1,10 @@
+[
+  {
+    "id": 1,
+    "titel": "test",
+    "date": "2022-06-02",
+    "image": "/images/background-homePage.jpg",
+    "link": "test-1",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  }
+]
